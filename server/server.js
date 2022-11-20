@@ -14,20 +14,17 @@ app.use(cors({ credentials: true, origin: ['http://localhost:3000'] }));
 // Route 1 - register as GET 
 app.get('/', routes.home)
 
-// Route 2 - register as GET 
-//app.get('/jersey/:choice', routes.jersey)
+app.get('/us_states', routes.allUsStates)
 
-// Route 3 - register as GET 
-//app.get('/matches/:league', routes.all_matches)
+app.get('/us_state', routes.retrieveStateDetails)
+/*app.get('/us_state', routes.retrieveStateHS)*/
 
-// Route 4 - register as GET 
-//app.get('/players', routes.all_players)
+app.get('/search/states_name', routes.searchStatesName)
 
-// Route 5 - register as GET 
-//app.get('/match', routes.match)
+app.get('/search/states_population', routes.searchStatesPopulation)
 
-// Route 6 - register as GET 
-//app.get('/player', routes.player)
+app.get('/search/states_topic', routes.searchStatesHSTopicTotal)
+
 
 
 
