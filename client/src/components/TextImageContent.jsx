@@ -6,9 +6,11 @@ const Layout = styled.div`
   flex-direction: row;
   justify-items: center;
   justify-content: space-evenly;
-  background-color: #ebe9e9;
+  align-items: center;
 `;
 
 export default function TextImageContent(props) {
-  return <Layout>{props.children}</Layout>;
+  return (
+    <Layout style={{ backgroundColor: props.color }}>{props.children}</Layout>
+  );
 }
