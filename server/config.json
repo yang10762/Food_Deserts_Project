@@ -1,0 +1,9 @@
+{
+    "rds_host": "cis5500-food-desert-finder.cretx4mon62g.us-east-1.rds.amazonaws.com",
+    "rds_port": "3306",
+    "rds_user": "FD_FINDER_SERVER",
+    "rds_password" : "a^<LUD(PKuN({]R,tU78",
+    "rds_db": "FD_FINDER",
+    "server_host": "127.0.0.1",
+    "server_port":"8080"
+}
