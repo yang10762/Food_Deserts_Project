@@ -1,46 +1,44 @@
 import config from './config.json'
 
-const getAllMatches = async (page, pagesize, league) => {
-    var res = await fetch(`http://${config.server_host}:${config.server_port}/matches/${league}?page=${page}&pagesize=${pagesize}`, {
+const getAllStates = async () => {
+    var res = await fetch(`http://${config.server_host}:${config.server_port}/us_states`, {
         method: 'GET',
     })
     return res.json()
 }
 
-const getAllPlayers = async (page, pagesize) => {
-    var res = await fetch(`http://${config.server_host}:${config.server_port}/players?page=${page}&pagesize=${pagesize}`, {
+
+
+//this url only gets id in order to use it to select all info for the player using ${id}
+const getStateDetails = async (name) => {
+    var res = await fetch(`http://${config.server_host}:${config.server_port}/us_state?state_name=${name}`, {
         method: 'GET',
     })
     return res.json()
 }
 
-const getMatch = async (id) => {
-    var res = await fetch(`http://${config.server_host}:${config.server_port}/match?id=${id}`, {
+//this url contains only the parameters needed to do the search
+const getStateSearchName = async (state) => {
+    var res = await fetch(`http://${config.server_host}:${config.server_port}/search/states_name?name=${state}`, {
         method: 'GET',
     })
     return res.json()
 }
 
-const getPlayer = async (id) => {
-    var res = await fetch(`http://${config.server_host}:${config.server_port}/player?id=${id}`, {
+const getStateSearchPopulation = async (popHigh, popLow) => {
+    var res = await fetch(`http://${config.server_host}:${config.server_port}/search/states_population?pophigh=${popHigh}&poplow=${popLow}`, {
         method: 'GET',
     })
     return res.json()
 }
 
-const getMatchSearch = async (home, away, page, pagesize) => {
-    var res = await fetch(`http://${config.server_host}:${config.server_port}/search/matches?Home=${home}&Away=${away}&page=${page}&pagesize=${pagesize}`, {
+const getAllHSYearsForTopicTotal= async (state, topic) => {
+    var res = await fetch(`http://${config.server_host}:${config.server_port}/search/states_topic?name=${state}&topic=${topic}`, {
         method: 'GET',
     })
     return res.json()
 }
 
-const getPlayerSearch = async (name, nationality, club, rating_high, rating_low, pot_high, pot_low, page, pagesize) => {
-    var res = await fetch(`http://${config.server_host}:${config.server_port}/search/players?Name=${name}&Nationality=${nationality}&Club=${club}&RatingLow=${rating_low}&RatingHigh=${rating_high}&PotentialHigh=${pot_high}&PotentialLow=${pot_low}&page=${page}&pagesize=${pagesize}`, {
-        method: 'GET',
-    })
-    return res.json()
-}
 
 
 
@@ -55,10 +53,9 @@ const getPlayerSearch = async (name, nationality, club, rating_high, rating_low,
 
 
 export {
-    getAllMatches,
-    getAllPlayers,
-    getMatch,
-    getPlayer,
-    getMatchSearch,
-    getPlayerSearch
+    getAllStates,
+    getStateDetails,
+    getStateSearchName,
+    getStateSearchPopulation,
+    getAllHSYearsForTopicTotal
 }
