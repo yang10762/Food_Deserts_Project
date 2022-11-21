@@ -1,13 +1,42 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import App from "./App";
+// import App from "./App";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import States from "./pages/States";
 import Counties from "./pages/Counties";
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider, Route } from "react-router-dom";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#7FB069",
+    },
+    secondary: {
+      main: "#c7d8ed",
+    },
+  },
+  typography: {
+    fontFamily: ["Open Sans"],
+    h1: {
+      fontWeight: 6000,
+      fontSize: 100,
+      lineHeight: "2rem",
+    },
+    h4: {
+      fontWeight: 600,
+      fontSize: 28,
+      lineHeight: "2rem",
+    },
+    h5: {
+      fontWeight: 100,
+      lineHeight: "2rem",
+    },
+  },
+});
 
 const router = createBrowserRouter([
   {
@@ -31,7 +60,9 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <ThemeProvider theme={theme}>
+      <RouterProvider router={router} />
+    </ThemeProvider>
   </React.StrictMode>
 );
 

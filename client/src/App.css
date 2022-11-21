@@ -39,14 +39,17 @@
   }
 }
 
+.Home,
 .About,
 .States,
 .Counties {
   display: flex;
   flex-direction: column;
   justify-items: center;
+  width: 100vw;
+  height: 100vh;
   /* background-color: #61dafb; */
-  width: 50vw;
+  /* width: 50vw; */
   /* min-height: 100vh; */
   /* margin: 0 25vw; */
 }
