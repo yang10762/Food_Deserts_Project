@@ -1,64 +1,28 @@
 import config from './config.json'
 
-const getAllMatches = async (page, pagesize, league) => {
-    var res = await fetch(`http://${config.server_host}:${config.server_port}/matches/${league}?page=${page}&pagesize=${pagesize}`, {
+const getAllCounties = async (page, pagesize) => {
+    var res = await fetch(`http://${config.server_host}:${config.server_port}/counties?page=${page}&pagesize=${pagesize}`, {
         method: 'GET',
     })
     return res.json()
 }
 
-const getAllPlayers = async (page, pagesize) => {
-    var res = await fetch(`http://${config.server_host}:${config.server_port}/players?page=${page}&pagesize=${pagesize}`, {
+const getCountySearch = async (county, state, pop_min, pop_max, fd_min, fd_max, page, pagesize) => {
+    var res = await fetch(`http://${config.server_host}:${config.server_port}/search/counties?County=${county}&State=${state}&PopMin=${pop_min}&PopMax=${pop_max}&FDMin=${fd_min}&FDMax=${fd_max}&page=${page}&pagesize=${pagesize}`, {
         method: 'GET',
     })
     return res.json()
 }
 
-const getMatch = async (id) => {
-    var res = await fetch(`http://${config.server_host}:${config.server_port}/match?id=${id}`, {
+const getCountyData = async (county, state) => {
+    var res = await fetch(`http://${config.server_host}:${config.server_port}/countyData?County=${county}&State=${state}`, {
         method: 'GET',
     })
     return res.json()
 }
-
-const getPlayer = async (id) => {
-    var res = await fetch(`http://${config.server_host}:${config.server_port}/player?id=${id}`, {
-        method: 'GET',
-    })
-    return res.json()
-}
-
-const getMatchSearch = async (home, away, page, pagesize) => {
-    var res = await fetch(`http://${config.server_host}:${config.server_port}/search/matches?Home=${home}&Away=${away}&page=${page}&pagesize=${pagesize}`, {
-        method: 'GET',
-    })
-    return res.json()
-}
-
-const getPlayerSearch = async (name, nationality, club, rating_high, rating_low, pot_high, pot_low, page, pagesize) => {
-    var res = await fetch(`http://${config.server_host}:${config.server_port}/search/players?Name=${name}&Nationality=${nationality}&Club=${club}&RatingLow=${rating_low}&RatingHigh=${rating_high}&PotentialHigh=${pot_high}&PotentialLow=${pot_low}&page=${page}&pagesize=${pagesize}`, {
-        method: 'GET',
-    })
-    return res.json()
-}
-
-
-
-
-
-
-
-
-
-
-
-
 
 export {
-    getAllMatches,
-    getAllPlayers,
-    getMatch,
-    getPlayer,
-    getMatchSearch,
-    getPlayerSearch
+    getAllCounties,
+    getCountyData,
+    getCountySearch
 }
