@@ -1,6 +1,6 @@
 import React from "react";
-import shopper from "../images/shopper.jpg";
-import groceries from "../images/groceries.jpg";
+import shopper from "../images/shopper.webp";
+import groceries from "../images/groceries.webp";
 import Navigation from "../components/Navigation.jsx";
 import TextImageContent from "../components/TextImageContent.jsx";
 import styled from "styled-components";
@@ -10,15 +10,17 @@ const PaddedContent = styled.div`
   display: flex;
   flex-direction: column;
   width: 25vw;
-  max-height: 50vh;
+  height: 40vh;
   margin: 2.5vw 1.25vw;
   padding: 2.5vw 1.25vw;
 `;
 export default function About() {
+  const imageSquareDimension = "35vh";
+
   return (
     <div className="About">
       <Navigation />
-      <TextImageContent>
+      <TextImageContent color="#EBE9E9">
         <PaddedContent>
           <h1>So what are food deserts?</h1>
           <p>
@@ -27,54 +29,30 @@ export default function About() {
             transportation.
           </p>
         </PaddedContent>
-        <PaddedContent>
-          <img
-            src={groceries}
-            style={{
-              height: "30vh",
-              width: "30vh",
-              objectFit: "cover",
-              borderRadius: "10px",
-            }}
-          />
-          {/* <div
-            style={{
-              backgroundImage: `url(${shopper})`,
-              display: "block",
-              maxWidth: "2300px",
-              maxHeight: "950px",
-              width: "auto",
-              height: "auto",
-              zIndex: 1,
-            }}
-          /> */}
-        </PaddedContent>
-
-        {/* <img
+        {/* <PaddedContent> */}
+        <img
           src={groceries}
-          className="Content-image"
-          alt="groceries"
-          style={{ width: "30%" }}
-        /> */}
+          style={{
+            height: imageSquareDimension,
+            width: imageSquareDimension,
+            objectFit: "cover",
+            borderRadius: "10px",
+          }}
+        />
+        {/* </PaddedContent> */}
       </TextImageContent>
-      <TextImageContent>
-        {/* <img
-          src={shopper}
-          className="Content-image"
-          alt="shopper"
-          style={{ width: "30%" }}
-        /> */}
+      <TextImageContent color="#666A86">
         <img
           src={shopper}
           style={{
-            height: "30vh",
-            width: "30vh",
+            height: imageSquareDimension,
+            width: imageSquareDimension,
             objectFit: "cover",
             borderRadius: "10px",
           }}
         />
 
-        <PaddedContent>
+        <PaddedContent style={{ color: "#EBE9E9" }}>
           <h1>How does Food Desert Finder Help?</h1>
           <p>
             In a country full of seemingly abundant food options we often forget

@@ -6,6 +6,7 @@ body {
   align-items: center;
   background-color: #ebe9e9;
   color: #333333;
+  overflow-x: hidden;
 
   font-family: "Open Sans", sans-serif;
 

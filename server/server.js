@@ -27,6 +27,19 @@ app.get('/search/counties', routes.search_counties)
 app.get('/countyData',routes.county_data) 
 
 
+app.get('/us_states', routes.allUsStates)
+
+app.get('/us_state', routes.retrieveStateDetails)
+/*app.get('/us_state', routes.retrieveStateHS)*/
+
+app.get('/search/states_name', routes.searchStatesName)
+
+app.get('/search/states_population', routes.searchStatesPopulation)
+
+app.get('/search/states_topic', routes.searchStatesHSTopicTotal)
+
+
+
 
 
 
