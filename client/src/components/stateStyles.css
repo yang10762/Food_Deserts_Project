@@ -1,0 +1,26 @@
+.card {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.271);
+    transition: 0.3s;
+    margin-left: auto;
+    margin-right: auto;
+    width: 90%;
+  }
+
+.card.customCardColor {
+  background-color: rgb(245, 238, 222);
+}
+  
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.471);
+}
+
+.center {
+ 
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+
+
+

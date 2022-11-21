@@ -7,8 +7,6 @@ const getAllStates = async () => {
     return res.json()
 }
 
-
-
 //this url only gets id in order to use it to select all info for the player using ${id}
 const getStateDetails = async (name) => {
     var res = await fetch(`http://${config.server_host}:${config.server_port}/us_state?state_name=${name}`, {
@@ -38,16 +36,6 @@ const getAllHSYearsForTopicTotal= async (state, topic) => {
     })
     return res.json()
 }
-
-
-
-
-
-
-
-
-
-
 
 
 
