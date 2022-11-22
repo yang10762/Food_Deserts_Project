@@ -202,41 +202,46 @@ render() {
                             <Col flex={2} style={{ textAlign: 'right' }}>
                             <h3>{this.state.selectedCountyFDDetails.County}</h3>
                             <h3>{this.state.selectedCountyFDDetails.State} </h3>
-
-                            </Col>
+                             </Col>
                             </Row>
                             <br>
                             </br>
                                 <Row gutter='30' align='middle' justify='left'>
                                 {this.isFDCounty ? <Col flex={2} style={{ textAlign: 'left'}}><h5 >This is a Food Dessert County.</h5></Col>:<Col flex={2} style={{ textAlign: 'left'}}><h5 >This is not a Food Dessert County.</h5></Col>}
-                                
-
-                    </Row>
+                             </Row>
                             <br>
                             </br>
-                        
-                            <Row gutter='30' align='middle' justify='left'>
+                             <Row gutter='30' align='middle' justify='left'>
                                 <Col flex={2} style={{ textAlign: 'left' }}>
-                               Total # of Food Desserts: <h5>{this.state.selectedCountyFDDetails.Total_Food_Deserts}</h5>
+                               Total Number of Food Desserts: <h5>{this.state.selectedCountyFDDetails.Total_Food_Deserts}</h5>
                                 </Col>
                                 <Col flex={2} style={{ textAlign: 'left' }}>
-                                No Car 1/2 Miles:  <h5>{this.state.selectedCountyFDDetails.no_car_half_M}</h5>
+                                Percentage Urban Areas: <h5>{this.state.selectedCountyFDDetails.percent_urban}</h5>
+                                </Col>
+                               
+                            </Row>
+                            <br>
+                            </br>
+                            <br>
+                            </br>
+                             <Row gutter='30' align='middle' justify='left'>
+                               
+                                <Col flex={2} style={{ textAlign: 'left' }}>
+                                No Car 1/2 Mile from Supermarket:  <h5>{this.state.selectedCountyFDDetails.no_car_half_M}</h5>
                                 </Col>
                                 <Col flex={2} style={{ textAlign: 'left' }}>
-                                No Car 1 Miles: <h5>{this.state.selectedCountyFDDetails.no_car_1_M}</h5>
+                                No Car 1 Mile from Supermarket: <h5>{this.state.selectedCountyFDDetails.no_car_1_M}</h5>
                                 </Col>
                             </Row>
                             <br>
                             </br>
                             <Row gutter='30' align='middle' justify='left'>
-                            <Col flex={2} style={{ textAlign: 'left' }}>
-                                Percentage Urban Areas: <h5>{this.state.selectedCountyFDDetails.percent_urban}</h5>
+                            
+                                <Col flex={2} style={{ textAlign: 'left' }}>
+                                No Car 10 Miles from Supermarket: <h5>{this.state.selectedCountyFDDetails.no_car_10_M}</h5>
                                 </Col>
                                 <Col flex={2} style={{ textAlign: 'left' }}>
-                                No Car 10 Miles: <h5>{this.state.selectedCountyFDDetails.no_car_10_M}</h5>
-                                </Col>
-                                <Col flex={2} style={{ textAlign: 'left' }}>
-                                No Car 20 Miles: <h5>{this.state.selectedCountyFDDetails.no_car_20_M}</h5>
+                                No Car 20 Miles from Supermarket: <h5>{this.state.selectedCountyFDDetails.no_car_20_M}</h5>
                                 </Col>
                                 </Row>
                                
@@ -327,13 +332,24 @@ render() {
                         </br>
                         <br>
                         </br>
+                        
+                        <Row gutter='30' align='middle' justify='left'>
+                            <Col flex={2} style={{ textAlign: 'center' }}>
+                            <h4>2010</h4>
+                            </Col>
+                            <Col flex={2} style={{ textAlign: 'center' }}>
+                             <h4>2015</h4>
+                            </Col>
+                            </Row>
+                            <br>
+                        </br>
                         <Row gutter='30' align='middle' justify='left'>
                             
                             <Col flex={2} style={{ textAlign: 'left' }}>
-                            Total # of Households 2010:  <h5>{this.state.selectedCountyDemoDetails.Total_Households_2010}</h5>
+                            Total Number of Households:  <h5>{this.state.selectedCountyDemoDetails.Total_Households_2010}</h5>
                             </Col>
                             <Col flex={2} style={{ textAlign: 'left' }}>
-                            Total # of Households 2015: <h5>{this.state.selectedCountyDemoDetails.Total_Households_2015}</h5>
+                            Total Number of Households: <h5>{this.state.selectedCountyDemoDetails.Total_Households_2015}</h5>
                             </Col >
                            
                         </Row>
@@ -341,21 +357,21 @@ render() {
                         </br>
                         <Row gutter='30' align='middle' justify='left'>
                         <Col flex={2} style={{ textAlign: 'left' }}>
-                        Households with member 18 & under 2010: <h5>{this.state.selectedCountyDemoDetails.hh_18_under_2010}</h5>
+                        Households with member 18 & under: <h5>{this.state.selectedCountyDemoDetails.hh_18_under_2010}</h5>
                             </Col>
                             <Col flex={2} style={{ textAlign: 'left' }}>
-                            Households with member 18 & under 2015: <h5>{this.state.selectedCountyDemoDetails.hh_18_under_2015}</h5>
+                            Households with member 18 & under: <h5>{this.state.selectedCountyDemoDetails.hh_18_under_2015}</h5>
                             </Col>
                         </Row>
                         <br>
                         </br>
                         <Row gutter='30' align='middle' justify='left'>
                         <Col flex={2} style={{ textAlign: 'left' }}>
-                            Households with member 60 & over 2010: <h5>{this.state.selectedCountyDemoDetails.hh_60_over_2010}</h5>
+                            Households with member 60 & over: <h5>{this.state.selectedCountyDemoDetails.hh_60_over_2010}</h5>
                             </Col>  
                            
                             <Col flex={2} style={{ textAlign: 'left' }}>
-                            Households with member 60 & over 2015: <h5>{this.state.selectedCountyDemoDetails.hh_60_over_2015}</h5>
+                            Households with member 60 & over: <h5>{this.state.selectedCountyDemoDetails.hh_60_over_2015}</h5>
                             </Col>
                         </Row>
                     </CardBody>
@@ -383,11 +399,21 @@ render() {
                         <br>
                         </br>
                         <Row gutter='30' align='middle' justify='left'>
+                            <Col flex={2} style={{ textAlign: 'center' }}>
+                            <h4>2010</h4>
+                            </Col>
+                            <Col flex={2} style={{ textAlign: 'center' }}>
+                             <h4>2015</h4>
+                            </Col>
+                            </Row>
+                        <br>
+                        </br>
+                        <Row gutter='30' align='middle' justify='left'>
                             <Col flex={2} style={{ textAlign: 'left' }}>
-                            Total # of Households 2010:  <h5>{this.state.selectedCountyIncomeDetails.Total_Households_2010}</h5>
+                            Total Number of Households:  <h5>{this.state.selectedCountyIncomeDetails.Total_Households_2010}</h5>
                             </Col>
                             <Col flex={2} style={{ textAlign: 'left' }}>
-                            Total # of Households 2015: <h5>{this.state.selectedCountyIncomeDetails.Total_Households_2015}</h5>
+                            Total Number of Households: <h5>{this.state.selectedCountyIncomeDetails.Total_Households_2015}</h5>
                             </Col>
                             </Row>
                         <br>
@@ -395,20 +421,32 @@ render() {
                         <Row gutter='30' align='middle' justify='left'>
                           
                         <Col flex={2} style={{ textAlign: 'left' }}>
-                            # of Households Receiving Food Stamps 2010: <h5>{this.state.selectedCountyIncomeDetails.Households_Receiving_FoodStamps_2010}</h5>
+                        Number of Households Receiving Food Stamps: <h5>{this.state.selectedCountyIncomeDetails.Households_Receiving_FoodStamps_2010}</h5>
                             </Col>
                             <Col flex={2} style={{ textAlign: 'left' }}>
-                            # of Households Receiving Food Stamps 2015: <h5>{this.state.selectedCountyIncomeDetails.Households_Receiving_FoodStamps_2015}</h5>
+                            Number of Households Receiving Food Stamps: <h5>{this.state.selectedCountyIncomeDetails.Households_Receiving_FoodStamps_2015}</h5>
                             </Col>
                         </Row>
                         <br>
                         </br>
-                        <Row gutter='30' align='middle' justify='left'>
+                        <Row gutter='30' align='middle' justify='left'> 
                         <Col flex={2} style={{ textAlign: 'left' }}>
-                        Avg Median Income 2010: <h5>{this.state.selectedCountyIncomeDetails.avg_est_med_income_2010}</h5>
+                        Number Households Below Poverty Level: <h5>{this.state.selectedCountyIncomeDetails.hh_below_pl_2010}</h5>
                             </Col>
                             <Col flex={2} style={{ textAlign: 'left' }}>
-                            Avg Median Income 2015: <h5>{this.state.selectedCountyIncomeDetails.avg_est_med_income_2015}</h5>
+                            Number Households Below Poverty Level: <h5>{this.state.selectedCountyIncomeDetails.hh_below_pl_2015}</h5>
+                            </Col>
+                    
+                        </Row>
+                        <br>
+                        </br>
+                        
+                        <Row gutter='30' align='middle' justify='left'>
+                        <Col flex={2} style={{ textAlign: 'left' }}>
+                        Avg Median Income: <h5>{this.state.selectedCountyIncomeDetails.avg_est_med_income_2010}</h5>
+                            </Col>
+                            <Col flex={2} style={{ textAlign: 'left' }}>
+                            Avg Median Income: <h5>{this.state.selectedCountyIncomeDetails.avg_est_med_income_2015}</h5>
                             </Col>
             
                              </Row>
@@ -416,24 +454,14 @@ render() {
                         </br>
                         <Row gutter='30' align='middle' justify='left'> 
                         <Col flex={2} style={{ textAlign: 'left' }}>
-                            Avg Median Income Receiving Food Stamps 2010: <h5>{this.state.selectedCountyIncomeDetails.avg_med_income_receiving_fs_2010}</h5>
+                            Avg Median Income Receiving Food Stamps: <h5>{this.state.selectedCountyIncomeDetails.avg_med_income_receiving_fs_2010}</h5>
                             </Col>
                             
                             <Col flex={2} style={{ textAlign: 'left' }}>
-                            Avg Median Income Receiving Food Stamps 2015: <h5>{this.state.selectedCountyIncomeDetails.avg_med_income_receiving_fs_2015}</h5>
+                            Avg Median Income Receiving Food Stamps: <h5>{this.state.selectedCountyIncomeDetails.avg_med_income_receiving_fs_2015}</h5>
                             </Col>   
                         </Row>
-                        <br>
-                        </br>
-                        <Row gutter='30' align='middle' justify='left'> 
-                        <Col flex={2} style={{ textAlign: 'left' }}>
-                            # Households Below Poverty Level 2010: <h5>{this.state.selectedCountyIncomeDetails.hh_below_pl_2010}</h5>
-                            </Col>
-                            <Col flex={2} style={{ textAlign: 'left' }}>
-                            # Households Below Poverty Level 2015: <h5>{this.state.selectedCountyIncomeDetails.hh_below_pl_2015}</h5>
-                            </Col>
-                    
-                        </Row>
+                        
     
                     </CardBody>
 
