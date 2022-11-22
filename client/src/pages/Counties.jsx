@@ -20,7 +20,7 @@ const popMarks = { // :SliderMarks
     8000000: '8 Mil',
     10000000: {
       style: {
-        color: 'blue',
+        color: 'black',
       },
       label: <strong>10</strong>,
     },
@@ -33,12 +33,11 @@ const popMarks = { // :SliderMarks
     60000: '60K',
     86500: {
       style: {
-        color: 'blue',
+        color: 'black', //#7FB069
       },
       label: <strong>86.5</strong>,
     },
   };
-
 
 class Counties extends React.Component {
     constructor(props) {
@@ -52,6 +51,7 @@ class Counties extends React.Component {
             fdMinQuery: 0,
             selectedState: "Alabama", //Alabama
             selectedCounty: "Autauga County", //Autauga County
+            isFDCounty: false,
             selectedCountyFDDetails: null,
             selectedCountyDemoDetails: null,
             selectedCountyIncomeDetails: null,
@@ -96,6 +96,9 @@ class Counties extends React.Component {
             this.setState({ selectedCountyFDDetails: res.fd_result[0] })
             this.setState({ selectedCountyDemoDetails: res.demo_result[0] })
             this.setState({ selectedCountyIncomeDetails: res.income_result[0]})
+            if(this.state.selectedCountyFDDetails.FD_County != null){
+              this.setState({isFDCounty: true})
+            }
         })
      
     }
@@ -122,6 +125,9 @@ class Counties extends React.Component {
             this.setState({ selectedCountyFDDetails: res.fd_result[0] })
             this.setState({ selectedCountyDemoDetails: res.demo_result[0] })
             this.setState({ selectedCountyIncomeDetails: res.income_result[0]})
+            if(this.state.selectedCountyFDDetails.FD_County != null){
+              this.setState({isFDCounty: true})
+            }
         })
     }
   
@@ -157,7 +163,7 @@ render() {
 
                         </FormGroup></Col>
                         <Col flex={2}><FormGroup style={{ width: '10vw' }}>
-                            <Button style={{ marginTop: '4vh' }} onClick={this.updateSearchResults}>Search</Button>
+                            <Button style={{ marginTop: '4vh' , color: "black",backgroundColor: '#7FB069', borderRadius: "20px", border: "none"}} onClick={this.updateSearchResults}>Search</Button>
                         </FormGroup></Col>
 
                     </Row>
@@ -191,13 +197,21 @@ render() {
                             
                         <Row gutter='30' align='middle' justify='center'>
                         <Col flex={2} style={{ textAlign: 'left' }}>
-                            <h3 >Food Dessert Data </h3></Col>
+                            <h3 >Food Dessert Data </h3>
+                            </Col>
                             <Col flex={2} style={{ textAlign: 'right' }}>
                             <h3>{this.state.selectedCountyFDDetails.County}</h3>
                             <h3>{this.state.selectedCountyFDDetails.State} </h3>
 
                             </Col>
                             </Row>
+                            <br>
+                            </br>
+                                <Row gutter='30' align='middle' justify='left'>
+                                {this.isFDCounty ? <Col flex={2} style={{ textAlign: 'left'}}><h5 >This County is a Food Dessert County.</h5></Col>:<Col flex={2} style={{ textAlign: 'left'}}><h5 >This County is not a Food Dessert County.</h5></Col>}
+                                
+
+                    </Row>
                             <br>
                             </br>
                         
@@ -224,11 +238,8 @@ render() {
                                 <Col flex={2} style={{ textAlign: 'left' }}>
                                 No Car 20 Miles: <h5>{this.state.selectedCountyFDDetails.no_car_20_M}</h5>
                                 </Col>
-                        
-                                {/*<Col flex={2} style={{ textAlign: 'right' }}>{this.state.selectedCountyFDDetails.FD_County}</Col>*/}
-                                
-
-                    </Row>
+                                </Row>
+                               
                     </CardBody>
 
                 </Card>
@@ -329,15 +340,16 @@ render() {
                         Households with member 18 & under 2010: <h5>{this.state.selectedCountyDemoDetails.hh_18_under_2010}</h5>
                             </Col>
                             <Col flex={2} style={{ textAlign: 'left' }}>
-                            Households with member 60 & over 2010: <h5>{this.state.selectedCountyDemoDetails.hh_60_over_2010}</h5>
-                            </Col>     
+                            Households with member 18 & under 2015: <h5>{this.state.selectedCountyDemoDetails.hh_18_under_2015}</h5>
+                            </Col>
                         </Row>
                         <br>
                         </br>
                         <Row gutter='30' align='middle' justify='left'>
-                            <Col flex={2} style={{ textAlign: 'left' }}>
-                            Households with member 18 & under 2015: <h5>{this.state.selectedCountyDemoDetails.hh_18_under_2015}</h5>
-                            </Col>
+                        <Col flex={2} style={{ textAlign: 'left' }}>
+                            Households with member 60 & over 2010: <h5>{this.state.selectedCountyDemoDetails.hh_60_over_2010}</h5>
+                            </Col>  
+                           
                             <Col flex={2} style={{ textAlign: 'left' }}>
                             Households with member 60 & over 2015: <h5>{this.state.selectedCountyDemoDetails.hh_60_over_2015}</h5>
                             </Col>
