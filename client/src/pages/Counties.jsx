@@ -1,19 +1,4 @@
-import React from "react";
 import Navigation from "../components/Navigation.jsx";
-
-export default function Counties() {
-  return (
-    <div className="Counties">
-      <Navigation />
-      <header className="Counties">
-        <h1>Find your county</h1>
-        <p>Information on Counties here</p>
-      </header>
-    </div>
-  );
-}
-
-{/*import Navigation from "../components/Navigation.jsx";
 import React from 'react';
 import { Form, FormInput, FormGroup, Button, Card, CardBody, CardTitle, Progress } from "shards-react";
 
@@ -27,17 +12,17 @@ import {
     Rate 
 } from 'antd'
 
-import type { SliderMarks } from 'antd/es/slider';
+import SliderMarks from 'antd/es/slider';
 
 //import { RadarChart } from 'react-vis';
 import { format } from 'd3-format';
 
 
-import MenuBar from '../components/MenuBar';
+//import MenuBar from '../components/MenuBar';
 import { getCountySearch, getCountyData, getAllCounties } from '../fetcher'
 const wideFormat = format('.3r');
 const { Column, ColumnGroup } = Table;
-const popMarks: SliderMarks = {
+const popMarks = { // :SliderMarks
     0: '0',
     2000000: '2 Mil',
     4000000: '4 Mil',
@@ -51,7 +36,7 @@ const popMarks: SliderMarks = {
     },
   };
 
-  const fdMarks: SliderMarks = {
+  const fdMarks = { //: SliderMarks
     0: '0',
     20000: '20K',
     40000: '40K',
@@ -262,7 +247,7 @@ class Counties extends React.Component {
                                 No Car 20 Miles: <h5>{this.state.selectedCountyFDDetails.no_car_20_M}</h5>
                                 </Col>
                         
-                                //<Col flex={2} style={{ textAlign: 'right' }}>{this.state.selectedCountyFDDetails.FD_County}</Col>
+                                /*<Col flex={2} style={{ textAlign: 'right' }}>{this.state.selectedCountyFDDetails.FD_County}</Col>*/
                                 
 
                     </Row>
@@ -457,4 +442,18 @@ class Counties extends React.Component {
 
 export default Counties
 
-*/}
+
+{/*import React from "react";
+import Navigation from "../components/Navigation.jsx";
+
+export default function Counties() {
+  return (
+    <div className="Counties">
+      <Navigation />
+      <header className="Counties">
+        <h1>Find your county</h1>
+        <p>Information on Counties here</p>
+      </header>
+    </div>
+  );
+}*/}
