@@ -208,7 +208,7 @@ render() {
                             <br>
                             </br>
                                 <Row gutter='30' align='middle' justify='left'>
-                                {this.isFDCounty ? <Col flex={2} style={{ textAlign: 'left'}}><h5 >This County is a Food Dessert County.</h5></Col>:<Col flex={2} style={{ textAlign: 'left'}}><h5 >This County is not a Food Dessert County.</h5></Col>}
+                                {this.isFDCounty ? <Col flex={2} style={{ textAlign: 'left'}}><h5 >This is a Food Dessert County.</h5></Col>:<Col flex={2} style={{ textAlign: 'left'}}><h5 >This is not a Food Dessert County.</h5></Col>}
                                 
 
                     </Row>
@@ -279,6 +279,8 @@ render() {
                         </Row>
                         <br>
                         </br>
+                        <br>
+                            </br>
                         <Row gutter='30' align='middle' justify='left'>
                         <Col flex={2} style={{ textAlign: 'left' }}>
                         Age 0-9: <h5>{this.state.selectedCountyDemoDetails.age_0_9}</h5>
@@ -321,6 +323,8 @@ render() {
                             Age 80 plus: <h5>{this.state.selectedCountyDemoDetails.age_80_plus}</h5>
                             </Col>
                         </Row>
+                        <br>
+                        </br>
                         <br>
                         </br>
                         <Row gutter='30' align='middle' justify='left'>
