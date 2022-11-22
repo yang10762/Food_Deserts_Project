@@ -1,26 +1,16 @@
 import Navigation from "../components/Navigation.jsx";
 import React from 'react';
 import { Form, FormInput, FormGroup, Button, Card, CardBody, CardTitle, Progress } from "shards-react";
-
-import {
-    Table,
-    Pagination,
-    Row,
-    Col,
-    Divider,
-    Slider,
-    Rate 
-} from 'antd'
-
+import {Table, Row, Col, Divider, Slider, Pagination, Rate } from 'antd'
+import 'antd/dist/antd.css'
+import "bootstrap/dist/css/bootstrap.min.css";
+import "shards-ui/dist/css/shards.min.css";
 import SliderMarks from 'antd/es/slider';
-
 //import { RadarChart } from 'react-vis';
 import { format } from 'd3-format';
-
-
-//import MenuBar from '../components/MenuBar';
 import { getCountySearch, getCountyData, getAllCounties } from '../fetcher'
-const wideFormat = format('.3r');
+
+//const wideFormat = format('.3r');
 const { Column, ColumnGroup } = Table;
 const popMarks = { // :SliderMarks
     0: '0',
@@ -134,24 +124,12 @@ class Counties extends React.Component {
             this.setState({ selectedCountyIncomeDetails: res.income_result[0]})
         })
     }
-
-// export default function Counties() {
-//   return (
-//     <div className="Counties">
-//       <Navigation />
-//       <header className="Counties">
-//         <h1>Find your county</h1>
-//         <p>Information on Counties here</p>
-//       </header>
-//     </div>
-//   );
-// }
-
-
-    render() {
+  
+  
+render() {
         return (
 
-          <div className="Counties">
+          <div className="County">
              <Navigation />
                 <Form style={{ width: '80vw', margin: '0 auto', marginTop: '5vh' }}>
                     <Row>
@@ -247,7 +225,7 @@ class Counties extends React.Component {
                                 No Car 20 Miles: <h5>{this.state.selectedCountyFDDetails.no_car_20_M}</h5>
                                 </Col>
                         
-                                /*<Col flex={2} style={{ textAlign: 'right' }}>{this.state.selectedCountyFDDetails.FD_County}</Col>*/
+                                {/*<Col flex={2} style={{ textAlign: 'right' }}>{this.state.selectedCountyFDDetails.FD_County}</Col>*/}
                                 
 
                     </Row>
@@ -255,6 +233,10 @@ class Counties extends React.Component {
 
                 </Card>
                 <br>
+                        </br>
+                        <br>
+                        </br>
+                        <br>
                         </br>
             </div> : null}
             {this.state.selectedCountyDemoDetails ? <div style={{ width: '70vw', margin: '0 auto', marginTop: '2vh' }}>
@@ -347,10 +329,14 @@ class Counties extends React.Component {
                         Households with member 18 & under 2010: <h5>{this.state.selectedCountyDemoDetails.hh_18_under_2010}</h5>
                             </Col>
                             <Col flex={2} style={{ textAlign: 'left' }}>
-                            Households with member 18 & under 2015: <h5>{this.state.selectedCountyDemoDetails.hh_18_under_2015}</h5>
-                            </Col>
-                            <Col flex={2} style={{ textAlign: 'left' }}>
                             Households with member 60 & over 2010: <h5>{this.state.selectedCountyDemoDetails.hh_60_over_2010}</h5>
+                            </Col>     
+                        </Row>
+                        <br>
+                        </br>
+                        <Row gutter='30' align='middle' justify='left'>
+                            <Col flex={2} style={{ textAlign: 'left' }}>
+                            Households with member 18 & under 2015: <h5>{this.state.selectedCountyDemoDetails.hh_18_under_2015}</h5>
                             </Col>
                             <Col flex={2} style={{ textAlign: 'left' }}>
                             Households with member 60 & over 2015: <h5>{this.state.selectedCountyDemoDetails.hh_60_over_2015}</h5>
@@ -360,6 +346,10 @@ class Counties extends React.Component {
 
                 </Card>
                 <br>
+                        </br>
+                        <br>
+                        </br>
+                        <br>
                         </br>
             </div> : null}
             {this.state.selectedCountyIncomeDetails ? <div style={{ width: '70vw', margin: '0 auto', marginTop: '2vh' }}>
@@ -439,21 +429,6 @@ class Counties extends React.Component {
     )
 }
 }
-
 export default Counties
 
 
-{/*import React from "react";
-import Navigation from "../components/Navigation.jsx";
-
-export default function Counties() {
-  return (
-    <div className="Counties">
-      <Navigation />
-      <header className="Counties">
-        <h1>Find your county</h1>
-        <p>Information on Counties here</p>
-      </header>
-    </div>
-  );
-}*/}
