@@ -85,12 +85,9 @@ class Counties extends React.Component {
     }
 
     goToCounty(county, state) {
-        
         this.setState({selectedCounty: county})
         this.setState({selectedState: state})
-        //useEffect(() => { }, []);
-        getCountyData(this.state.selectedCounty, this.state.selectedState).then(res => {
-            //console.log(res.results)
+        getCountyData(county, state).then(res => {
             this.setState({ selectedCountyFDDetails: res.fd_result[0] })
             this.setState({ selectedCountyDemoDetails: res.demo_result[0] })
             this.setState({ selectedCountyIncomeDetails: res.income_result[0]})
@@ -117,7 +114,6 @@ class Counties extends React.Component {
         })
 
         getCountyData(this.state.selectedCounty, this.state.selectedState).then(res => { 
-            //console.log(res.results)
             this.setState({ selectedCountyFDDetails: res.fd_result[0] })
             this.setState({ selectedCountyDemoDetails: res.demo_result[0] })
             this.setState({ selectedCountyIncomeDetails: res.income_result[0]})
@@ -165,11 +161,12 @@ render() {
                 </Form>
                 <Divider style={{ width: '70vw', margin: '0 auto', marginTop: '2vh' }} />
                     <h3>Counties</h3>
+                    <h7>Click on a row to see County details.</h7>
                   <Table onRow={(record, rowIndex) => {
                         return { 
                         onClick: event => {this.goToCounty(record.County, record.State)},}; //columns={countyColumns}
                      }} dataSource={this.state.countiesResults}  pagination={{ pageSizeOptions:[5, 10], defaultPageSize: 5, showQuickJumper:true }}>
-                        <ColumnGroup >
+                      
                             <Column title= 'County' dataIndex= 'County' key= 'County' sorter = {(a, b) => a.County.localeCompare(b.County)} />
                             <Column title=  'State'  dataIndex= 'State' key= 'State' sorter= {(a, b) => a.State.localeCompare(b.State)}/>
                             <Column title=  'Population' dataIndex= 'Population' key= 'Population' sorter= {(a, b) => a.Population - b.Population}/>
@@ -178,7 +175,7 @@ render() {
                             <Column title=  'Total Number of Households 2015' dataIndex= 'Total_Households_2015' key= 'Total_Households_2015' sorter= {(a, b) => a.Total_Households_2015 - b.Total_Households_2015} />
                             <Column title=  'Total Number of Households Receiving Food Stamps 2010' dataIndex= 'Households_Receiving_FoodStamps_2010' key= 'Households_Receiving_FoodStamps_2010' sorter= {(a, b) => a.Households_Receiving_FoodStamps_2010 - b.Households_Receiving_FoodStamps_2010} />
                             <Column title=  'Total Number of Households Receiving Food Stamps 2015' dataIndex = 'Households_Receiving_FoodStamps_2015' key= 'Households_Receiving_FoodStamps_2015' sorter= {(a, b) => a.Households_Receiving_FoodStamps_2015 - b.Households_Receiving_FoodStamps_2015} />
-                        </ColumnGroup>
+                       
                 
                   </Table>
                 
