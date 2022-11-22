@@ -49,13 +49,12 @@ class Counties extends React.Component {
             popMinQuery: 0,
             fdMaxQuery: 86500,
             fdMinQuery: 0,
-            selectedState: "Alabama", //Alabama
-            selectedCounty: "Autauga County", //Autauga County
+            selectedState: "", //Alabama
+            selectedCounty: "", //Autauga County
             selectedCountyFDDetails: null,
             selectedCountyDemoDetails: null,
             selectedCountyIncomeDetails: null,
             countiesResults: []
-
         }
 
         this.updateSearchResults = this.updateSearchResults.bind(this)
@@ -91,10 +90,11 @@ class Counties extends React.Component {
         this.setState({selectedState: state})
         //useEffect(() => { }, []);
         getCountyData(this.state.selectedCounty, this.state.selectedState).then(res => {
-            console.log(res.results)
+            //console.log(res.results)
             this.setState({ selectedCountyFDDetails: res.fd_result[0] })
             this.setState({ selectedCountyDemoDetails: res.demo_result[0] })
             this.setState({ selectedCountyIncomeDetails: res.income_result[0]})
+            
         })
      
     }
@@ -117,7 +117,7 @@ class Counties extends React.Component {
         })
 
         getCountyData(this.state.selectedCounty, this.state.selectedState).then(res => { 
-            console.log(res.results)
+            //console.log(res.results)
             this.setState({ selectedCountyFDDetails: res.fd_result[0] })
             this.setState({ selectedCountyDemoDetails: res.demo_result[0] })
             this.setState({ selectedCountyIncomeDetails: res.income_result[0]})
@@ -183,11 +183,12 @@ render() {
                   </Table>
                 
                   <Divider />
-
+                  
                 {this.state.selectedCountyFDDetails ? <div style={{ width: '70vw', margin: '0 auto', marginTop: '2vh' }}>
+                {console.log(this.state.selectedCountyFDDetails ) }
+
                     <Card title ="Food Dessert Data ">
                         <CardBody>
-                            
                         <Row gutter='30' align='middle' justify='center'>
                         <Col flex={2} style={{ textAlign: 'left' }}>
                             <h3 >Food Dessert Data </h3>
@@ -200,7 +201,7 @@ render() {
                             <br>
                             </br>
                                 <Row gutter='30' align='middle' justify='left'>
-                                {this.state.selectedCountyFDDetails.FD_County != null? <Col flex={2} style={{ textAlign: 'left'}}><h5 >This is a Food Dessert County.</h5></Col>:<Col flex={2} style={{ textAlign: 'left'}}><h5 >This is not a Food Dessert County.</h5></Col>}
+                                {this.state.selectedCountyFDDetails.FD_County != null? <Col flex={2} style={{ textAlign: 'left'}}><h5 style={{color:'red'}} >This is a Food Dessert County.</h5></Col>:<Col flex={2} style={{ textAlign: 'left'}}><h5 style={{color:'#7FB069'}} >This is not a Food Dessert County.</h5></Col>}
                              </Row>
                             <br>
                             </br>
@@ -249,6 +250,8 @@ render() {
                         </br>
             </div> : null}
             {this.state.selectedCountyDemoDetails ? <div style={{ width: '70vw', margin: '0 auto', marginTop: '2vh' }}>
+             {console.log(this.state.selectedCountyDemoDetails ) }
+            
                 <Card title ="Demographic Data ">
                     <CardBody>
                     <Row gutter='30' align='middle' justify='center'>
@@ -378,6 +381,7 @@ render() {
                         </br>
             </div> : null}
             {this.state.selectedCountyIncomeDetails ? <div style={{ width: '70vw', margin: '0 auto', marginTop: '2vh' }}>
+            {console.log(this.state.selectedCountyIncomeDetails )} 
                 <Card title ="Income Data ">
                     <CardBody>
                         <Row gutter='30' align='middle' justify='center'>
@@ -460,6 +464,10 @@ render() {
 
                 </Card>
                 <br>
+                        </br>
+
+                        <Card><CardBody><Row><Col flex={2} style={{ textAlign: 'left' }}><h5 > See State Details </h5><a href={`/search/states_name?name=${this.state.selectedState}`}>{this.state.selectedState}</a></Col></Row><Row> <Col flex={2} style={{ textAlign: 'left' }}>(Link needs to be fixed once state page is working)</Col></Row></CardBody></Card>
+                        <br>
                         </br>
             </div> : null}
         </div>
