@@ -51,7 +51,6 @@ class Counties extends React.Component {
             fdMinQuery: 0,
             selectedState: "Alabama", //Alabama
             selectedCounty: "Autauga County", //Autauga County
-            isFDCounty: false,
             selectedCountyFDDetails: null,
             selectedCountyDemoDetails: null,
             selectedCountyIncomeDetails: null,
@@ -96,9 +95,6 @@ class Counties extends React.Component {
             this.setState({ selectedCountyFDDetails: res.fd_result[0] })
             this.setState({ selectedCountyDemoDetails: res.demo_result[0] })
             this.setState({ selectedCountyIncomeDetails: res.income_result[0]})
-            if(this.state.selectedCountyFDDetails.FD_County != null){
-              this.setState({isFDCounty: true})
-            }
         })
      
     }
@@ -125,9 +121,6 @@ class Counties extends React.Component {
             this.setState({ selectedCountyFDDetails: res.fd_result[0] })
             this.setState({ selectedCountyDemoDetails: res.demo_result[0] })
             this.setState({ selectedCountyIncomeDetails: res.income_result[0]})
-            if(this.state.selectedCountyFDDetails.FD_County != null){
-              this.setState({isFDCounty: true})
-            }
         })
     }
   
@@ -207,7 +200,7 @@ render() {
                             <br>
                             </br>
                                 <Row gutter='30' align='middle' justify='left'>
-                                {this.isFDCounty ? <Col flex={2} style={{ textAlign: 'left'}}><h5 >This is a Food Dessert County.</h5></Col>:<Col flex={2} style={{ textAlign: 'left'}}><h5 >This is not a Food Dessert County.</h5></Col>}
+                                {this.state.selectedCountyFDDetails.FD_County != null? <Col flex={2} style={{ textAlign: 'left'}}><h5 >This is a Food Dessert County.</h5></Col>:<Col flex={2} style={{ textAlign: 'left'}}><h5 >This is not a Food Dessert County.</h5></Col>}
                              </Row>
                             <br>
                             </br>
