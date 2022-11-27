@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import Button from "@mui/material/Button";
+// import { Button } from "shards-react";
 import { useLocation } from "react-router-dom";
 
 const Bar = styled.div`
@@ -66,9 +66,9 @@ export default function Navigation() {
           ))}
         </Pages>
 
-        <Button variant="contained" style={{ borderRadius: 50 }}>
+        {/* <Button variant="contained" style={{ borderRadius: 50 }}>
           Find Deserts
-        </Button>
+        </Button> */}
       </Bar>
     </Wrapper>
   );
