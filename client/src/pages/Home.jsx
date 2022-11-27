@@ -10,7 +10,7 @@ const Content = styled.div`
   height: 60vh;
   margin: 2.5vw 1.25vw;
   padding: 2.5vw 1.25vw;
-  width: 25vw;
+  width: 30vw;
   justify-content: space-between;
 `;
 
@@ -21,7 +21,7 @@ const HeatMap = styled.div`
   // max-height: 50vh;
   margin: 2.5vw 1.25vw;
   padding: 2.5vw 1.25vw;
-  width: 65vw;
+  width: 60vw;
   justify-content: space-between;
 `;
 
@@ -42,7 +42,9 @@ export default function Home() {
             The place to be for
           </h2>
           <div className="intro">
-            <h1 style={{ fontSize: "64px" }}>understanding</h1>
+            <h1 style={{ fontSize: "64px", lineHeight: "1.25em" }}>
+              understanding
+            </h1>
             <img
               src={squiggle}
               style={{
@@ -54,9 +56,13 @@ export default function Home() {
                 // borderRadius: "10px",
               }}
             />
-            <h1 style={{ fontSize: "64px" }}>food accesibility in</h1>
+            <h1 style={{ fontSize: "64px", lineHeight: "1.25em" }}>
+              food accesibility in
+            </h1>
 
-            <h1 style={{ fontSize: "64px" }}>the United States</h1>
+            <h1 style={{ fontSize: "64px", lineHeight: "1.25em" }}>
+              the United States
+            </h1>
           </div>
           <div className="tagline">
             <h2 style={{ fontWeight: "normal" }}>The interactive food</h2>
