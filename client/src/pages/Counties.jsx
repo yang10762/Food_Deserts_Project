@@ -1,7 +1,8 @@
 import Navigation from "../components/Navigation.jsx";
 import React from 'react';
-import { Form, FormInput, FormGroup, Button, Card, CardBody, CardTitle, Progress } from "shards-react";
-import { Table, Row, Col, Divider, Slider, Pagination, Rate } from 'antd'
+import { Form, FormInput, FormGroup, Button, Card, CardBody, CardTitle, Breadcrumb, BreadcrumbItem  } from "shards-react";
+import { Table, Row, Col, Divider, Slider, Pagination, Rate , Progress} from 'antd'
+import { red, blue } from '@ant-design/colors';
 import 'antd/dist/antd.css'
 import "bootstrap/dist/css/bootstrap.min.css";
 import "shards-ui/dist/css/shards.min.css";
@@ -173,6 +174,12 @@ class Counties extends React.Component {
         <Divider />
 
         {this.state.selectedCountyFDDetails ? <div style={{ width: '70vw', margin: '0 auto', marginTop: '2vh' }}>
+        <Breadcrumb>
+      <BreadcrumbItem>
+        <a href={`/search/states_name?name=${this.state.selectedState}`}>{this.state.selectedState}</a>
+      </BreadcrumbItem>
+      <BreadcrumbItem active>{this.state.selectedCounty}</BreadcrumbItem>
+    </Breadcrumb>
           {console.log(this.state.selectedCountyFDDetails)}
           <Card title="Food Dessert Data ">
             <CardBody>
@@ -197,7 +204,8 @@ class Counties extends React.Component {
                   Total Number of Food Desserts: <h5>{this.state.selectedCountyFDDetails.Total_Food_Deserts}</h5>
                 </Col>
                 <Col flex={2} style={{ textAlign: 'left' }}>
-                  Percentage Urban Areas: <h5>{this.state.selectedCountyFDDetails.percent_urban}</h5>
+                  Percentage Urban Areas: <nbsp></nbsp>
+                  <Progress type="circle" width={80} percent={this.state.selectedCountyFDDetails.percent_urban}  strokeColor={{'0%': '#e3eede','100%':'#7FB069' ,}}style={{ marginRight: 10, }} />
                 </Col>
               </Row>
               <br>
@@ -228,11 +236,11 @@ class Counties extends React.Component {
           </br>
           <br>
           </br>
-          <br>
-          </br>
         </div> : null}
 
         {this.state.selectedCountyDemoDetails ? <div style={{ width: '70vw', margin: '0 auto', marginTop: '2vh' }}>
+        
+
           {console.log(this.state.selectedCountyDemoDetails)}
           <Card title="Demographic Data ">
             <CardBody>
@@ -252,9 +260,11 @@ class Counties extends React.Component {
                 </Col>
                 <Col flex={2} style={{ textAlign: 'left' }}>
                   Men: <h5>{this.state.selectedCountyDemoDetails.male}</h5>
+                  <Progress percent={((this.state.selectedCountyDemoDetails.male/this.state.selectedCountyDemoDetails.Population)*100).toFixed(2)} strokeColor={'#0000ff'}/>
                 </Col>
                 <Col flex={2} style={{ textAlign: 'left' }}>
                   Women: <h5>{this.state.selectedCountyDemoDetails.female}</h5>
+                  <Progress percent={((this.state.selectedCountyDemoDetails.female/this.state.selectedCountyDemoDetails.Population)*100).toFixed(2)} strokeColor={'#FF0000'}/>
                 </Col>
               </Row>
               <br>
@@ -342,8 +352,6 @@ class Counties extends React.Component {
               </Row>
             </CardBody>
           </Card>
-          <br>
-          </br>
           <br>
           </br>
           <br>
