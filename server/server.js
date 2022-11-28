@@ -29,7 +29,7 @@ app.get('/countyData',routes.county_data)
 
 app.get('/us_states', routes.allUsStates)
 
-app.get('/us_state', routes.retrieveStateDetails)
+app.get('/state', routes.retrieveStateDetails)
 /*app.get('/us_state', routes.retrieveStateHS)*/
 
 app.get('/search/states_name', routes.searchStatesName)
