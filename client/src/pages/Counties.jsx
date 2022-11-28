@@ -1,17 +1,17 @@
 import Navigation from "../components/Navigation.jsx";
 import React from 'react';
-import { Form, FormInput, FormGroup, Button, Card, CardBody, CardTitle, Breadcrumb, BreadcrumbItem } from "shards-react";
-import { Table, Row, Col, Divider, Slider, Pagination, Rate, Progress, Tabs } from 'antd'
-//import { red, blue } from '@ant-design/colors';
+import { Form, FormInput, FormGroup, Button, Card, CardBody, Breadcrumb, BreadcrumbItem } from "shards-react"; //CardTitle, 
+import { Table, Row, Col, Divider, Slider, Progress, Tabs } from 'antd' //Pagination, Rate,
 import 'antd/dist/antd.css'
 import "bootstrap/dist/css/bootstrap.min.css";
 import "shards-ui/dist/css/shards.min.css";
+//import { red, blue } from '@ant-design/colors';
 //import SliderMarks from 'antd/es/slider';
-import { format } from 'd3-format';
+//import { format } from 'd3-format';
 import { getCountySearch, getCountyData, getAllCounties } from '../fetcher'
 
-const wideFormat = format('.3r');
-const { Column, ColumnGroup } = Table;
+//const wideFormat = format('.3r');
+const { Column } = Table; //ColumnGroup
 const onChange = (key) => {
   console.log(key);
 };
@@ -105,9 +105,9 @@ class Counties extends React.Component {
     })
   }
 
-  changeColor(o) {
-    o.style.backgroundColor = (o.style.backgroundColor == '#7FB069') ? ('transparent') : ('#7FB069');
-  }
+  // changeColor(o) {
+  //   o.style.backgroundColor = (o.style.backgroundColor == '#7FB069') ? ('transparent') : ('#7FB069');
+  // }
 
 
   componentDidMount() {
@@ -181,7 +181,7 @@ class Counties extends React.Component {
         {this.state.selectedCountyFDDetails ? <div style={{ width: '70vw', margin: '0 auto', marginTop: '2vh' }}>
           <Breadcrumb>
             <BreadcrumbItem>
-              <a href={`/search/states_name?name=${this.state.selectedState}`}>{this.state.selectedState}</a>
+              <a href={`/states?state_name=${this.state.selectedState}`}>{this.state.selectedState}</a>
             </BreadcrumbItem>
             <BreadcrumbItem active>{this.state.selectedCounty}</BreadcrumbItem>
           </Breadcrumb>
