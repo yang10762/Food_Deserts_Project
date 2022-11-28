@@ -10,7 +10,7 @@ const getAllStates = async () => {
 
 //this url only gets id in order to use it to select all info for the player using ${id}
 const getStateDetails = async (name) => {
-    var res = await fetch(`http://${config.server_host}:${config.server_port}/us_state?state_name=${name}`, {
+    var res = await fetch(`http://${config.server_host}:${config.server_port}/state?state_name=${name}`, {
         method: 'GET',
     })
     return res.json()

@@ -105,7 +105,7 @@ const stateColumns = [
     align: "center",
     sorter: (a, b) => a.state.localeCompare(b.state),
     render: (text, row) => (
-      <a href={`/us_states?state_name=${row.state}`}>{text}</a>
+      <a href={`/states?state_name=${row.state}`}>{text}</a>
     ),
   },
   {
