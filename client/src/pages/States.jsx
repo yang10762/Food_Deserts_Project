@@ -102,7 +102,7 @@ const stateColumns = [
     dataIndex: "state",
     key: "state",
     width: 30,
-    align: "center",
+    align: "left",
     sorter: (a, b) => a.state.localeCompare(b.state),
     render: (text, row) => (
       <a href={`/states?state_name=${row.state}`}>{text}</a>
@@ -117,10 +117,21 @@ const stateColumns = [
     sorter: (a, b) => a.population_count - b.population_count,
     render: (text, row) => (
       <span>{row.population_count?.toLocaleString("en-US")}</span>
-    ),
+    )
   },
   {
-    title: "Percentage of Households with Food Desert Status within Half-Mile*",
+    title: "Total Food Deserts (Housing Units)",
+    dataIndex: "total_HH_FD_status",
+    key: "total_HH_FD_status",
+    width: 10,
+    align: "center",
+    sorter: (a, b) => a.total_HH_FD_status- b.total_HH_FD_status,
+    render: (text, row) => (
+      <span>{row.total_HH_FD_status?.toLocaleString("en-US")}</span>
+    )
+  },
+  {
+    title: "Percentage of Housing Units with Food Desert Status within Half-Mile*",
     dataIndex: "no_car_half_mile_percent",
     key: "no_car_half_mile_percent",
     width: 10,
@@ -146,7 +157,7 @@ const stateColumns = [
     ),
   },
   {
-    title: "Percentage of Households with Food Desert Status within 1 Mile*",
+    title: "Percentage of Housing Units with Food Desert Status within 1 Mile*",
     dataIndex: "no_car_1_mile_percent",
     key: "no_car_1_mile_percent",
     width: 10,
@@ -172,7 +183,7 @@ const stateColumns = [
     ),
   },
   {
-    title: "Percentage of Households with Food Desert Status within 10 Miles*",
+    title: "Percentage of Housing Units with Food Desert Status within 10 Miles*",
     dataIndex: "no_car_10_mile_percent",
     key: "no_car_10_miles_percent",
     width: 10,
@@ -197,7 +208,7 @@ const stateColumns = [
     ),
   },
   {
-    title: "Percentage of Households with Food Desert Status within 20 Miles*",
+    title: "Percentage of Housing Units with Food Desert Status within 20 Miles*",
     dataIndex: "no_car_20_mile_percent",
     key: "no_car_20_mile_percent",
     width: 10,
