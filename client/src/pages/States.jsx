@@ -120,7 +120,7 @@ const stateColumns = [
     )
   },
   {
-    title: "Total Food Deserts (Housing Units)",
+    title: "Total Housing Units in Food Desert Regions*",
     dataIndex: "total_HH_FD_status",
     key: "total_HH_FD_status",
     width: 10,
@@ -131,7 +131,7 @@ const stateColumns = [
     )
   },
   {
-    title: "Percentage of Housing Units with Food Desert Status within Half-Mile*",
+    title: "Percentage of Housing Units Beyond 1/2 Mile From Supermarket**",
     dataIndex: "no_car_half_mile_percent",
     key: "no_car_half_mile_percent",
     width: 10,
@@ -157,7 +157,7 @@ const stateColumns = [
     ),
   },
   {
-    title: "Percentage of Housing Units with Food Desert Status within 1 Mile*",
+    title: "Percentage of Housing Units Beyond 1 Mile From Supermarket**",
     dataIndex: "no_car_1_mile_percent",
     key: "no_car_1_mile_percent",
     width: 10,
@@ -183,7 +183,7 @@ const stateColumns = [
     ),
   },
   {
-    title: "Percentage of Housing Units with Food Desert Status within 10 Miles*",
+    title: "Percentage of Housing Units Beyond 10 Miles From Supermarket**",
     dataIndex: "no_car_10_mile_percent",
     key: "no_car_10_miles_percent",
     width: 10,
@@ -208,7 +208,7 @@ const stateColumns = [
     ),
   },
   {
-    title: "Percentage of Housing Units with Food Desert Status within 20 Miles*",
+    title: "Percentage of Housing Units Beyond 20 Miles From Supermarket**",
     dataIndex: "no_car_20_mile_percent",
     key: "no_car_20_mile_percent",
     width: 10,
@@ -503,8 +503,10 @@ class StatePage extends React.Component {
             pagination={{ defaultPageSize: 5, showQuickJumper: true }}
           />
           <p style={{ fontSize: 14, color: "black" }}>
-            *Percentages were calculated based on total households without car
-            access in both urban and non-urban areas in the year 2010
+            *Food Desert regions are defined for housing units with no vehicle access located 1/2 mile and beyond from the nearest supermarket.
+          <br></br>
+            **Percentages were calculated based on total housing units without car
+            access in both urban and non-urban areas in the year 2010.  Distance represents the # of miles away from the nearest supermarket.
           </p>
         </div>
 

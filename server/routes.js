@@ -56,19 +56,19 @@ async function allUsStates(req, res) {
 
 async function searchStatesName(req, res) {
     const stateNameSearch = req.query.name ? req.query.name : ''
-    var queryNameSearch = `WITH Absolute_FD_Households_State_All (state, avg_housing_units, avg_half, avg_one, avg_ten, avg_twenty) as (
-                                SELECT l.state, avg(housing_units), avg(no_car_half_mile) , avg(no_car_1_mile), avg(no_car_10_mile), avg(no_car_20_mile)
-                                FROM Food_Desert fd JOIN Location l ON fd.geo_id = l.geo_id
-                                GROUP BY l.state
-                                ORDER BY state ASC
-                            ),
-                            Pop (state, population_count) as (
-                                SELECT state, SUM(total) as total
-                                FROM Age_Sex A JOIN Location L on A.geo_id = L.geo_id
-                                GROUP BY state
-                            )
-                            SELECT state_flag, AB.state, P.population_count, Round((avg_half / avg_housing_units) * 100, 2) as no_car_half_mile_percent, Round((avg_one / avg_housing_units) * 100, 2) as no_car_1_mile_percent, Round((avg_ten / avg_housing_units) * 100, 2) as no_car_10_mile_percent, Round((avg_twenty / avg_housing_units) * 100, 2) as no_car_20_mile_percent
-                            FROM Absolute_FD_Households_State_All AB JOIN USA_States US ON AB.state = US.state JOIN Pop P ON P.state=AB.state
+    var queryNameSearch = `WITH Absolute_FD_Households_State_All (state, sum_half, sum_one, sum_ten, sum_twenty, avg_housing_units, avg_half, avg_one, avg_ten, avg_twenty) as (
+        SELECT l.state, SUM(no_car_half_mile), SUM(no_car_1_mile), SUM(no_car_10_mile), SUM(no_car_20_mile), avg(housing_units), avg(no_car_half_mile) , avg(no_car_1_mile), avg(no_car_10_mile), avg(no_car_20_mile)
+        FROM Food_Desert fd JOIN Location l ON fd.geo_id = l.geo_id
+        GROUP BY l.state
+        ORDER BY state ASC
+    ),
+    Pop (state, population_count) as (
+        SELECT state, SUM(total) as total
+        FROM Age_Sex A JOIN Location L on A.geo_id = L.geo_id
+        GROUP BY state
+    )
+    SELECT state_flag, AB.state, P.population_count, Round(sum_half + sum_one + sum_ten + sum_twenty,0) as total_HH_FD_status, Round((avg_half / avg_housing_units) * 100, 2) as no_car_half_mile_percent, Round((avg_one / avg_housing_units) * 100, 2) as no_car_1_mile_percent, Round((avg_ten / avg_housing_units) * 100, 2) as no_car_10_mile_percent, Round((avg_twenty / avg_housing_units) * 100, 2) as no_car_20_mile_percent
+    FROM Absolute_FD_Households_State_All AB JOIN USA_States US ON AB.state = US.state JOIN Pop P ON P.state=AB.state
                             WHERE AB.state LIKE '%${stateNameSearch}%';`
         connection.query(queryNameSearch, function (error, results, fields) {
             if (error) {
@@ -87,17 +87,19 @@ async function searchStatesPopulation(req, res) {
         population_high = 40000000
     }
 
-    var queryPopulationSearch = `WITH Absolute_FD_Households_State_All (state, avg_housing_units, avg_half, avg_one, avg_ten, avg_twenty) as (
-                                    SELECT l.state, avg(housing_units), avg(no_car_half_mile) , avg(no_car_1_mile), avg(no_car_10_mile), avg(no_car_20_mile)
-                                    FROM Food_Desert fd JOIN Location l ON fd.geo_id = l.geo_id
-                                    GROUP BY l.state
-                                    ORDER BY state ASC),
-                                Pop (state, population_count) as (
-                                    SELECT state, SUM(total) as total
-                                    FROM Age_Sex A JOIN Location L on A.geo_id = L.geo_id
-                                    GROUP BY state)
-                                SELECT state_flag, AB.state, P.population_count, Round((avg_half / avg_housing_units) * 100, 2) as no_car_half_mile_percent, Round((avg_one / avg_housing_units) * 100, 2) as no_car_1_mile_percent, Round((avg_ten / avg_housing_units) * 100, 2) as no_car_10_mile_percent, Round((avg_twenty / avg_housing_units) * 100, 2) as no_car_20_mile_percent
-                                FROM Absolute_FD_Households_State_All AB JOIN USA_States US ON AB.state = US.state JOIN Pop P ON P.state=AB.state
+    var queryPopulationSearch = `WITH Absolute_FD_Households_State_All (state, sum_half, sum_one, sum_ten, sum_twenty, avg_housing_units, avg_half, avg_one, avg_ten, avg_twenty) as (
+        SELECT l.state, SUM(no_car_half_mile), SUM(no_car_1_mile), SUM(no_car_10_mile), SUM(no_car_20_mile), avg(housing_units), avg(no_car_half_mile) , avg(no_car_1_mile), avg(no_car_10_mile), avg(no_car_20_mile)
+        FROM Food_Desert fd JOIN Location l ON fd.geo_id = l.geo_id
+        GROUP BY l.state
+        ORDER BY state ASC
+    ),
+    Pop (state, population_count) as (
+        SELECT state, SUM(total) as total
+        FROM Age_Sex A JOIN Location L on A.geo_id = L.geo_id
+        GROUP BY state
+    )
+    SELECT state_flag, AB.state, P.population_count, Round(sum_half + sum_one + sum_ten + sum_twenty,0) as total_HH_FD_status, Round((avg_half / avg_housing_units) * 100, 2) as no_car_half_mile_percent, Round((avg_one / avg_housing_units) * 100, 2) as no_car_1_mile_percent, Round((avg_ten / avg_housing_units) * 100, 2) as no_car_10_mile_percent, Round((avg_twenty / avg_housing_units) * 100, 2) as no_car_20_mile_percent
+    FROM Absolute_FD_Households_State_All AB JOIN USA_States US ON AB.state = US.state JOIN Pop P ON P.state=AB.state
                                 WHERE '${population_low}' <= population AND population <= '${population_high}';` 
         connection.query(queryPopulationSearch, function (error, results, fields) {
             if (error) {
