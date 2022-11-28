@@ -1,6 +1,7 @@
 const config = require('./config.json')
 const mysql = require('mysql');
 const e = require('express');
+const path = require('path');
 
 // TODO: fill in your connection details here
 const connection = mysql.createConnection({
@@ -178,6 +179,35 @@ async function searchStatesHSTopicTotal(req, res) {
             
     }
 
+async function getHeatmapOverlay(req, res) {
+    connection.query(`SELECT fips,
+                             lat,
+                             lon,
+                             ((SUM(no_car_half_mile) * 0.5) + 
+                              SUM(no_car_1_mile) + 
+                              (SUM(no_car_10_mile) * 10) +
+                              (SUM(no_car_20_mile) * 20)) AS weight
+                      FROM Food_Desert
+                      JOIN County_Coordinates ON fips = LEFT(geo_id,5)
+                      GROUP BY fips
+                      HAVING (SUM(no_car_half_mile) > 0 OR 
+                              SUM(no_car_1_mile) > 0 OR
+                              SUM(no_car_10_mile) > 0 OR
+                              SUM(no_car_20_mile) > 0)`, 
+        (error, results, fields) => {
+            if (error) {
+                console.log(error);
+                res.json({error: error});
+            } else if (results) {
+                res.json({ results: results });
+            }
+
+        })
+    if (req.query.overlays) {
+
+    }
+}
+
 
 // ********************************************
 //            MORE ROUTES HERE
@@ -189,5 +219,6 @@ module.exports = {
     searchStatesPopulation,
     retrieveStateDetails,
     retrieveStateHS,
-    searchStatesHSTopicTotal
+    searchStatesHSTopicTotal,
+    getHeatmapOverlay
 }
