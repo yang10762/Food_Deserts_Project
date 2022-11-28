@@ -114,35 +114,33 @@ async function retrieveStateDetails(req, res) {
     var queryDetail = `SELECT abbrev, nickname, website, capital_city, population_rank, state_flag, state_seal, map_image, landscape_background, skyline_background
                        FROM USA_States
                        where state = '${usState}';`
-    var queryDemographics = `SELECT state, SUM(total) as total, SUM(male) as male, SUM(female) as female, SUM(age_0_9) as age_0_9, SUM(age_10_17) as age_10_17, SUM(age_18_29) as age_18_29, SUM(age_30_39) as age_30_39, SUM(age_40_49) as age_40_49, SUM(age_50_59) as age_50_59, SUM(age_60_69) as age_60_69, SUM(age_70_79) as age_70_79, Sum(age_80_plus) as age_80_plus
-                             FROM Age_Sex A JOIN Location L on A.geo_id = L.geo_id
-                             GROUP BY state
-                             HAVING state = '${usState}';`
-    var queryFoodStamps = `WITH Food_Stamps (state, total_2010, total_2015) as (SELECT L.state, SUM(FA.hh_receiving_fs_2010) AS total_receiving_fs_2010, SUM(FA.hh_receiving_fs_2015) AS total_receiving_fs_2015
-                                FROM Food_Assistance FA
-                                JOIN Location L ON FA.geo_id = L.geo_id
-                                GROUP BY state)
-                                SELECT state, total_2010, total_2015, ROUND(((total_2015 - total_2010) / total_2010)* 100, 2) as Percent_Change
-                                FROM Food_Stamps
-                                WHERE state = '${usState}'`
+    var queryDemographicsFS = `WITH DemographicsFS (state, total, male, female, age_0_9, age_10_17, age_18_29, age_30_39, age_40_49, age_50_59, age_60_69, age_70_79, age_80_plus, income_2010, income_2015, total_white, total_black, total_indigenous, total_asian, total_hawaiian_pacific, total_other, total_multi, total_hispanic, total_HH_2010, total_HH_2015, total_FS_2010, total_FS_2015) as (SELECT L.state,SUM(A.total), SUM(male), SUM(female), SUM(age_0_9), SUM(age_10_17), SUM(age_18_29), SUM(age_30_39), SUM(age_40_49), SUM(age_50_59), SUM(age_60_69), SUM(age_70_79), Sum(age_80_plus),AVG(I.est_med_income_2010), AVG(I.est_med_income_2015), SUM(RE.total_white), SUM(RE.total_black_aa), SUM(RE.total_indigenous), SUM(RE.total_asian), SUM(RE.total_hawaiian_pacific), SUM(RE.total_other), SUM(RE.total_multi), SUM(RE.total_hisp_lat),  SUM(FA.total_hh_2010), SUM(FA.total_hh_2015), SUM(FA.hh_receiving_fs_2010) AS total_receiving_fs_2010, SUM(FA.hh_receiving_fs_2015) AS total_receiving_fs_2015
+                                    FROM Food_Assistance FA
+                                    JOIN Location L ON FA.geo_id = L.geo_id JOIN Income I ON I.geo_id = L.geo_id JOIN Race_Ethnicity RE on L.geo_id = RE.geo_id JOIN Age_Sex A on L.geo_id = A.geo_id
+                                    GROUP BY state)
+                                SELECT state, total, male, female, age_0_9, age_10_17, age_18_29, age_30_39, age_40_49, age_50_59, age_60_69, age_70_79, age_80_plus, ROUND(income_2010,0) as median_income_2010, ROUND(income_2015, 0) as median_income_2015, ROUND(total_white,0) as total_white, ROUND(total_black,0) as total_black, ROUND(total_indigenous,0) as total_indigenous, ROUND(total_asian,0) as total_asian, ROUND(total_hawaiian_pacific,0) as total_hawaiian_pacific, ROUND(total_other,0) as total_other, ROUND(total_multi,0) as total_multi, ROUND(total_hispanic,0) as total_hispanic, total_HH_2010, total_HH_2015, total_FS_2010, total_FS_2015, ROUND(((total_FS_2015 - total_FS_2010) / total_FS_2010)* 100, 2) as Percent_Change_FS
+                                FROM DemographicsFS
+                                HAVING state = '${usState}';`
+    var queryHealthInsurance = `SELECT uninsured_rate_2010, uninsured_rate_2015, uninsured_rate_change, health_insurance_coverage_change, employer_health_insurance_coverage_2015 FROM Health_Insurance_Rates
+                                WHERE state = '${usState}';`
     connection.query(queryDetail, function (error, detailResults, fields) {
     if (error) {
         console.log(error)
         res.json({ error: error })
         } else if (detailResults) {
-            connection.query(queryDemographics, function (error, demoResults, fields) {
+            connection.query(queryDemographicsFS, function (error, demoFSResults, fields) {
             if (error) {
                 console.log(error)
                 res.json({ error: error })
-            } else if (demoResults) {
-                connection.query(queryFoodStamps, function (error, foodStampResults, fields) {
-                if (error) {
-                    console.log(error)
-                    res.json({ error: error })
-                } else if (foodStampResults) {
-                    res.json({ detailResults: detailResults, demoResults, foodStampResults})
-                }
-                });
+            } else if (demoFSResults) {
+                connection.query(queryHealthInsurance, function (error, healthInsuranceResults, fields) {
+                    if (error) {
+                        console.log(error)
+                        res.json({ error: error })
+                    } else if (healthInsuranceResults) {
+                        res.json({ detailResults: detailResults, demoFSResults, healthInsuranceResults})
+                    }
+                    });
             }
             });
         }

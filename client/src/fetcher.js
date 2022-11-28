@@ -8,7 +8,6 @@ const getAllStates = async () => {
     return res.json()
 }
 
-//this url only gets id in order to use it to select all info for the player using ${id}
 const getStateDetails = async (name) => {
     var res = await fetch(`http://${config.server_host}:${config.server_port}/state?state_name=${name}`, {
         method: 'GET',
@@ -16,7 +15,6 @@ const getStateDetails = async (name) => {
     return res.json()
 }
 
-//this url contains only the parameters needed to do the search
 const getStateSearchName = async (state) => {
     var res = await fetch(`http://${config.server_host}:${config.server_port}/search/states_name?name=${state}`, {
         method: 'GET',

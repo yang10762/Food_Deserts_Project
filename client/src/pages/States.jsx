@@ -269,8 +269,8 @@ class StatePage extends React.Component {
       selectedStateDetails: {
         detail: null,
         HS: null,
-        demo: null,
-        foodStamp: null,
+        demoFS: null,
+        healthInsurance: null
       },
       yearlyHSResultsForTopicTotal: null,
       selectedTopicTotal: "",
@@ -374,8 +374,8 @@ class StatePage extends React.Component {
       this.setState({
         selectedStateDetails: {
           detail: res.detailResults[0],
-          demo: res.demoResults[0],
-          foodStamp: res.foodStampResults[0],
+          demoFS: res.demoFSResults[0],
+          healthInsurance: res.healthInsuranceResults[0]
         },
       });
     });
@@ -511,14 +511,15 @@ class StatePage extends React.Component {
             {console.log(this.state.yearlyHSResultsForTopicTotal)}
             {console.log(this.state.selectedStateDetails.detail)}
 
-            {console.log(this.state.selectedStateDetails.demo)}
-            {console.log(this.state.selectedStateDetails.foodStamp)}
+            {console.log(this.state.selectedStateDetails.demoFS)}
+            {console.log(this.state.selectedStateDetails.healthInsurance)}
+           
 
             <Card className="customCardColor" style={{ width: "70%" }}>
               <CardBody>
                 <Row align="center">
                   <h2>
-                    {this.state.selectedStateDetails.foodStamp.state},{" "}
+                    {this.state.selectedStateDetails.demoFS.state},{" "}
                     {this.state.selectedStateDetails.detail.abbrev}
                   </h2>
                 </Row>
@@ -550,7 +551,7 @@ class StatePage extends React.Component {
                     <h6>
                       {" "}
                       Location of{" "}
-                      {this.state.selectedStateDetails.foodStamp.state} in the
+                      {this.state.selectedStateDetails.demoFS.state} in the
                       USA:
                     </h6>{" "}
                     <img
@@ -608,7 +609,7 @@ class StatePage extends React.Component {
                   <p>
                     with a total population of{" "}
                     <span style={{ color: "green" }}>
-                      {this.state.selectedStateDetails.demo.total?.toLocaleString(
+                      {this.state.selectedStateDetails.demoFS.total?.toLocaleString(
                         "en-US"
                       )}{" "}
                     </span>
@@ -627,14 +628,14 @@ class StatePage extends React.Component {
                     <Progress
                       bar
                       value={
-                        (this.state.selectedStateDetails.demo.male /
-                          this.state.selectedStateDetails.demo.total) *
+                        (this.state.selectedStateDetails.demoFS.male /
+                          this.state.selectedStateDetails.demoFS.total) *
                         100
                       }
                     >
                       {(
-                        (this.state.selectedStateDetails.demo.male /
-                          this.state.selectedStateDetails.demo.total) *
+                        (this.state.selectedStateDetails.demoFS.male /
+                          this.state.selectedStateDetails.demoFS.total) *
                         100
                       ).toFixed(1)}
                       %
@@ -643,14 +644,14 @@ class StatePage extends React.Component {
                       bar
                       theme={"danger"}
                       value={
-                        (this.state.selectedStateDetails.demo.female /
-                          this.state.selectedStateDetails.demo.total) *
+                        (this.state.selectedStateDetails.demoFS.female /
+                          this.state.selectedStateDetails.demoFS.total) *
                         100
                       }
                     >
                       {(
-                        (this.state.selectedStateDetails.demo.female /
-                          this.state.selectedStateDetails.demo.total) *
+                        (this.state.selectedStateDetails.demoFS.female /
+                          this.state.selectedStateDetails.demoFS.total) *
                         100
                       ).toFixed(1)}
                       %
@@ -661,24 +662,24 @@ class StatePage extends React.Component {
                 <Row gutter="10" align="middle" justify="center">
                   <p align="left">
                     <Badge className="badge bg-primary">Male</Badge> : {""}
-                    {this.state.selectedStateDetails.demo.male?.toLocaleString(
+                    {this.state.selectedStateDetails.demoFS.male?.toLocaleString(
                       "en-US"
                     )}{" "}
                     males ~ (
                     {(
-                      (this.state.selectedStateDetails.demo.male /
-                        this.state.selectedStateDetails.demo.total) *
+                      (this.state.selectedStateDetails.demoFS.male /
+                        this.state.selectedStateDetails.demoFS.total) *
                       100
                     ).toFixed(1)}
                     %)<br></br>
                     <Badge className="badge bg-danger">Female</Badge> :{" "}
-                    {this.state.selectedStateDetails.demo.female?.toLocaleString(
+                    {this.state.selectedStateDetails.demoFS.female?.toLocaleString(
                       "en-US"
                     )}{" "}
                     females ~(
                     {(
-                      (this.state.selectedStateDetails.demo.female /
-                        this.state.selectedStateDetails.demo.total) *
+                      (this.state.selectedStateDetails.demoFS.female /
+                        this.state.selectedStateDetails.demoFS.total) *
                       100
                     ).toFixed(1)}
                     %)
@@ -698,14 +699,14 @@ class StatePage extends React.Component {
                       bar
                       theme={"primary"}
                       value={
-                        (this.state.selectedStateDetails.demo.age_0_9 /
-                          this.state.selectedStateDetails.demo.total) *
+                        (this.state.selectedStateDetails.demoFS.age_0_9 /
+                          this.state.selectedStateDetails.demoFS.total) *
                         100
                       }
                     >
                       {(
-                        (this.state.selectedStateDetails.demo.age_0_9 /
-                          this.state.selectedStateDetails.demo.total) *
+                        (this.state.selectedStateDetails.demoFS.age_0_9 /
+                          this.state.selectedStateDetails.demoFS.total) *
                         100
                       ).toFixed(1)}
                       %
@@ -714,14 +715,14 @@ class StatePage extends React.Component {
                       bar
                       theme={"secondary"}
                       value={
-                        (this.state.selectedStateDetails.demo.age_10_17 /
-                          this.state.selectedStateDetails.demo.total) *
+                        (this.state.selectedStateDetails.demoFS.age_10_17 /
+                          this.state.selectedStateDetails.demoFS.total) *
                         100
                       }
                     >
                       {(
-                        (this.state.selectedStateDetails.demo.age_10_17 /
-                          this.state.selectedStateDetails.demo.total) *
+                        (this.state.selectedStateDetails.demoFS.age_10_17 /
+                          this.state.selectedStateDetails.demoFS.total) *
                         100
                       ).toFixed(1)}
                       %
@@ -730,14 +731,14 @@ class StatePage extends React.Component {
                       bar
                       theme={"success"}
                       value={
-                        (this.state.selectedStateDetails.demo.age_18_29 /
-                          this.state.selectedStateDetails.demo.total) *
+                        (this.state.selectedStateDetails.demoFS.age_18_29 /
+                          this.state.selectedStateDetails.demoFS.total) *
                         100
                       }
                     >
                       {(
-                        (this.state.selectedStateDetails.demo.age_18_29 /
-                          this.state.selectedStateDetails.demo.total) *
+                        (this.state.selectedStateDetails.demoFS.age_18_29 /
+                          this.state.selectedStateDetails.demoFS.total) *
                         100
                       ).toFixed(1)}
                       %
@@ -746,14 +747,14 @@ class StatePage extends React.Component {
                       bar
                       theme={"danger"}
                       value={
-                        (this.state.selectedStateDetails.demo.age_30_39 /
-                          this.state.selectedStateDetails.demo.total) *
+                        (this.state.selectedStateDetails.demoFS.age_30_39 /
+                          this.state.selectedStateDetails.demoFS.total) *
                         100
                       }
                     >
                       {(
-                        (this.state.selectedStateDetails.demo.age_30_39 /
-                          this.state.selectedStateDetails.demo.total) *
+                        (this.state.selectedStateDetails.demoFS.age_30_39 /
+                          this.state.selectedStateDetails.demoFS.total) *
                         100
                       ).toFixed(1)}
                       %
@@ -762,14 +763,14 @@ class StatePage extends React.Component {
                       bar
                       theme={"warning"}
                       value={
-                        (this.state.selectedStateDetails.demo.age_40_49 /
-                          this.state.selectedStateDetails.demo.total) *
+                        (this.state.selectedStateDetails.demoFS.age_40_49 /
+                          this.state.selectedStateDetails.demoFS.total) *
                         100
                       }
                     >
                       {(
-                        (this.state.selectedStateDetails.demo.age_40_49 /
-                          this.state.selectedStateDetails.demo.total) *
+                        (this.state.selectedStateDetails.demoFS.age_40_49 /
+                          this.state.selectedStateDetails.demoFS.total) *
                         100
                       ).toFixed(1)}
                       %
@@ -778,14 +779,14 @@ class StatePage extends React.Component {
                       bar
                       theme={"info"}
                       value={
-                        (this.state.selectedStateDetails.demo.age_50_59 /
-                          this.state.selectedStateDetails.demo.total) *
+                        (this.state.selectedStateDetails.demoFS.age_50_59 /
+                          this.state.selectedStateDetails.demoFS.total) *
                         100
                       }
                     >
                       {(
-                        (this.state.selectedStateDetails.demo.age_50_59 /
-                          this.state.selectedStateDetails.demo.total) *
+                        (this.state.selectedStateDetails.demoFS.age_50_59 /
+                          this.state.selectedStateDetails.demoFS.total) *
                         100
                       ).toFixed(1)}
                       %
@@ -794,14 +795,14 @@ class StatePage extends React.Component {
                       bar
                       theme={"light"}
                       value={
-                        (this.state.selectedStateDetails.demo.age_60_69 /
-                          this.state.selectedStateDetails.demo.total) *
+                        (this.state.selectedStateDetails.demoFS.age_60_69 /
+                          this.state.selectedStateDetails.demoFS.total) *
                         100
                       }
                     >
                       {(
-                        (this.state.selectedStateDetails.demo.age_60_69 /
-                          this.state.selectedStateDetails.demo.total) *
+                        (this.state.selectedStateDetails.demoFS.age_60_69 /
+                          this.state.selectedStateDetails.demoFS.total) *
                         100
                       ).toFixed(1)}
                       %
@@ -810,16 +811,16 @@ class StatePage extends React.Component {
                       bar
                       theme={"dark"}
                       value={
-                        ((this.state.selectedStateDetails.demo.age_70_79 +
-                          this.state.selectedStateDetails.demo.age_80_plus) /
-                          this.state.selectedStateDetails.demo.total) *
+                        ((this.state.selectedStateDetails.demoFS.age_70_79 +
+                          this.state.selectedStateDetails.demoFS.age_80_plus) /
+                          this.state.selectedStateDetails.demoFS.total) *
                         100
                       }
                     >
                       {(
-                        ((this.state.selectedStateDetails.demo.age_70_79 +
-                          this.state.selectedStateDetails.demo.age_80_plus) /
-                          this.state.selectedStateDetails.demo.total) *
+                        ((this.state.selectedStateDetails.demoFS.age_70_79 +
+                          this.state.selectedStateDetails.demoFS.age_80_plus) /
+                          this.state.selectedStateDetails.demoFS.total) *
                         100
                       ).toFixed(1)}
                       %
@@ -830,49 +831,49 @@ class StatePage extends React.Component {
                 <Row gutter="50" align="middle" justify="center">
                   <Col>
                     <Badge className="badge bg-primary">Ages 0-9</Badge> {" : "}{" "}
-                    {this.state.selectedStateDetails.demo.age_0_9?.toLocaleString(
+                    {this.state.selectedStateDetails.demoFS.age_0_9?.toLocaleString(
                       "en-US"
                     )}{" "}
                     total ~ (
                     {(
-                      (this.state.selectedStateDetails.demo.age_0_9 /
-                        this.state.selectedStateDetails.demo.total) *
+                      (this.state.selectedStateDetails.demoFS.age_0_9 /
+                        this.state.selectedStateDetails.demoFS.total) *
                       100
                     ).toFixed(1)}
                     %)<br></br>
                     <Badge className="badge bg-secondary">Ages 10-17</Badge>
                     {" : "}{" "}
-                    {this.state.selectedStateDetails.demo.age_10_17?.toLocaleString(
+                    {this.state.selectedStateDetails.demoFS.age_10_17?.toLocaleString(
                       "en-US"
                     )}{" "}
                     total ~ (
                     {(
-                      (this.state.selectedStateDetails.demo.age_10_17 /
-                        this.state.selectedStateDetails.demo.total) *
+                      (this.state.selectedStateDetails.demoFS.age_10_17 /
+                        this.state.selectedStateDetails.demoFS.total) *
                       100
                     ).toFixed(1)}
                     %) <br></br>
                     <Badge className="badge bg-success">Ages 18-29</Badge>
                     {" : "}{" "}
-                    {this.state.selectedStateDetails.demo.age_18_29?.toLocaleString(
+                    {this.state.selectedStateDetails.demoFS.age_18_29?.toLocaleString(
                       "en-US"
                     )}{" "}
                     total ~ (
                     {(
-                      (this.state.selectedStateDetails.demo.age_18_29 /
-                        this.state.selectedStateDetails.demo.total) *
+                      (this.state.selectedStateDetails.demoFS.age_18_29 /
+                        this.state.selectedStateDetails.demoFS.total) *
                       100
                     ).toFixed(1)}
                     %)<br></br>
                     <Badge className="badge bg-danger">Ages 30-39</Badge>
                     {" : "}{" "}
-                    {this.state.selectedStateDetails.demo.age_30_39?.toLocaleString(
+                    {this.state.selectedStateDetails.demoFS.age_30_39?.toLocaleString(
                       "en-US"
                     )}{" "}
                     total ~ (
                     {(
-                      (this.state.selectedStateDetails.demo.age_30_39 /
-                        this.state.selectedStateDetails.demo.total) *
+                      (this.state.selectedStateDetails.demoFS.age_30_39 /
+                        this.state.selectedStateDetails.demoFS.total) *
                       100
                     ).toFixed(1)}
                     %)<br></br>
@@ -880,50 +881,50 @@ class StatePage extends React.Component {
                   <Col>
                     <Badge className="badge bg-warning">Ages 40-49</Badge>
                     {" : "}{" "}
-                    {this.state.selectedStateDetails.demo.age_40_49?.toLocaleString(
+                    {this.state.selectedStateDetails.demoFS.age_40_49?.toLocaleString(
                       "en-US"
                     )}{" "}
                     total ~ (
                     {(
-                      (this.state.selectedStateDetails.demo.age_40_49 /
-                        this.state.selectedStateDetails.demo.total) *
+                      (this.state.selectedStateDetails.demoFS.age_40_49 /
+                        this.state.selectedStateDetails.demoFS.total) *
                       100
                     ).toFixed(1)}
                     %)<br></br>
                     <Badge className="badge bg-info">Ages 50-59</Badge>
                     {" : "}{" "}
-                    {this.state.selectedStateDetails.demo.age_50_59?.toLocaleString(
+                    {this.state.selectedStateDetails.demoFS.age_50_59?.toLocaleString(
                       "en-US"
                     )}{" "}
                     total ~ (
                     {(
-                      (this.state.selectedStateDetails.demo.age_50_59 /
-                        this.state.selectedStateDetails.demo.total) *
+                      (this.state.selectedStateDetails.demoFS.age_50_59 /
+                        this.state.selectedStateDetails.demoFS.total) *
                       100
                     ).toFixed(1)}
                     %) <br></br>
                     <Badge className="badge bg-light">Ages 60-69</Badge>
                     {" : "}{" "}
-                    {this.state.selectedStateDetails.demo.age_60_69?.toLocaleString(
+                    {this.state.selectedStateDetails.demoFS.age_60_69?.toLocaleString(
                       "en-US"
                     )}{" "}
                     total ~ (
                     {(
-                      (this.state.selectedStateDetails.demo.age_60_69 /
-                        this.state.selectedStateDetails.demo.total) *
+                      (this.state.selectedStateDetails.demoFS.age_60_69 /
+                        this.state.selectedStateDetails.demoFS.total) *
                       100
                     ).toFixed(1)}
                     %)<br></br>
                     <Badge className="badge bg-dark">Ages 70+</Badge> {" : "}{" "}
                     {(
-                      this.state.selectedStateDetails.demo.age_70_79 +
-                      this.state.selectedStateDetails.demo.age_80_plus
+                      this.state.selectedStateDetails.demoFS.age_70_79 +
+                      this.state.selectedStateDetails.demoFS.age_80_plus
                     )?.toLocaleString("en-US")}{" "}
                     total ~ (
                     {(
-                      ((this.state.selectedStateDetails.demo.age_70_79 +
-                        this.state.selectedStateDetails.demo.age_80_plus) /
-                        this.state.selectedStateDetails.demo.total) *
+                      ((this.state.selectedStateDetails.demoFS.age_70_79 +
+                        this.state.selectedStateDetails.demoFS.age_80_plus) /
+                        this.state.selectedStateDetails.demoFS.total) *
                       100
                     ).toFixed(1)}
                     %)<br></br>
@@ -948,7 +949,7 @@ class StatePage extends React.Component {
                     style={{ width: "70%", marginLeft: "10px" }}
                     onChange={(value) => {
                       this.topicOnChange(
-                        this.state.selectedStateDetails.foodStamp.state,
+                        this.state.selectedStateDetails.demoFS.state,
                         value
                       );
                     }}
@@ -998,7 +999,7 @@ class StatePage extends React.Component {
                 <Row style={{ width: "100%" }} align="center">
                   <h5>
                     Survey Results for{" "}
-                    {this.state.selectedStateDetails.foodStamp.state}*
+                    {this.state.selectedStateDetails.demoFS.state}*
                   </h5>{" "}
                   <br></br>
                   <br></br>
@@ -1135,7 +1136,7 @@ class StatePage extends React.Component {
               <CardBody>
                 <Row align="middle" justify="center">
                   <h3>
-                    {this.state.selectedStateDetails.foodStamp.state} Views
+                    {this.state.selectedStateDetails.demoFS.state} Views
                   </h3>
                 </Row>
                 <Divider></Divider>
