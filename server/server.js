@@ -14,9 +14,22 @@ app.use(cors({ credentials: true, origin: ['http://localhost:3000'] }));
 // Route 1 - register as GET 
 // app.get('/', routes.home)
 
+
+//County Routes
+
+//Route 2 
+app.get('/counties', routes.all_counties)  
+
+//Route 3
+app.get('/search/counties', routes.search_counties)  
+
+//Route 4 
+app.get('/countyData',routes.county_data) 
+
+
 app.get('/us_states', routes.allUsStates)
 
-app.get('/us_state', routes.retrieveStateDetails)
+app.get('/state', routes.retrieveStateDetails)
 /*app.get('/us_state', routes.retrieveStateHS)*/
 
 app.get('/search/states_name', routes.searchStatesName)
