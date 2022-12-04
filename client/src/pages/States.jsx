@@ -1,19 +1,5 @@
 import React from "react";
 
-// import Navigation from "../components/Navigation.jsx";
-
-// export default function States() {
-//   return (
-//     <div className="States">
-//       <Navigation />
-//       <header className="States">
-//         <h1>Find your state</h1>
-//         <p>Information on States here</p>
-//       </header>
-//     </div>
-//   );
-// }
-
 import {
   Form,
   FormInput,
@@ -128,8 +114,8 @@ const stateColumns = [
     sorter: (a, b) => a.no_car_half_mile_percent - b.no_car_half_mile_percent,
     render: (text, row) => (
       <Badge className={`${row.no_car_half_mile_percent > average_half_mile_percent + 0.5 * std_dev_half_mile_percent
-            ? row.no_car_half_mile_percent > average_half_mile_percent + std_dev_half_mile_percent ? "badge bg-danger" : "badge bg-warning text-dark"
-            : row.no_car_half_mile_percent < average_half_mile_percent - std_dev_half_mile_percent ? "badge bg-success" : "badge bg-warning text-dark"}`} >
+          ? row.no_car_half_mile_percent > average_half_mile_percent + std_dev_half_mile_percent ? "badge bg-danger" : "badge bg-warning text-dark"
+          : row.no_car_half_mile_percent < average_half_mile_percent - std_dev_half_mile_percent ? "badge bg-success" : "badge bg-warning text-dark"}`} >
         {row.no_car_half_mile_percent}%
       </Badge>
     )
@@ -142,20 +128,10 @@ const stateColumns = [
     align: "center",
     sorter: (a, b) => a.no_car_1_mile_percent - b.no_car_1_mile_percent,
     render: (text, row) => (
-      <Badge
-        className={`${
-          row.no_car_1_mile_percent >
-          average_1_mile_percent + 0.5 * std_dev_1_mile_percent
-            ? row.no_car_1_mile_percent >
-              average_1_mile_percent + std_dev_1_mile_percent
-              ? "badge bg-danger"
-              : "badge bg-warning text-dark"
-            : row.no_car_1_mile_percent <
-              average_1_mile_percent - std_dev_1_mile_percent
-            ? "badge bg-success"
-            : "badge bg-warning text-dark"
-        }`}
-      >
+      <Badge className={`${row.no_car_1_mile_percent > average_1_mile_percent + 0.5 * std_dev_1_mile_percent
+          ? row.no_car_1_mile_percent > average_1_mile_percent + std_dev_1_mile_percent ? "badge bg-danger" : "badge bg-warning text-dark"
+          : row.no_car_1_mile_percent < average_1_mile_percent - std_dev_1_mile_percent
+          ? "badge bg-success" : "badge bg-warning text-dark"}`} >
         {row.no_car_1_mile_percent}%
       </Badge>
     ),
@@ -168,19 +144,9 @@ const stateColumns = [
     align: "center",
     sorter: (a, b) => a.no_car_10_mile_percent - b.no_car_10_mile_percent,
     render: (text, row) => (
-      <Badge
-        className={`${
-          row.no_car_10_mile_percent >
-          average_10_mile_percent + 0.5 * std_dev_10_mile_percent
-            ? row.no_car_10_mile_percent >
-              average_10_mile_percent + std_dev_10_mile_percent
-              ? "badge bg-danger"
-              : "badge bg-warning text-dark"
-            : row.no_car_10_mile_percent <= 0
-            ? "badge bg-success"
-            : "badge bg-warning text-dark"
-        }`}
-      >
+      <Badge className={`${row.no_car_10_mile_percent > average_10_mile_percent + 0.5 * std_dev_10_mile_percent ? row.no_car_10_mile_percent >
+          average_10_mile_percent + std_dev_10_mile_percent ? "badge bg-danger" : "badge bg-warning text-dark"
+          : row.no_car_10_mile_percent <= 0 ? "badge bg-success" : "badge bg-warning text-dark"}`} > 
         {row.no_car_10_mile_percent}%
       </Badge>
     ),
@@ -193,19 +159,9 @@ const stateColumns = [
     align: "center",
     sorter: (a, b) => a.no_car_20_mile_percent - b.no_car_20_mile_percent,
     render: (text, row) => (
-      <Badge
-        className={`${
-          row.no_car_20_mile_percent >
-          average_20_mile_percent + 0.5 * std_dev_20_mile_percent
-            ? row.no_car_20_mile_percent >
-              average_20_mile_percent + std_dev_20_mile_percent
-              ? "badge bg-danger"
-              : "badge bg-warning text-dark"
-            : row.no_car_20_mile_percent <= 0
-            ? "badge bg-success"
-            : "badge bg-warning text-dark"
-        }`}
-      >
+      <Badge className={`${row.no_car_20_mile_percent > average_20_mile_percent + 0.5 * std_dev_20_mile_percent ? row.no_car_20_mile_percent >
+          average_20_mile_percent + std_dev_20_mile_percent
+          ? "badge bg-danger" : "badge bg-warning text-dark" : row.no_car_20_mile_percent <= 0 ? "badge bg-success" : "badge bg-warning text-dark"}`} >
         {row.no_car_20_mile_percent}%
       </Badge>
     ),
@@ -399,7 +355,7 @@ class StatePage extends React.Component {
           {popSearch ? (
             <span style={{ color: "yellow" }}>
               Search results for states with population size of{" "}
-              {this.state.populationLowQuery * 2 + "M"} to{" "} {this.state.populationHighQuery * 2 + "M:"}
+              {this.state.populationLowQuery * 2 + "M"} to{" "} {this.state.populationHighQuery * 2}{this.state.populationHighQuery === 6 ? "M+:" : "M"}
             </span>
           ) : (
             <span></span>
@@ -442,6 +398,7 @@ class StatePage extends React.Component {
             defaultActiveKey="1"
             centered
             type="card"
+            tabPosition="top"
             items={[
               {
                 label: `State Summary`,
@@ -866,7 +823,7 @@ class StatePage extends React.Component {
                     </h3>
                   </Row>
                   <Divider></Divider>
-                  <Carousel dots={true} draggable={true} ref={carouselRef}>
+                  <Carousel dots={true} draggable={true} ref={carouselRef} >
                     <div>
                       <img
                         src={this.state.selectedStateDetails.detail.landscape_background}
@@ -899,7 +856,7 @@ class StatePage extends React.Component {
               </Card>
               }
             ]}
-            /><br></br>
+            /><br></br> <br></br> <br></br>
           </div>
         ) : null}
       </div>
