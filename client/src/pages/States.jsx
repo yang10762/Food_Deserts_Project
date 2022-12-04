@@ -337,7 +337,7 @@ class StatePage extends React.Component {
                 <label style={{ color: "black" }}>
                   Search by State Population
                 </label>
-                <Slider range defaultValue={[3, 6]} min={0} max={6} marks={marks} step={1} valueLabelDisplay="off"
+                <Slider range defaultValue={[0, 4]} min={0} max={6} marks={marks} step={1} valueLabelDisplay="off"
                   onChange={this.handleUsStatePopulationChange} />
               </FormGroup>
             </Col>
@@ -813,8 +813,20 @@ class StatePage extends React.Component {
               </Card>
               },
               {
-                label: "Photos",
+                label: "Health Insurance",
                 key: "4",
+                children: <Card className="customCardColor">
+                <CardBody>
+                  <Row align="middle" justify="center">
+                    <h3>Health Insurance</h3> <Divider></Divider>
+                    
+                  </Row>
+                </CardBody>
+              </Card>
+              },
+              {
+                label: "Photos",
+                key: "5",
                 children: <Card className="customCardColor">
                 <CardBody>
                   <Row align="middle" justify="center">
