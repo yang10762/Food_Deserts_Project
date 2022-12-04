@@ -179,6 +179,9 @@ class Counties extends React.Component {
                 />
               </FormGroup>
             </Col>
+            <Col flex={2}>
+              <FormGroup style={{ width: "10vw" }}></FormGroup>
+            </Col>
           </Row>
           <br></br>
           <Row>
@@ -228,9 +231,13 @@ class Counties extends React.Component {
         <Divider
           style={{ width: "70vw", margin: "0 auto", marginTop: "2vh" }}
         />
-        <h3>Counties</h3>
-        <h7>Click on a row to see County details.</h7>
+        <div style={{ width: "70vw", margin: "0 auto" }}>
+          <h3>Counties</h3>
+          <h7>Click on a row to see County details.</h7>
+        </div>
+
         <Table
+          style={{ maxWidth: "70vw", margin: "0 auto" }}
           onRow={(record, rowIndex) => {
             return {
               onClick: (event) => {
