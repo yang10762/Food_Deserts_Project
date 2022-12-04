@@ -30,19 +30,7 @@ async function home(req, res) {
 }
 
 async function allUsStates(req, res) {
-    const queryAllStates = `WITH Absolute_FD_Households_State_All (state, sum_half, sum_one, sum_ten, sum_twenty, avg_housing_units, avg_half, avg_one, avg_ten, avg_twenty) as (
-        SELECT l.state, SUM(no_car_half_mile), SUM(no_car_1_mile), SUM(no_car_10_mile), SUM(no_car_20_mile), avg(housing_units), avg(no_car_half_mile) , avg(no_car_1_mile), avg(no_car_10_mile), avg(no_car_20_mile)
-        FROM Food_Desert fd JOIN Location l ON fd.geo_id = l.geo_id
-        GROUP BY l.state
-        ORDER BY state ASC
-    ),
-    Pop (state, population_count) as (
-        SELECT state, SUM(total) as total
-        FROM Age_Sex A JOIN Location L on A.geo_id = L.geo_id
-        GROUP BY state
-    )
-    SELECT state_flag, AB.state, P.population_count, Round(sum_half + sum_one + sum_ten + sum_twenty,0) as total_HH_FD_status, Round((avg_half / avg_housing_units) * 100, 2) as no_car_half_mile_percent, Round((avg_one / avg_housing_units) * 100, 2) as no_car_1_mile_percent, Round((avg_ten / avg_housing_units) * 100, 2) as no_car_10_mile_percent, Round((avg_twenty / avg_housing_units) * 100, 2) as no_car_20_mile_percent
-    FROM Absolute_FD_Households_State_All AB JOIN USA_States US ON AB.state = US.state JOIN Pop P ON P.state=AB.state;`
+    const queryAllStates = `SELECT * FROM Materialized_All_States`
         connection.query(queryAllStates, function (error, results, fields) {
             if (error) {
                 console.log(error)
@@ -56,20 +44,8 @@ async function allUsStates(req, res) {
 
 async function searchStatesName(req, res) {
     const stateNameSearch = req.query.name ? req.query.name : ''
-    var queryNameSearch = `WITH Absolute_FD_Households_State_All (state, sum_half, sum_one, sum_ten, sum_twenty, avg_housing_units, avg_half, avg_one, avg_ten, avg_twenty) as (
-        SELECT l.state, SUM(no_car_half_mile), SUM(no_car_1_mile), SUM(no_car_10_mile), SUM(no_car_20_mile), avg(housing_units), avg(no_car_half_mile) , avg(no_car_1_mile), avg(no_car_10_mile), avg(no_car_20_mile)
-        FROM Food_Desert fd JOIN Location l ON fd.geo_id = l.geo_id
-        GROUP BY l.state
-        ORDER BY state ASC
-    ),
-    Pop (state, population_count) as (
-        SELECT state, SUM(total) as total
-        FROM Age_Sex A JOIN Location L on A.geo_id = L.geo_id
-        GROUP BY state
-    )
-    SELECT state_flag, AB.state, P.population_count, Round(sum_half + sum_one + sum_ten + sum_twenty,0) as total_HH_FD_status, Round((avg_half / avg_housing_units) * 100, 2) as no_car_half_mile_percent, Round((avg_one / avg_housing_units) * 100, 2) as no_car_1_mile_percent, Round((avg_ten / avg_housing_units) * 100, 2) as no_car_10_mile_percent, Round((avg_twenty / avg_housing_units) * 100, 2) as no_car_20_mile_percent
-    FROM Absolute_FD_Households_State_All AB JOIN USA_States US ON AB.state = US.state JOIN Pop P ON P.state=AB.state
-                            WHERE AB.state LIKE '%${stateNameSearch}%';`
+    var queryNameSearch = `SELECT * FROM Materialized_All_States
+                           WHERE state LIKE '%${stateNameSearch}%';`
         connection.query(queryNameSearch, function (error, results, fields) {
             if (error) {
                 console.log(error)
@@ -87,20 +63,8 @@ async function searchStatesPopulation(req, res) {
         population_high = 40000000
     }
 
-    var queryPopulationSearch = `WITH Absolute_FD_Households_State_All (state, sum_half, sum_one, sum_ten, sum_twenty, avg_housing_units, avg_half, avg_one, avg_ten, avg_twenty) as (
-        SELECT l.state, SUM(no_car_half_mile), SUM(no_car_1_mile), SUM(no_car_10_mile), SUM(no_car_20_mile), avg(housing_units), avg(no_car_half_mile) , avg(no_car_1_mile), avg(no_car_10_mile), avg(no_car_20_mile)
-        FROM Food_Desert fd JOIN Location l ON fd.geo_id = l.geo_id
-        GROUP BY l.state
-        ORDER BY state ASC
-    ),
-    Pop (state, population_count) as (
-        SELECT state, SUM(total) as total
-        FROM Age_Sex A JOIN Location L on A.geo_id = L.geo_id
-        GROUP BY state
-    )
-    SELECT state_flag, AB.state, P.population_count, Round(sum_half + sum_one + sum_ten + sum_twenty,0) as total_HH_FD_status, Round((avg_half / avg_housing_units) * 100, 2) as no_car_half_mile_percent, Round((avg_one / avg_housing_units) * 100, 2) as no_car_1_mile_percent, Round((avg_ten / avg_housing_units) * 100, 2) as no_car_10_mile_percent, Round((avg_twenty / avg_housing_units) * 100, 2) as no_car_20_mile_percent
-    FROM Absolute_FD_Households_State_All AB JOIN USA_States US ON AB.state = US.state JOIN Pop P ON P.state=AB.state
-                                WHERE '${population_low}' <= population AND population <= '${population_high}';` 
+    var queryPopulationSearch = `SELECT * FROM Materialized_All_States
+                                 WHERE '${population_low}' <= population_count AND population_count <= '${population_high}';` 
         connection.query(queryPopulationSearch, function (error, results, fields) {
             if (error) {
                 console.log(error)
@@ -116,13 +80,13 @@ async function retrieveStateDetails(req, res) {
     var queryDetail = `SELECT abbrev, nickname, website, capital_city, population_rank, state_flag, state_seal, map_image, landscape_background, skyline_background
                        FROM USA_States
                        where state = '${usState}';`
-    var queryDemographicsFS = `WITH DemographicsFS (state, total, male, female, age_0_9, age_10_17, age_18_29, age_30_39, age_40_49, age_50_59, age_60_69, age_70_79, age_80_plus, income_2010, income_2015, total_white, total_black, total_indigenous, total_asian, total_hawaiian_pacific, total_other, total_multi, total_hispanic, total_HH_2010, total_HH_2015, total_FS_2010, total_FS_2015) as (SELECT L.state,SUM(A.total), SUM(male), SUM(female), SUM(age_0_9), SUM(age_10_17), SUM(age_18_29), SUM(age_30_39), SUM(age_40_49), SUM(age_50_59), SUM(age_60_69), SUM(age_70_79), Sum(age_80_plus),AVG(I.est_med_income_2010), AVG(I.est_med_income_2015), SUM(RE.total_white), SUM(RE.total_black_aa), SUM(RE.total_indigenous), SUM(RE.total_asian), SUM(RE.total_hawaiian_pacific), SUM(RE.total_other), SUM(RE.total_multi), SUM(RE.total_hisp_lat),  SUM(FA.total_hh_2010), SUM(FA.total_hh_2015), SUM(FA.hh_receiving_fs_2010) AS total_receiving_fs_2010, SUM(FA.hh_receiving_fs_2015) AS total_receiving_fs_2015
+    var queryDemographicsFS = `WITH DemographicsFS (state, total_pop, male, female, age_0_9, age_10_17, age_18_29, age_30_39, age_40_49, age_50_59, age_60_69, age_70_79, age_80_plus, income_2010, income_2015, total_HH_2010, total_HH_2015, total_FS_2010, total_FS_2015) as (SELECT L.state,SUM(A.total) as total, SUM(male), SUM(female), SUM(age_0_9), SUM(age_10_17), SUM(age_18_29), SUM(age_30_39), SUM(age_40_49), SUM(age_50_59), SUM(age_60_69), SUM(age_70_79), Sum(age_80_plus),AVG(I.est_med_income_2010), AVG(I.est_med_income_2015), SUM(FA.total_hh_2010), SUM(FA.total_hh_2015), SUM(FA.hh_receiving_fs_2010) AS total_receiving_fs_2010, SUM(FA.hh_receiving_fs_2015) AS total_receiving_fs_2015
                                     FROM Food_Assistance FA
-                                    JOIN Location L ON FA.geo_id = L.geo_id JOIN Income I ON I.geo_id = L.geo_id JOIN Race_Ethnicity RE on L.geo_id = RE.geo_id JOIN Age_Sex A on L.geo_id = A.geo_id
+                                    JOIN Location L ON FA.geo_id = L.geo_id JOIN Income I ON I.geo_id = L.geo_id JOIN Age_Sex A on L.geo_id = A.geo_id
                                     GROUP BY state)
-                                SELECT state, total, male, female, age_0_9, age_10_17, age_18_29, age_30_39, age_40_49, age_50_59, age_60_69, age_70_79, age_80_plus, ROUND(income_2010,0) as median_income_2010, ROUND(income_2015, 0) as median_income_2015, ROUND(total_white,0) as total_white, ROUND(total_black,0) as total_black, ROUND(total_indigenous,0) as total_indigenous, ROUND(total_asian,0) as total_asian, ROUND(total_hawaiian_pacific,0) as total_hawaiian_pacific, ROUND(total_other,0) as total_other, ROUND(total_multi,0) as total_multi, ROUND(total_hispanic,0) as total_hispanic, total_HH_2010, total_HH_2015, total_FS_2010, total_FS_2015, ROUND(((total_FS_2015 - total_FS_2010) / total_FS_2010)* 100, 2) as Percent_Change_FS
+                                SELECT state, total_pop as total, male, female, age_0_9, age_10_17, age_18_29, age_30_39, age_40_49, age_50_59, age_60_69, age_70_79, age_80_plus, ROUND(income_2010,0) as median_income_2010, ROUND(income_2015, 0) as median_income_2015, total_HH_2010, total_HH_2015, total_FS_2010, total_FS_2015, ROUND(((total_FS_2015 - total_FS_2010) / total_FS_2010)* 100, 2) as Percent_Change_FS
                                 FROM DemographicsFS
-                                HAVING state = '${usState}';`
+                                WHERE state = '${usState}';`
     var queryHealthInsurance = `SELECT uninsured_rate_2010, uninsured_rate_2015, uninsured_rate_change, health_insurance_coverage_change, employer_health_insurance_coverage_2015 FROM Health_Insurance_Rates
                                 WHERE state = '${usState}';`
     connection.query(queryDetail, function (error, detailResults, fields) {
@@ -190,10 +154,8 @@ async function all_counties(req, res) {
         const pageSize = req.query.pagesize ? req.query.pagesize : 10 
         const offset = ((page - 1) * pageSize) 
         
-        connection.query(`SELECT L.county AS County, L.state AS State, SUM(A_S.total) AS Population, SUM(no_car_half_mile + no_car_1_mile + no_car_10_mile + no_car_20_mile) AS Total_Food_Deserts , SUM(FA.total_hh_2010) AS Total_Households_2010, SUM(FA.total_hh_2015)AS Total_Households_2015,  SUM(FA.hh_receiving_fs_2010) AS Households_Receiving_FoodStamps_2010, SUM(FA.hh_receiving_fs_2015) AS Households_Receiving_FoodStamps_2015
-        FROM Food_Assistance FA JOIN Location L ON FA.geo_id = L.geo_id LEFT JOIN Age_Sex A_S ON L.geo_id = A_S.geo_id JOIN Food_Desert FD ON L.geo_id = FD.geo_id
-        GROUP BY L.state, L.county
-        ORDER BY L.state ASC, L.county ASC
+        connection.query(`SELECT * 
+        FROM Materialized_All_Counties
         LIMIT ${pageSize} OFFSET ${offset}`, function (error, results, fields) 
         {
 
@@ -207,10 +169,8 @@ async function all_counties(req, res) {
    
     } else {
 
-        connection.query(`SELECT L.county AS County, L.state AS State, SUM(A_S.total) AS Population, SUM(no_car_half_mile + no_car_1_mile + no_car_10_mile + no_car_20_mile) AS Total_Food_Deserts , SUM(FA.total_hh_2010) AS Total_Households_2010, SUM(FA.total_hh_2015)AS Total_Households_2015,  SUM(FA.hh_receiving_fs_2010) AS Households_Receiving_FoodStamps_2010, SUM(FA.hh_receiving_fs_2015) AS Households_Receiving_FoodStamps_2015
-        FROM Food_Assistance FA JOIN Location L ON FA.geo_id = L.geo_id LEFT JOIN Age_Sex A_S ON L.geo_id = A_S.geo_id JOIN Food_Desert FD ON L.geo_id = FD.geo_id
-        GROUP BY L.state, L.county
-        ORDER BY L.state ASC, L.county ASC`, function (error, results, fields) {
+        connection.query(`SELECT * 
+        FROM Materialized_All_Counties`, function (error, results, fields) {
 
             if (error) {
                 console.log(error)
@@ -242,12 +202,10 @@ async function search_counties(req, res) {
 
 
     if (req.query.page && !isNaN(req.query.page)) {
-        connection.query(`SELECT L.county AS County, L.state AS State, SUM(A_S.total) AS Population, SUM(no_car_half_mile + no_car_1_mile + no_car_10_mile + no_car_20_mile) AS Total_Food_Deserts , SUM(FA.total_hh_2010) AS Total_Households_2010, SUM(FA.total_hh_2015)AS Total_Households_2015,  SUM(FA.hh_receiving_fs_2010) AS Households_Receiving_FoodStamps_2010, SUM(FA.hh_receiving_fs_2015) AS Households_Receiving_FoodStamps_2015
-        FROM Food_Assistance FA JOIN Location L ON FA.geo_id = L.geo_id LEFT JOIN Age_Sex A_S ON L.geo_id = A_S.geo_id JOIN Food_Desert FD ON L.geo_id = FD.geo_id
-        WHERE L.county LIKE '%${county}%' AND L.state LIKE '%${state}%'
-        GROUP BY L.state, L.county
-        HAVING SUM(A_S.total) >= ${popMin} AND SUM(A_S.total) <= ${popMax} AND SUM(no_car_half_mile + no_car_1_mile + no_car_10_mile + no_car_20_mile) >= ${FDMin} AND SUM(no_car_half_mile + no_car_1_mile + no_car_10_mile + no_car_20_mile) <= ${FDMax}
-        ORDER BY L.state ASC, L.county ASC
+        connection.query(`SELECT County,  State, Population, Total_Food_Deserts , Total_Households_2010, Total_Households_2015,  Households_Receiving_FoodStamps_2010,  Households_Receiving_FoodStamps_2015
+        FROM Materialized_All_Counties
+        WHERE County LIKE '%${county}%' AND State LIKE '%${state}%' AND Population >= '${popMin}' AND Population <= '${popMax}'  AND Total_Food_Deserts >= '${FDMin}' AND Total_Food_Deserts <= '${FDMax}'
+        ORDER BY State ASC, County ASC
         LIMIT ${pageSize} OFFSET ${offset}`, function (error, results, fields) 
         {
 
@@ -261,12 +219,10 @@ async function search_counties(req, res) {
 
     } else{
         
-        connection.query(`SELECT L.county AS County, L.state AS State, SUM(A_S.total) AS Population, SUM(no_car_half_mile + no_car_1_mile + no_car_10_mile + no_car_20_mile) AS Total_Food_Deserts , SUM(FA.total_hh_2010) AS Total_Households_2010, SUM(FA.total_hh_2015)AS Total_Households_2015,  SUM(FA.hh_receiving_fs_2010) AS Households_Receiving_FoodStamps_2010, SUM(FA.hh_receiving_fs_2015) AS Households_Receiving_FoodStamps_2015
-        FROM Food_Assistance FA JOIN Location L ON FA.geo_id = L.geo_id LEFT JOIN Age_Sex A_S ON L.geo_id = A_S.geo_id JOIN Food_Desert FD ON L.geo_id = FD.geo_id
-        WHERE L.county LIKE '%${county}%' AND L.state LIKE '%${state}%'
-        GROUP BY L.state, L.county
-        HAVING SUM(A_S.total) >= ${popMin} AND SUM(A_S.total) <= ${popMax} AND SUM(no_car_half_mile + no_car_1_mile + no_car_10_mile + no_car_20_mile) >= ${FDMin} AND SUM(no_car_half_mile + no_car_1_mile + no_car_10_mile + no_car_20_mile) <= ${FDMax}
-        ORDER BY L.state ASC, L.county ASC`, function (error, results, fields) 
+        connection.query(`SELECT County,  State, Population, Total_Food_Deserts , Total_Households_2010, Total_Households_2015,  Households_Receiving_FoodStamps_2010,  Households_Receiving_FoodStamps_2015
+        FROM Materialized_All_Counties
+        WHERE County LIKE '%${county}%' AND State LIKE '%${state}%' AND Population >= ${popMin} AND Population <= ${popMax}  AND Total_Food_Deserts >= ${FDMin} AND Total_Food_Deserts <= ${FDMax}
+        ORDER BY State ASC, County ASC`, function (error, results, fields) 
         {
             if (error) {
                 console.log(error)
