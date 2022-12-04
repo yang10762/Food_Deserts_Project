@@ -190,10 +190,8 @@ async function all_counties(req, res) {
         const pageSize = req.query.pagesize ? req.query.pagesize : 10 
         const offset = ((page - 1) * pageSize) 
         
-        connection.query(`SELECT L.county AS County, L.state AS State, SUM(A_S.total) AS Population, SUM(no_car_half_mile + no_car_1_mile + no_car_10_mile + no_car_20_mile) AS Total_Food_Deserts , SUM(FA.total_hh_2010) AS Total_Households_2010, SUM(FA.total_hh_2015)AS Total_Households_2015,  SUM(FA.hh_receiving_fs_2010) AS Households_Receiving_FoodStamps_2010, SUM(FA.hh_receiving_fs_2015) AS Households_Receiving_FoodStamps_2015
-        FROM Food_Assistance FA JOIN Location L ON FA.geo_id = L.geo_id LEFT JOIN Age_Sex A_S ON L.geo_id = A_S.geo_id JOIN Food_Desert FD ON L.geo_id = FD.geo_id
-        GROUP BY L.state, L.county
-        ORDER BY L.state ASC, L.county ASC
+        connection.query(`SELECT * 
+        FROM Materialized_All_Counties
         LIMIT ${pageSize} OFFSET ${offset}`, function (error, results, fields) 
         {
 
@@ -207,10 +205,8 @@ async function all_counties(req, res) {
    
     } else {
 
-        connection.query(`SELECT L.county AS County, L.state AS State, SUM(A_S.total) AS Population, SUM(no_car_half_mile + no_car_1_mile + no_car_10_mile + no_car_20_mile) AS Total_Food_Deserts , SUM(FA.total_hh_2010) AS Total_Households_2010, SUM(FA.total_hh_2015)AS Total_Households_2015,  SUM(FA.hh_receiving_fs_2010) AS Households_Receiving_FoodStamps_2010, SUM(FA.hh_receiving_fs_2015) AS Households_Receiving_FoodStamps_2015
-        FROM Food_Assistance FA JOIN Location L ON FA.geo_id = L.geo_id LEFT JOIN Age_Sex A_S ON L.geo_id = A_S.geo_id JOIN Food_Desert FD ON L.geo_id = FD.geo_id
-        GROUP BY L.state, L.county
-        ORDER BY L.state ASC, L.county ASC`, function (error, results, fields) {
+        connection.query(`SELECT * 
+        FROM Materialized_All_Counties`, function (error, results, fields) {
 
             if (error) {
                 console.log(error)
@@ -242,12 +238,10 @@ async function search_counties(req, res) {
 
 
     if (req.query.page && !isNaN(req.query.page)) {
-        connection.query(`SELECT L.county AS County, L.state AS State, SUM(A_S.total) AS Population, SUM(no_car_half_mile + no_car_1_mile + no_car_10_mile + no_car_20_mile) AS Total_Food_Deserts , SUM(FA.total_hh_2010) AS Total_Households_2010, SUM(FA.total_hh_2015)AS Total_Households_2015,  SUM(FA.hh_receiving_fs_2010) AS Households_Receiving_FoodStamps_2010, SUM(FA.hh_receiving_fs_2015) AS Households_Receiving_FoodStamps_2015
-        FROM Food_Assistance FA JOIN Location L ON FA.geo_id = L.geo_id LEFT JOIN Age_Sex A_S ON L.geo_id = A_S.geo_id JOIN Food_Desert FD ON L.geo_id = FD.geo_id
-        WHERE L.county LIKE '%${county}%' AND L.state LIKE '%${state}%'
-        GROUP BY L.state, L.county
-        HAVING SUM(A_S.total) >= ${popMin} AND SUM(A_S.total) <= ${popMax} AND SUM(no_car_half_mile + no_car_1_mile + no_car_10_mile + no_car_20_mile) >= ${FDMin} AND SUM(no_car_half_mile + no_car_1_mile + no_car_10_mile + no_car_20_mile) <= ${FDMax}
-        ORDER BY L.state ASC, L.county ASC
+        connection.query(`SELECT County,  State, Population, Total_Food_Deserts , Total_Households_2010, Total_Households_2015,  Households_Receiving_FoodStamps_2010,  Households_Receiving_FoodStamps_2015
+        FROM Materialized_All_Counties
+        WHERE County LIKE '%${county}%' AND State LIKE '%${state}%' AND Population >= '${popMin}' AND Population <= '${popMax}'  AND Total_Food_Deserts >= '${FDMin}' AND Total_Food_Deserts <= '${FDMax}'
+        ORDER BY State ASC, County ASC
         LIMIT ${pageSize} OFFSET ${offset}`, function (error, results, fields) 
         {
 
@@ -261,12 +255,10 @@ async function search_counties(req, res) {
 
     } else{
         
-        connection.query(`SELECT L.county AS County, L.state AS State, SUM(A_S.total) AS Population, SUM(no_car_half_mile + no_car_1_mile + no_car_10_mile + no_car_20_mile) AS Total_Food_Deserts , SUM(FA.total_hh_2010) AS Total_Households_2010, SUM(FA.total_hh_2015)AS Total_Households_2015,  SUM(FA.hh_receiving_fs_2010) AS Households_Receiving_FoodStamps_2010, SUM(FA.hh_receiving_fs_2015) AS Households_Receiving_FoodStamps_2015
-        FROM Food_Assistance FA JOIN Location L ON FA.geo_id = L.geo_id LEFT JOIN Age_Sex A_S ON L.geo_id = A_S.geo_id JOIN Food_Desert FD ON L.geo_id = FD.geo_id
-        WHERE L.county LIKE '%${county}%' AND L.state LIKE '%${state}%'
-        GROUP BY L.state, L.county
-        HAVING SUM(A_S.total) >= ${popMin} AND SUM(A_S.total) <= ${popMax} AND SUM(no_car_half_mile + no_car_1_mile + no_car_10_mile + no_car_20_mile) >= ${FDMin} AND SUM(no_car_half_mile + no_car_1_mile + no_car_10_mile + no_car_20_mile) <= ${FDMax}
-        ORDER BY L.state ASC, L.county ASC`, function (error, results, fields) 
+        connection.query(`SELECT County,  State, Population, Total_Food_Deserts , Total_Households_2010, Total_Households_2015,  Households_Receiving_FoodStamps_2010,  Households_Receiving_FoodStamps_2015
+        FROM Materialized_All_Counties
+        WHERE County LIKE '%${county}%' AND State LIKE '%${state}%' AND Population >= ${popMin} AND Population <= ${popMax}  AND Total_Food_Deserts >= ${FDMin} AND Total_Food_Deserts <= ${FDMax}
+        ORDER BY State ASC, County ASC`, function (error, results, fields) 
         {
             if (error) {
                 console.log(error)
