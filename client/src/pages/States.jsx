@@ -118,7 +118,7 @@ const stateColumns = [
     sorter: (a, b) => a.population_count - b.population_count,
     render: (text, row) => (
       <span>{row.population_count?.toLocaleString("en-US")}</span>
-    )
+    ),
   },
   {
     title: "Total Housing Units in Food Desert Regions*",
@@ -126,10 +126,10 @@ const stateColumns = [
     key: "total_HH_FD_status",
     width: 10,
     align: "center",
-    sorter: (a, b) => a.total_HH_FD_status- b.total_HH_FD_status,
+    sorter: (a, b) => a.total_HH_FD_status - b.total_HH_FD_status,
     render: (text, row) => (
       <span>{row.total_HH_FD_status?.toLocaleString("en-US")}</span>
-    )
+    ),
   },
   {
     title: "Percentage of Housing Units Beyond 1/2 Mile From Supermarket**",
@@ -270,22 +270,24 @@ class StatePage extends React.Component {
   constructor(props) {
     super(props);
 
+    // state query you select when you click on a state
     this.state = {
       usStateQuery: ``,
       populationLowQuery: 0,
       populationHighQuery: 4,
-      usStateResults: [],
+      usStateResults: [], // results you get when you search through state through name or population
       selectedStateName: window.location.search
-        ? window.location.search.substring(1).split("=")[1]
+        ? window.location.search.substring(1).split("=")[1] // getting the name from URL
         : null,
+      //Gets populated when you click on a state, populates these fields
       selectedStateDetails: {
-        detail: null,
-        HS: null,
-        demoFS: null,
-        healthInsurance: null
+        detail: null, // images population done
+        HS: null, // health servelance done
+        demoFS: null, // demographic food stamps TODO
+        healthInsurance: null, // health insurance TODO
       },
-      yearlyHSResultsForTopicTotal: null,
-      selectedTopicTotal: "",
+      yearlyHSResultsForTopicTotal: null, // done
+      selectedTopicTotal: "", // done
     };
 
     this.handleUsStateNameChange = this.handleUsStateNameChange.bind(this);
@@ -296,7 +298,7 @@ class StatePage extends React.Component {
       this.updateSearchResultsPopulation.bind(this);
     this.topicOnChange = this.topicOnChange.bind(this);
   }
-
+  // changes from population input
   handleUsStateNameChange(event) {
     nameSearch = false;
     popSearch = false;
@@ -331,6 +333,7 @@ class StatePage extends React.Component {
     });
   }
 
+  // health survelenace when yo u change topic, gets up dated, done
   topicOnChange(us_state, topic) {
     getAllHSYearsForTopicTotal(us_state, topic).then((res) => {
       this.setState({ selectedTopicTotal: topic });
@@ -377,17 +380,19 @@ class StatePage extends React.Component {
     });
   }
 
+  // sets the states when you load the page
   componentDidMount() {
     getAllStates().then((res) => {
       this.setState({ usStateResults: res.results });
     });
 
+    // once you click on a state the name of the state youclicked on will be passed and will receive these details
     getStateDetails(this.state.selectedStateName).then((res) => {
       this.setState({
         selectedStateDetails: {
           detail: res.detailResults[0],
           demoFS: res.demoFSResults[0],
-          healthInsurance: res.healthInsuranceResults[0]
+          healthInsurance: res.healthInsuranceResults[0],
         },
       });
     });
@@ -414,7 +419,6 @@ class StatePage extends React.Component {
         }}
       >
         <Navigation />
-
         <Form
           style={{ width: "80vw", margin: "0 auto", marginTop: "5vh" }}
           onKeyPress={(e) => {
@@ -473,7 +477,6 @@ class StatePage extends React.Component {
             </Col>
           </Row>
         </Form>
-
         <div style={{ width: "70vw", margin: "0 auto", marginTop: "5vh" }}>
           <h2 style={{ textAlign: "center" }}>States</h2>
 
@@ -504,15 +507,17 @@ class StatePage extends React.Component {
             pagination={{ defaultPageSize: 5, showQuickJumper: true }}
           />
           <p style={{ fontSize: 14, color: "black" }}>
-            *Food Desert regions are defined for housing units with no vehicle access located 1/2 mile and beyond from the nearest supermarket.
-          <br></br>
-            **Percentages were calculated based on total housing units without car
-            access in both urban and non-urban areas in the year 2010.  Distance represents the # of miles away from the nearest supermarket.
+            *Food Desert regions are defined for housing units with no vehicle
+            access located 1/2 mile and beyond from the nearest supermarket.
+            <br></br>
+            **Percentages were calculated based on total housing units without
+            car access in both urban and non-urban areas in the year 2010.
+            Distance represents the # of miles away from the nearest
+            supermarket.
           </p>
         </div>
-
+        {/* console log, when null nothing shows up, once filled it loads the page cards */}
         <Divider />
-
         {Object.values(this.state.selectedStateDetails).every(
           (x) => x !== null && typeof x != "undefined"
         ) &&
@@ -522,13 +527,13 @@ class StatePage extends React.Component {
         this.state.selectedTopicTotal != null &&
         this.state.selectedTopicTotal != "undefined" ? (
           <div style={{ width: "70vw", margin: "0 auto", marginTop: "2vh" }}>
-            {console.log(this.state.yearlyHSResultsForTopicTotal)}
-            {console.log(this.state.selectedStateDetails.detail)}
-
-            {console.log(this.state.selectedStateDetails.demoFS)}
-            {console.log(this.state.selectedStateDetails.healthInsurance)}
-           
-
+            {/* // shows how to access the data */}
+            {console.log(this.state.yearlyHSResultsForTopicTotal)} // done
+            {console.log(this.state.selectedStateDetails.detail)} // done
+            {console.log(this.state.selectedStateDetails.demoFS)} // TODO,
+            ethnicity and income, to access go to DemoFS
+            {console.log(this.state.selectedStateDetails.healthInsurance)} //
+            TODO
             <Card className="customCardColor" style={{ width: "70%" }}>
               <CardBody>
                 <Row align="center">
@@ -564,9 +569,10 @@ class StatePage extends React.Component {
                   <Col flex=".5" style={{ width: "30%" }} align="center">
                     <h6>
                       {" "}
-                      Location of{" "}
-                      {this.state.selectedStateDetails.demoFS.state} in the
-                      USA:
+                      Location of {
+                        this.state.selectedStateDetails.demoFS.state
+                      }{" "}
+                      in the USA:
                     </h6>{" "}
                     <img
                       src={this.state.selectedStateDetails.detail.map_image}
@@ -604,7 +610,6 @@ class StatePage extends React.Component {
             </Card>
             <br></br>
             <br></br>
-
             <Card className="customCardColor" style={{ width: "80%" }}>
               <CardBody>
                 <Row gutter="30" align="middle" justify="center">
@@ -947,10 +952,8 @@ class StatePage extends React.Component {
                 <br></br>
               </CardBody>
             </Card>
-
             <br></br>
             <br></br>
-
             <Card className="customCardColor">
               <CardBody>
                 <Row align="center">
@@ -1142,16 +1145,12 @@ class StatePage extends React.Component {
                 </Row>
               </CardBody>
             </Card>
-
             <br></br>
             <br></br>
-
             <Card className="customCardColor">
               <CardBody>
                 <Row align="middle" justify="center">
-                  <h3>
-                    {this.state.selectedStateDetails.demoFS.state} Views
-                  </h3>
+                  <h3>{this.state.selectedStateDetails.demoFS.state} Views</h3>
                 </Row>
                 <Divider></Divider>
                 <Carousel dots={true} draggable={true} ref={carouselRef}>
