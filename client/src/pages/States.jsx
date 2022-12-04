@@ -1,4 +1,5 @@
 import React from "react";
+import desert from "../images/Opacity75Desert.png";
 
 import {
   Form,
@@ -395,9 +396,10 @@ class StatePage extends React.Component {
     return (
       <div
         style={{
-          backgroundImage: `url(https://wallup.net/wp-content/uploads/2015/12/52687-landscape-desert.jpg)`,
+          backgroundImage: `url(${desert})`,
           backgroundAttachment: "fixed",
           backgroundSize: "cover",
+          minHeight: "100vh",
         }}
       >
         <Navigation />

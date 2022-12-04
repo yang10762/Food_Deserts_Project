@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 // import App from "./App";
 import Home from "./pages/Home";
+import Heatmap from "./pages/Heatmap";
 import About from "./pages/About";
 import States from "./pages/States";
 import Counties from "./pages/Counties";
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
+  },
+  {
+    path: "/heatmap",
+    element: <Heatmap />,
   },
   {
     path: "/about",

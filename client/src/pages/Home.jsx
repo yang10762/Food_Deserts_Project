@@ -14,7 +14,7 @@ const Content = styled.div`
   justify-content: space-between;
 `;
 
-const HeatMap = styled.div`
+const Map = styled.div`
   display: flex;
   flex-direction: column;
   height: 60vh;
@@ -69,17 +69,17 @@ export default function Home() {
             <h2 style={{ fontWeight: "normal" }}>desert visualizer.</h2>
           </div>
         </Content>
-        <HeatMap>
+        <Map>
           <img
             src={tempUS}
             style={{
               // height: "75vw",
-              width: "65vw",
+              width: "55vw",
               objectFit: "contain",
               // borderRadius: "10px",
             }}
           />
-        </HeatMap>
+        </Map>
       </Wrapper>
     </div>
   );

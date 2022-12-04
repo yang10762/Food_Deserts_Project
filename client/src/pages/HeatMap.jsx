@@ -1,13 +1,18 @@
 import React from "react";
+import Navigation from "../components/Navigation.jsx";
 
 // type Props = {};
 
-export default function HeatMap() {
+export default function Heatmap() {
   return (
-    <div className="HeatMap">
+    <div className="Heatmap">
       <Navigation />
-      <header classname="HeatMap">
+      <header className="Heatmap">
         <h1>Heatmap here</h1>
+        <p>
+          View the heatmap below to see the distribution of food deserts across
+          the United States
+        </p>
       </header>
     </div>
   );
