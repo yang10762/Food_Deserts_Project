@@ -38,9 +38,9 @@ export default function Navigation() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const routes = ["/heatmap", "/about", "/states", "/counties"];
+  const routes = ["/map", "/about", "/states", "/counties"];
 
-  const tabs = ["Heatmap", "About", "States", "Counties"];
+  const tabs = ["Map", "About", "States", "Counties"];
 
   return (
     <Wrapper>
@@ -75,7 +75,7 @@ export default function Navigation() {
             border: "none",
           }}
           onClick={() => {
-            navigate("/heatmap");
+            navigate("/map");
           }}
         >
           Find Deserts
