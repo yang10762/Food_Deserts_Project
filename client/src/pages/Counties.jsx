@@ -24,6 +24,8 @@ const { Column } = Table; //ColumnGroup
 const onChange = (key) => {
   console.log(key);
 };
+
+//This adds customized markings and colour to the label font on the Slider for Population Searches
 const popMarks = {
   // :SliderMarks
   0: "0",
@@ -39,6 +41,7 @@ const popMarks = {
   },
 };
 
+//This adds customized markings and colour to the label font on the Slider for Total Food Desert Searches
 const fdMarks = {
   //: SliderMarks
   0: "0",
@@ -54,6 +57,7 @@ const fdMarks = {
 };
 
 class Counties extends React.Component {
+  //Constructor creating variables
   constructor(props) {
     super(props);
     this.state = {
@@ -79,24 +83,31 @@ class Counties extends React.Component {
     this.goToCounty = this.goToCounty.bind(this);
   }
 
+  //This updates the var countyQuery when user types into the 'county' search box
   handleCountyQueryChange(event) {
     this.setState({ countyQuery: event.target.value });
   }
 
+  //This updates the var stateQuery when user types into the 'state' search box
   handleStateQueryChange(event) {
     this.setState({ stateQuery: event.target.value });
   }
 
+  //This updates the var pop min and max when user types changes the range on the population slider
   handlePopulationChange(value) {
     this.setState({ popMinQuery: value[0] });
     this.setState({ popMaxQuery: value[1] });
   }
 
+  //This updates the var fd min and max when user types changes the range on the Total number of food deserts slider
   handleFDChange(value) {
     this.setState({ fdMinQuery: value[0] });
     this.setState({ fdMaxQuery: value[1] });
   }
 
+  //This update the state and county variable when a row in the table is clicked. 
+  //The new state and county are used to complete the query. 
+  //This func also ensures data from the query is displayed on the cards/tabs
   goToCounty(county, state) {
     this.setState({ selectedCounty: county });
     this.setState({ selectedState: state });
@@ -107,6 +118,9 @@ class Counties extends React.Component {
     });
   }
 
+  //This func updates the 4 seacrh variables when the search button is clicked.
+  //This new info is used for query
+  //This func sets the countiesResult variable the results of the query which is then displayed in the table. 
   updateSearchResults() {
     getCountySearch(
       this.state.countyQuery,
@@ -126,6 +140,8 @@ class Counties extends React.Component {
   //   o.style.backgroundColor = (o.style.backgroundColor == '#7FB069') ? ('transparent') : ('#7FB069');
   // }
 
+  //Ensure the data is displayed. e.g. Initial table when the page first loads. 
+  //Sets instance viables, and then sets the arrays instance variables to the results of the query
   componentDidMount() {
     getAllCounties(null, null).then((res) => {
       this.setState({ countiesResults: res.results });
@@ -153,12 +169,18 @@ class Counties extends React.Component {
     );
   }
 
+  /* The code below is structured just like the web page - the NavBar, then Searched, Then table, then Tab with the Cards */
+
   render() {
     return (
       <div className="County">
         <Navigation />
+        {/* The <Form> 's below are for the searches. Each <FormGroup > is for a searchThe first two are the State and County text searches. */}
         <Form style={{ width: "80vw", margin: "0 auto", marginTop: "5vh" }}>
           <Row>
+          {/* This <Row> has the first two searches which are the State and County text searches. 
+          Both have a handler function which updates the stateQuery and countyQuery instance variable to the string entered in the box*/}
+
             <Col flex={2}>
               <FormGroup style={{ width: "20vw", margin: "0 auto" }}>
                 <label>State</label>
@@ -185,6 +207,8 @@ class Counties extends React.Component {
           </Row>
           <br></br>
           <Row>
+          {/* This <Row> has the next two searches which are the 'population' and 'total num of food deserts' slider searches.
+          Both have the handler function which updates the instance variables once the slider value changes (min and max) */}
             <Col flex={2}>
               <FormGroup style={{ width: "20vw", margin: "0 auto" }}>
                 <label>Population</label>
@@ -211,6 +235,7 @@ class Counties extends React.Component {
             </Col>
             <Col flex={2}>
               <FormGroup style={{ width: "10vw" }}>
+                {/* This search button calls the function that will trigger the query and update the Table with the results*/}
                 <Button
                   style={{
                     marginTop: "4vh",
@@ -235,7 +260,8 @@ class Counties extends React.Component {
           <h3>Counties</h3>
           <h7>Click on a row to see County details.</h7>
         </div>
-
+        {/* This is the <Table>. Data for the table is set to the countiesResult var. Initally this is All counties but will update when search button is hit
+        There is an onClick event for the row which updates the state and county values (see goToCounty func above)*/}
         <Table
           style={{ maxWidth: "70vw", margin: "0 auto" }}
           onRow={(record, rowIndex) => {
@@ -252,6 +278,7 @@ class Counties extends React.Component {
             showQuickJumper: true,
           }}
         >
+          {/* Each column has a sorter for string or int. The ?.toLocalString("en-US)  add commas to the large ints */}
           <Column
             title="County"
             dataIndex="County"
@@ -334,7 +361,10 @@ class Counties extends React.Component {
           />
         </Table>
         <Divider />
-
+        {/* The code below has the Breadcrumb and the 3 Tabs (each with a Card): FD Data, Demo Data and Income Data. 
+        It controlled by a ternary statement - if the values are null (a row in the table has not been clicked) the arrays that hold the results of the 3 queries will be null and none of this will be displayed on the page.
+        If a row is clicked and the onClick event triggers the query and the arrays are populated with the results of the query (they are no longer null), the cards/tabs and breadcrubms will show up */}
+       {/* The Breadcrumb shows 'State/County' and links to the State detail page. It will update when a row is clicked */}
         {this.state.selectedCountyFDDetails ? (
           <div style={{ width: "70vw", margin: "0 auto", marginTop: "2vh" }}>
             <Breadcrumb>
@@ -347,7 +377,6 @@ class Counties extends React.Component {
                 {this.state.selectedCounty}
               </BreadcrumbItem>
             </Breadcrumb>
-
             <Tabs
               defaultActiveKey="1"
               centered
@@ -366,6 +395,8 @@ class Counties extends React.Component {
                       }}
                     >
                       {console.log(this.state.selectedCountyFDDetails)}
+                      {/*Below is the Card on the first Tab - FD Data. This card is also controlled by a ternary statement and will not display if the selectedCountyFDDetails array is null
+                      To access the data from the query result just use this.selectedCountyFDDetails.ATRRIBUTE_HERE. */}
                       <Card title="Food Desert Data ">
                         <CardBody>
                           <Row gutter="30" align="middle" justify="center">
@@ -483,6 +514,8 @@ class Counties extends React.Component {
                       }}
                     >
                       {console.log(this.state.selectedCountyDemoDetails)}
+                       {/*Below is the Card on the 2nd Tab - Demo Data. This card is also controlled by a ternary statement and will not display if the selectedCountyDemoDetails array is null*/}
+
                       <Card title="Demographic Data ">
                         <CardBody>
                           <Row gutter="30" align="middle" justify="center">
@@ -711,6 +744,8 @@ class Counties extends React.Component {
                       }}
                     >
                       {console.log(this.state.selectedCountyIncomeDetails)}
+                     {/*Below is the Card on the 3nd Tab - Income Data. This card is also controlled by a ternary statement and will not display if the selectedCountyIncomeDetails array is null*/}
+
                       <Card title="Income Data ">
                         <CardBody>
                           <Row gutter="30" align="middle" justify="center">
@@ -834,7 +869,6 @@ class Counties extends React.Component {
                       </Card>
                       <br></br>
                       <br></br>
-                      {/* <Card><CardBody><Row><Col flex={2} style={{ textAlign: 'left' }}><h5 > See State Details </h5><a href={`/search/states_name?name=${this.state.selectedState}`}>{this.state.selectedState}</a></Col></Row><Row> <Col flex={2} style={{ textAlign: 'left' }}>(Link needs to be fixed once state page is working)</Col></Row></CardBody></Card>*/}
                     </div>
                   ) : null,
                 },
