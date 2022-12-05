@@ -20,7 +20,7 @@ export default function About() {
   return (
     <div className="About">
       <Navigation />
-      <TextImageContent color="#EBE9E9">
+      <TextImageContent color="white">
         <PaddedContent>
           <h1>So what are food deserts?</h1>
           <p>
