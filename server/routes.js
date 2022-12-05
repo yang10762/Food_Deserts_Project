@@ -182,31 +182,88 @@ async function searchStatesHSTopicTotal(req, res) {
     }
 
 async function getHeatmapOverlay(req, res) {
-    connection.query(`SELECT fips,
-                             lat,
-                             lon,
-                             ((SUM(no_car_half_mile) * 0.5) + 
-                              SUM(no_car_1_mile) + 
-                              (SUM(no_car_10_mile) * 10) +
-                              (SUM(no_car_20_mile) * 20)) AS weight
-                      FROM Food_Desert
-                      JOIN County_Coordinates ON fips = LEFT(geo_id,5)
-                      GROUP BY fips
-                      HAVING (SUM(no_car_half_mile) > 0 OR 
-                              SUM(no_car_1_mile) > 0 OR
-                              SUM(no_car_10_mile) > 0 OR
-                              SUM(no_car_20_mile) > 0)`, 
-        (error, results, fields) => {
-            if (error) {
-                console.log(error);
-                res.json({error: error});
-            } else if (results) {
-                res.json({ results: results });
-            }
-
-        })
-    if (req.query.overlays) {
-
+    switch (req.query.overlay) {
+        case 'population':
+            connection.query(`SELECT fips,
+                                     lat,
+                                     lon,
+                                     SUM(population)/1000 AS weight
+                              FROM Food_Desert
+                              JOIN County_Coordinates ON fips = LEFT(geo_id,5)
+                              GROUP BY fips
+                              HAVING SUM(population) > 5000`, 
+                (error, results, fields) => {
+                    if (error) {
+                        console.log(error);
+                        res.json({error: error});
+                    } else if (results) {
+                        res.json({ results: results });
+                    }
+                });
+            break;
+        case 'avg_hh_size':
+            connection.query(`SELECT fips,
+                                     lat,
+                                     lon,
+                                     ((SUM(nonfamily_1) / SUM(total_hh)) + ((SUM(family_2) + SUM(nonfamily_2)) / SUM(total_hh) * 2) +
+                                      ((SUM(family_3) + SUM(nonfamily_3)) / SUM(total_hh) * 3) + ((SUM(family_4) + SUM(nonfamily_4)) / SUM(total_hh) * 4) +
+                                      ((SUM(family_5) + SUM(nonfamily_5)) / SUM(total_hh) * 5) + ((SUM(family_6) + SUM(nonfamily_6)) / SUM(total_hh) * 6) +
+                                      ((SUM(family_7_plus) + SUM(nonfamily_7_plus)) / SUM(total_hh) * 7)) AS weight
+                              FROM Household_Size HH
+                              JOIN County_Coordinates ON fips = LEFT(HH.geo_id,5)
+                              GROUP BY fips`, 
+                (error, results, fields) => {
+                    if (error) {
+                        console.log(error);
+                        res.json({error: error});
+                    } else if (results) {
+                        res.json({ results: results });
+                    }
+                });
+            break;
+        case 'below_poverty_line':
+            connection.query(`SELECT fips,
+                                     lat,
+                                     lon,
+                                     (SUM(pct_below_pl_2010 * total_hh_2010) / SUM(total_hh_2010)) AS weight
+                              FROM Food_Assistance
+                              JOIN County_Coordinates ON fips = LEFT(geo_id,5)
+                              GROUP BY fips
+                              HAVING (SUM(pct_below_pl_2010 * total_hh_2010) / SUM(total_hh_2010)) > 10`, 
+                (error, results, fields) => {
+                    if (error) {
+                        console.log(error);
+                        res.json({error: error});
+                    } else if (results) {
+                        res.json({ results: results });
+                    }
+                });
+            break;
+        case 'food_desert':
+        default:
+            connection.query(`SELECT fips,
+                                     lat,
+                                     lon,
+                                     (((SUM(no_car_half_mile) / SUM(housing_units)) * 0.5) + 
+                                     (SUM(no_car_1_mile) / SUM(housing_units)) + 
+                                     ((SUM(no_car_10_mile) / SUM(housing_units)) * 10) +
+                                     ((SUM(no_car_20_mile) / SUM(housing_units)) * 20)) * 100 AS weight
+                              FROM Food_Desert
+                              JOIN County_Coordinates ON fips = LEFT(geo_id,5)
+                              GROUP BY fips
+                              HAVING (SUM(no_car_half_mile) > 0 OR 
+                                      SUM(no_car_1_mile) > 0 OR
+                                      SUM(no_car_10_mile) > 0 OR
+                                      SUM(no_car_20_mile) > 0)`, 
+                (error, results, fields) => {
+                    if (error) {
+                        console.log(error);
+                        res.json({error: error});
+                    } else if (results) {
+                        res.json({ results: results });
+                    }
+                });
+            break;
     }
 }
 

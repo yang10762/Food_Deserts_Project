@@ -37,8 +37,8 @@ const getAllHSYearsForTopicTotal= async (state, topic) => {
     return res.json()
 }
 
-const getMap = async () => {
-    let res = await fetch(`http://${config.server_host}:${config.server_port}/map`, {
+const getMap = async (type) => {
+    let res = await fetch(`http://${config.server_host}:${config.server_port}/map?overlay=${type}`, {
         method: 'GET',
     });
     return res.json();
