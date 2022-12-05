@@ -239,7 +239,7 @@ class Counties extends React.Component {
                 <Button
                   style={{
                     marginTop: "4vh",
-                    color: "black",
+                    color: "white",
                     backgroundColor: "#7FB069",
                     borderRadius: "20px",
                     border: "none",

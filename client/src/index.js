@@ -3,11 +3,10 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 // import App from "./App";
 import Home from "./pages/Home";
-import Heatmap from "./pages/Heatmap";
+import Map from "./pages/Map";
 import About from "./pages/About";
 import States from "./pages/States";
 import Counties from "./pages/Counties";
-import Map from "./pages/Map"
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider, Route } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -46,8 +45,8 @@ const router = createBrowserRouter([
     element: <Home />,
   },
   {
-    path: "/heatmap",
-    element: <Heatmap />,
+    path: "/map",
+    element: <Map />,
   },
   {
     path: "/about",
@@ -64,7 +63,7 @@ const router = createBrowserRouter([
   {
     path: "/map",
     element: <Map />,
-  }
+  },
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

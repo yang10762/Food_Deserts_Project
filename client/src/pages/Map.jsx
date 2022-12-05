@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, ReactElement, useState } from "react";
 import Navigation from "../components/Navigation.jsx";
 import { Wrapper, Status } from "@googlemaps/react-wrapper";
-import config from '../config.json'
-import { getMap } from '../fetcher.js'
+import config from "../config.json";
+import { getMap } from "../fetcher.js";
 
 let map;
 
@@ -33,21 +33,31 @@ const mapStyle = [
   {
     featureType: "administrative.province",
     elementType: "labels.text",
-    stylers: [{ visibility: "on" }, { color: "#5a5a5a" }, { brightness: 25 }, { stroke: .8 }],
+    stylers: [
+      { visibility: "on" },
+      { color: "#5a5a5a" },
+      { brightness: 25 },
+      { stroke: 0.8 },
+    ],
   },
   {
     featureType: "administrative.country",
     elementType: "labels.text",
-    stylers: [{ visibility: "on" }, { color: "#6a6a6a" }, { brightness: 25 }, { stroke: .8 }],
-  }
+    stylers: [
+      { visibility: "on" },
+      { color: "#6a6a6a" },
+      { brightness: 25 },
+      { stroke: 0.8 },
+    ],
+  },
 ];
 
 const foodDesertHeatmapStyle = (heatmapData) => {
   return {
     data: heatmapData,
     dissipating: false,
-    radius: .9,
-    opacity: .6,
+    radius: 0.9,
+    opacity: 0.6,
     gradient: [
       "rgba(255,255,229,0)",
       "rgba(255,255,229,0.5)",
@@ -60,16 +70,16 @@ const foodDesertHeatmapStyle = (heatmapData) => {
       "rgba(153,52,4,1)",
       "rgba(102,37,6,1)",
     ],
-    maxIntensity: 200
-  }
-}
+    maxIntensity: 200,
+  };
+};
 
 const populationHeatmapStyle = (heatmapData) => {
   return {
     data: heatmapData,
     dissipating: false,
-    radius: .7,
-    opacity: .45,
+    radius: 0.7,
+    opacity: 0.45,
     gradient: [
       "rgba(0, 255, 255, 0)",
       "rgba(0, 255, 255, 1)",
@@ -86,16 +96,16 @@ const populationHeatmapStyle = (heatmapData) => {
       "rgba(191, 0, 31, 1)",
       "rgba(255, 0, 0, 1)",
     ],
-    maxIntensity: 5000
-  }
-} 
+    maxIntensity: 5000,
+  };
+};
 
 const avgHHSizeHeatmapStyle = (heatmapData) => {
   return {
     data: heatmapData,
     dissipating: false,
-    radius: .4,
-    opacity: .45,
+    radius: 0.4,
+    opacity: 0.45,
     gradient: [
       "rgba(0, 0, 255, 0)",
       "rgba(0, 0, 225, 0.5)",
@@ -112,16 +122,16 @@ const avgHHSizeHeatmapStyle = (heatmapData) => {
       "rgba(0, 40, 135, 0.8)",
       "rgba(0, 50, 125, 1)",
     ],
-    maxIntensity: 5
-  }
-}
+    maxIntensity: 5,
+  };
+};
 
 const belowPovertyLineHeatmapStyle = (heatmapData) => {
   return {
     data: heatmapData,
     dissipating: false,
-    radius: .4,
-    opacity: .45,
+    radius: 0.4,
+    opacity: 0.45,
     gradient: [
       "rgba(0, 255, 255, 0)",
       "rgba(0, 255, 255, 1)",
@@ -138,80 +148,95 @@ const belowPovertyLineHeatmapStyle = (heatmapData) => {
       "rgba(191, 191, 31, 1)",
       "rgba(255, 255, 0, 1)",
     ],
-    maxIntensity: 35
-  }
-}
+    maxIntensity: 35,
+  };
+};
 
-const getHeatmap = (overlay='') => {
-  
-  if (overlay === 'population') {
-    getMap('population').then(res => {
+const getHeatmap = (overlay = "") => {
+  if (overlay === "population") {
+    getMap("population").then((res) => {
       const results = res.results;
-      
+
       let heatmapData = [];
       for (let i = 0; i < results.length; i++) {
         heatmapData.push({
-          location: new window.google.maps.LatLng(results[i].lat,results[i].lon), 
-          weight: results[i].weight
+          location: new window.google.maps.LatLng(
+            results[i].lat,
+            results[i].lon
+          ),
+          weight: results[i].weight,
         });
       }
-      
-      let heatmap = new window.google.maps.visualization.HeatmapLayer(populationHeatmapStyle(heatmapData));
+
+      let heatmap = new window.google.maps.visualization.HeatmapLayer(
+        populationHeatmapStyle(heatmapData)
+      );
       heatmap.setMap(map);
     });
-  } else if (overlay === 'avg_hh_size') {
-    getMap('avg_hh_size').then(res => {
+  } else if (overlay === "avg_hh_size") {
+    getMap("avg_hh_size").then((res) => {
       const results = res.results;
-      
+
       let heatmapData = [];
       for (let i = 0; i < results.length; i++) {
         heatmapData.push({
-                            location: new window.google.maps.LatLng(results[i].lat,results[i].lon), 
-                            weight: results[i].weight
-                          });
-                        }
-                        
-      let heatmap = new window.google.maps.visualization.HeatmapLayer(avgHHSizeHeatmapStyle(heatmapData));
-      heatmap.setMap(map);
-    });
-  } else if (overlay === 'below_poverty_line') {
-    getMap('below_poverty_line').then(res => {
-      const results = res.results;
-      
-      let heatmapData = [];
-      for (let i = 0; i < results.length; i++) {
-        heatmapData.push({
-          location: new window.google.maps.LatLng(results[i].lat,results[i].lon), 
-          weight: results[i].weight
+          location: new window.google.maps.LatLng(
+            results[i].lat,
+            results[i].lon
+          ),
+          weight: results[i].weight,
         });
       }
-      
-      let heatmap = new window.google.maps.visualization.HeatmapLayer(belowPovertyLineHeatmapStyle(heatmapData));
+
+      let heatmap = new window.google.maps.visualization.HeatmapLayer(
+        avgHHSizeHeatmapStyle(heatmapData)
+      );
+      heatmap.setMap(map);
+    });
+  } else if (overlay === "below_poverty_line") {
+    getMap("below_poverty_line").then((res) => {
+      const results = res.results;
+
+      let heatmapData = [];
+      for (let i = 0; i < results.length; i++) {
+        heatmapData.push({
+          location: new window.google.maps.LatLng(
+            results[i].lat,
+            results[i].lon
+          ),
+          weight: results[i].weight,
+        });
+      }
+
+      let heatmap = new window.google.maps.visualization.HeatmapLayer(
+        belowPovertyLineHeatmapStyle(heatmapData)
+      );
       heatmap.setMap(map);
     });
   }
-  getMap('food_desert').then(res => {
+  getMap("food_desert").then((res) => {
     const results = res.results;
-    
+
     let heatmapData = [];
     for (let i = 0; i < results.length; i++) {
       heatmapData.push({
-                          location: new window.google.maps.LatLng(results[i].lat, results[i].lon), 
-                          weight: results[i].weight
-                        });
+        location: new window.google.maps.LatLng(results[i].lat, results[i].lon),
+        weight: results[i].weight,
+      });
     }
-    
-    let heatmap = new window.google.maps.visualization.HeatmapLayer(foodDesertHeatmapStyle(heatmapData));
+
+    let heatmap = new window.google.maps.visualization.HeatmapLayer(
+      foodDesertHeatmapStyle(heatmapData)
+    );
     heatmap.setMap(map);
   });
-}
+};
 
-
-function MyMapComponent({ center,zoom,styles }) {
+function MyMapComponent({ center, zoom, styles }) {
   const ref = useRef();
 
-  const [overlay, setOverlay] = useState('food_desert');
-  
+  const [overlay, setOverlay] = useState("food_desert");
+
   useEffect(() => {
     map = new window.google.maps.Map(ref.current, {
       center,
@@ -220,10 +245,10 @@ function MyMapComponent({ center,zoom,styles }) {
     });
   });
   useEffect(() => {
-    getHeatmap('population');
-  })
-  
-  return <div ref={ref} id="map"/>;
+    getHeatmap("population");
+  });
+
+  return <div ref={ref} id="map" />;
 }
 
 const render = (status) => {
@@ -235,15 +260,23 @@ const render = (status) => {
 const center = { lat: 38, lng: -98 };
 const zoom = 5;
 export default function Map() {
-    const [overlay, setOverlay] = useState('');
-  
-    return (
-        <div className="Map">
-            <Navigation />
-            <h1>Food Desert Heatmap</h1>
-            <Wrapper apiKey={ `${config.maps_api_key}` } render={ render } libraries={ ['visualization'] }>
-                <MyMapComponent center={center} zoom={zoom} styles={mapStyle}/>
-            </Wrapper>
-        </div>
-    );
+  const [overlay, setOverlay] = useState("");
+
+  return (
+    <div className="Map">
+      <Navigation />
+      <h1>Food Desert Heatmap</h1>
+      <p>
+        View the heatmap below to see the distribution of food deserts and
+        population across the United States
+      </p>
+      <Wrapper
+        apiKey={`${config.maps_api_key}`}
+        render={render}
+        libraries={["visualization"]}
+      >
+        <MyMapComponent center={center} zoom={zoom} styles={mapStyle} />
+      </Wrapper>
+    </div>
+  );
 }
