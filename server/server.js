@@ -12,7 +12,7 @@ const app = express();
 app.use(cors({ credentials: true, origin: ['http://localhost:3000'] }));
 
 // Route 1 - register as GET 
-app.get('/', routes.home)
+// app.get('/', routes.home)
 
 
 //County Routes
@@ -37,6 +37,8 @@ app.get('/search/states_name', routes.searchStatesName)
 app.get('/search/states_population', routes.searchStatesPopulation)
 
 app.get('/search/states_topic', routes.searchStatesHSTopicTotal)
+
+app.get('/map', routes.getHeatmapOverlay)
 
 
 

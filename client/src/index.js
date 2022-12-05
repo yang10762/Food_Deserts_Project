@@ -7,6 +7,7 @@ import Heatmap from "./pages/Heatmap";
 import About from "./pages/About";
 import States from "./pages/States";
 import Counties from "./pages/Counties";
+import Map from "./pages/Map"
 import reportWebVitals from "./reportWebVitals";
 import { createBrowserRouter, RouterProvider, Route } from "react-router-dom";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -60,6 +61,10 @@ const router = createBrowserRouter([
     path: "/counties",
     element: <Counties />,
   },
+  {
+    path: "/map",
+    element: <Map />,
+  }
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

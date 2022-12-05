@@ -1,4 +1,5 @@
 {
     "server_host": "127.0.0.1",
-    "server_port": "8080"
+    "server_port":"8080",
+    "maps_api_key":"AIzaSyDi9DF7skuN7kGu9KVFu0PJp3DaYeGs2qo"
 }
