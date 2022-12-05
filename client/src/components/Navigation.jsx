@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-// import { Button } from "shards-react";
-import { useLocation } from "react-router-dom";
+import { Button } from "shards-react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Bar = styled.div`
   display: flex;
@@ -36,10 +36,11 @@ const Wrapper = styled.div`
 
 export default function Navigation() {
   const location = useLocation();
+  const navigate = useNavigate();
 
-  const routes = ["/about", "/states", "/counties"];
+  const routes = ["/heatmap", "/about", "/states", "/counties"];
 
-  const tabs = ["About", "States", "Counties"];
+  const tabs = ["Heatmap", "About", "States", "Counties"];
 
   return (
     <Wrapper>
@@ -60,15 +61,25 @@ export default function Navigation() {
               }}
               href={route}
               rel="noopener noreferrer"
+              key={`tab-${index}`}
             >
               {tabs[index]}
             </a>
           ))}
         </Pages>
-
-        {/* <Button variant="contained" style={{ borderRadius: 50 }}>
+        <Button
+          style={{
+            color: "white",
+            backgroundColor: "#7FB069",
+            borderRadius: "50",
+            border: "none",
+          }}
+          onClick={() => {
+            navigate("/heatmap");
+          }}
+        >
           Find Deserts
-        </Button> */}
+        </Button>
       </Bar>
     </Wrapper>
   );
