@@ -1,5 +1,5 @@
 import React from "react";
-import desert from "../images/Opacity75Desert.png";
+import desert from "../images/Opacity75Desert.jpeg";
 import DoughnutChart from "../components/DoughnutChart";
 import PolarAreaChart from "../components/PolarAreaChart";
 
