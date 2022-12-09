@@ -1,4 +1,5 @@
 import Navigation from "../components/Navigation.jsx";
+import CustomButton from "../components/CustomButton.jsx";
 import React from "react";
 import DoughnutChart from "../components/DoughnutChart";
 import PolarAreaChart from "../components/PolarAreaChart";
@@ -213,28 +214,17 @@ class Counties extends React.Component {
             </Col>
             <Col flex={2}>
               <FormGroup style={{ width: "10vw" }}>
-                <Button
-                  style={{
-                    marginTop: "3vh",
-                    color: "white",
-                    backgroundColor: "#7FB069",
-                    borderRadius: "20px",
-                    border: "none",
-                  }}
+                <CustomButton
+                  text="Search"
                   onClick={this.updateSearchResults}
-                >
-                  Search
-                </Button>
+                />
               </FormGroup>
             </Col>
           </Row>
         </Form>
 
-        <Divider
-          style={{ width: "70vw", margin: "0 auto", marginTop: "2vh" }}
-        />
-        <div style={{ width: "70vw", margin: "0 auto" }}>
-          <h3>Counties</h3>
+        <div style={{ width: "70vw", margin: "0 auto", marginTop: "5vh" }}>
+          <h2>Counties</h2>
           <h7>Click on a row to see County details.</h7>
         </div>
 

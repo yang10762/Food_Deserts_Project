@@ -2,6 +2,7 @@ import React from "react";
 import desert from "../images/Opacity75Desert.jpeg";
 import DoughnutChart from "../components/DoughnutChart";
 import PolarAreaChart from "../components/PolarAreaChart";
+import CustomButton from "../components/CustomButton";
 
 import {
   Form,
@@ -36,11 +37,7 @@ import {
   Slider,
   Rate,
 } from "antd";
-// import {
-//   MarkSeries,
-//   RadarChart,
-//   SearchableDiscreteColorLegend,
-// } from "react-vis";
+
 import { format } from "d3-format";
 
 //top menu in components folder thatis put into html using <Navigation />
@@ -425,17 +422,10 @@ class StatePage extends React.Component {
             </Col>
             <Col flex={2}>
               <FormGroup style={{ width: "10vw" }}>
-                <Button
-                  style={{
-                    marginTop: "3vh",
-                    backgroundColor: "#7FB069",
-                    borderRadius: "20px",
-                    border: "none",
-                  }}
-                  onClick={this.updateSearchResultsName}
-                >
-                  Search Name
-                </Button>
+                <CustomButton
+                  text="Search Name"
+                  callback={this.updateSearchResultsName}
+                />
               </FormGroup>
             </Col>
             <Col flex={2}>
@@ -457,17 +447,10 @@ class StatePage extends React.Component {
             </Col>
             <Col flex={2}>
               <FormGroup style={{ width: "10vw" }}>
-                <Button
-                  style={{
-                    marginTop: "3vh",
-                    backgroundColor: "#7FB069",
-                    borderRadius: "20px",
-                    border: "none",
-                  }}
-                  onClick={this.updateSearchResultsPopulation}
-                >
-                  Search Range
-                </Button>
+                <CustomButton
+                  text="Search Range"
+                  callback={this.updateSearchResultsPopulation}
+                />
               </FormGroup>
             </Col>
           </Row>
@@ -476,24 +459,6 @@ class StatePage extends React.Component {
           <h2 style={{ textAlign: "left" }}>States</h2>
           <h7>Click on a row to see State details.</h7>
 
-          {popSearch ? (
-            <span style={{ color: "yellow" }}>
-              Search results for states with population size of{" "}
-              {this.state.populationLowQuery * 2 + "M"} to{" "}
-              {this.state.populationHighQuery * 2}
-              {this.state.populationHighQuery === 6 ? "M+:" : "M"}
-            </span>
-          ) : (
-            <span></span>
-          )}
-          {nameSearch ? (
-            <span style={{ color: "yellow" }}>
-              Search results for states with letters '{this.state.usStateQuery}
-              ':{" "}
-            </span>
-          ) : (
-            <br></br>
-          )}
           <Table
             style={{
               width: "100%",
@@ -538,7 +503,7 @@ class StatePage extends React.Component {
                   label: `State Summary`,
                   key: "1",
                   children: (
-                    <Card className="customCardColor" style={{ width: "70%" }}>
+                    <Card style={{ width: "70%" }}>
                       <CardBody>
                         <Row align="center">
                           <h2>
@@ -646,7 +611,7 @@ class StatePage extends React.Component {
                   label: `Population Data`,
                   key: "2",
                   children: (
-                    <Card className="customCardColor" style={{ width: "80%" }}>
+                    <Card style={{ width: "80%" }}>
                       <CardBody>
                         <Row gutter="30" align="middle" justify="center">
                           <h3>Population Rank:</h3>
@@ -768,7 +733,7 @@ class StatePage extends React.Component {
                   label: "Foodstamps",
                   key: "3",
                   children: (
-                    <Card className="customCardColor">
+                    <Card>
                       <CardBody>
                         <Row align="middle" justify="center">
                           <h3>Foodstamps</h3> <Divider></Divider>
@@ -783,7 +748,7 @@ class StatePage extends React.Component {
                   label: "Households",
                   key: "4",
                   children: (
-                    <Card className="customCardColor">
+                    <Card>
                       <CardBody>
                         <Row align="middle" justify="center">
                           <h3>Households</h3> <Divider></Divider>
@@ -798,7 +763,7 @@ class StatePage extends React.Component {
                   label: "Income",
                   key: "5",
                   children: (
-                    <Card className="customCardColor">
+                    <Card>
                       <CardBody>
                         <Row align="middle" justify="center">
                           <h3>Income</h3> <Divider></Divider>
@@ -813,7 +778,7 @@ class StatePage extends React.Component {
                   label: `Health Surveys`,
                   key: "6",
                   children: (
-                    <Card className="customCardColor">
+                    <Card>
                       <CardBody>
                         <Row align="center">
                           <h3>Health Surveys (2011 - 2016)</h3>{" "}
@@ -1029,7 +994,7 @@ class StatePage extends React.Component {
                   label: "Health Insurance",
                   key: "7",
                   children: (
-                    <Card className="customCardColor" style={{ width: "80%" }}>
+                    <Card style={{ width: "80%" }}>
                       <CardBody>
                         <Row align="middle" justify="center">
                           <h3>Health Insurance Statistics</h3>{" "}
@@ -1188,7 +1153,7 @@ class StatePage extends React.Component {
                   label: "Photos",
                   key: "8",
                   children: (
-                    <Card className="customCardColor">
+                    <Card>
                       <CardBody>
                         <Row align="middle" justify="center">
                           <h3>
@@ -1227,22 +1192,26 @@ class StatePage extends React.Component {
                           </div>
                         </Carousel>
                         <br></br>
-                        <Row align="middle" justify="center">
-                          <Button
-                            style={{ backgroundColor: "orange" }}
-                            onClick={() => carouselRef.current.goTo(0)}
-                          >
-                            Landscape View
-                          </Button>
-                          <Button
-                            style={{
-                              backgroundColor: "orange",
-                              marginLeft: "15px",
+                        <Row
+                          style={{
+                            displayFlex: "flex-direction-row",
+                            justifyContent: "space-evenly",
+                          }}
+                          align="middle"
+                          justify="center"
+                        >
+                          <CustomButton
+                            text="Landscape"
+                            callback={() => {
+                              carouselRef.current.goTo(0);
                             }}
-                            onClick={() => carouselRef.current.goTo(1)}
-                          >
-                            Skyline View
-                          </Button>
+                          />
+                          <CustomButton
+                            text="Skyline"
+                            callback={() => {
+                              carouselRef.current.goTo(1);
+                            }}
+                          />
                         </Row>
                       </CardBody>
                     </Card>

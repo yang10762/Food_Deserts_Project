@@ -1,30 +1,21 @@
 import React from "react";
-// import Button from "shards-react";
-import { withStyles } from "@mui/material/styles";
+import { Button } from "shards-react";
 
-const StyledButton = withStyles({
-  root: {
-    display: "flex",
-    alignItems: "right",
-    justifyContent: "center",
-    height: "44px",
-    padding: "0 25px",
-    boxSizing: "border-box",
-    borderRadius: 0,
-    background: "#4f25f7",
-    color: "#fff",
-    transform: "none",
-    boxShadow: "none",
-    transition: "background .3s, border-color .3s, color .3s",
-    "&hover": {
-      backgroundColor: "#4f25f7",
-    },
-  },
-  label: {
-    textTransform: "capitalize",
-  },
-})(Button);
-
-export default function CustomButton() {
-  return <StyledButton variant="contained">Find Deserts</StyledButton>;
+export default function CustomButton(props) {
+  return (
+    <Button
+      style={{
+        marginTop: "3vh",
+        color: "white",
+        backgroundColor: "#7FB069",
+        borderRadius: "20px",
+        border: "none",
+      }}
+      onClick={() => {
+        props.callback();
+      }}
+    >
+      {props.text}
+    </Button>
+  );
 }
