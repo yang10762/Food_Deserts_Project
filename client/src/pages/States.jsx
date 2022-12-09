@@ -613,13 +613,24 @@ class StatePage extends React.Component {
                   ),
                 },
 
-                //State Population Data Tab
+                //State Demographic Data Tab
                 {
                   label: `Demographic Data`,
                   key: "2",
                   children: (
                     <Card style={{ width: "80%" }}>
                       <CardBody>
+                        {/* Card Header */}
+                        <Row gutter="30" align="middle" justify="center">
+                          <Col flex={2} style={{ textAlign: "left" }}>
+                            <h3>Demographic Data </h3>
+                          </Col>
+                          <Col flex={2} style={{ textAlign: "right" }}>
+                            <h3 style={{ color: "#7FB069" }}>
+                              {this.state.selectedStateName}
+                            </h3>
+                          </Col>
+                        </Row>
                         <Row gutter="30" align="middle" justify="center">
                           <h3>Population Rank:</h3>
                         </Row>
@@ -636,24 +647,22 @@ class StatePage extends React.Component {
                           </h2>
                         </Row>
                         <Row align="middle" justify="center">
-                          <p>
+                          <h6>
                             with a total population of{" "}
                             <span style={{ color: "#7FB069" }}>
                               {this.state.selectedStateDetails.demoFS.total?.toLocaleString(
                                 "en-US"
                               )}{" "}
                             </span>
-                          </p>
+                          </h6>
                         </Row>
                         <Divider />
-                        <br></br>
+
+                        {/* Gender distribution within a selected state*/}
                         <Row align="middle" justify="center">
                           <h4>Gender Distribution:</h4>
-                          <br></br>
-                          <br></br>
                         </Row>
                         <Row align="middle" justify="center">
-                          {" "}
                           <DoughnutChart
                             data={{
                               labels: ["Male", "Female"],
@@ -670,11 +679,9 @@ class StatePage extends React.Component {
                             }}
                           />
                         </Row>
-                        <br></br>
-
-                        <br></br>
                         <Divider />
-                        <br></br>
+
+                        {/* Age distribution within a selected state*/}
                         <Row align="middle" justify="center">
                           <h4>Age Distribution: </h4>
                         </Row>
@@ -725,7 +732,8 @@ class StatePage extends React.Component {
                           />
                         </Row>
                         <Divider />
-                        {/* Households within a county */}
+
+                        {/* Households within a selected state */}
                         <Row align="middle" justify="center">
                           <h4>Households: </h4>
                         </Row>
@@ -768,8 +776,6 @@ class StatePage extends React.Component {
                             }}
                           ></BarChart>
                         </Row>
-
-                        <br></br>
                       </CardBody>
                     </Card>
                   ),
