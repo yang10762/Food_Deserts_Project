@@ -576,105 +576,51 @@ class Counties extends React.Component {
                           <Divider />
 
                           {/* Households within a county */}
-                          <Row gutter="30" align="middle" justify="left">
-                            {/* <StackedBarChart
+                          <Row align="middle" justify="center">
+                            <h4>Households: </h4>
+                          </Row>
+                          <Row gutter="30" align="left" justify="center">
+                            <StackedBarChart
                               data={{
                                 labels: ["2010", "2015"],
                                 datasets: [
                                   {
                                     label: "Total households",
-                                    data: this.state.selectedCountyDemoDetails
-                                      .Total_Households_2010,
-
-                                    backgroundColor: "rgb(255, 99, 132)",
+                                    data: [
+                                      this.state.selectedCountyDemoDetails
+                                        .Total_Households_2010,
+                                      this.state.selectedCountyDemoDetails
+                                        .Total_Households_2015,
+                                    ],
+                                    backgroundColor: "#7FB069",
                                   },
-                                  // {
-                                  //   label: "Households with members 18 & under",
-                                  //   data: labels.map(() =>
-                                  //     faker.datatype.number({
-                                  //       min: -1000,
-                                  //       max: 1000,
-                                  //     })
-                                  //   ),
-                                  //   backgroundColor: "rgb(75, 192, 192)",
-                                  // },
-                                  // {
-                                  //   label: "Households with members 60 & over",
-                                  //   data: labels.map(() =>
-                                  //     faker.datatype.number({
-                                  //       min: -1000,
-                                  //       max: 1000,
-                                  //     })
-                                  //   ),
-                                  //   backgroundColor: "rgb(53, 162, 235)",
-                                  // },
+                                  {
+                                    label:
+                                      "Total households with members under 18",
+                                    data: [
+                                      this.state.selectedCountyDemoDetails
+                                        .hh_18_under_2010,
+                                      this.state.selectedCountyDemoDetails
+                                        .hh_18_under_2015,
+                                    ],
+                                    backgroundColor: "#666A86",
+                                  },
+                                  {
+                                    label:
+                                      "Total households with members over 60",
+                                    data: [
+                                      this.state.selectedCountyDemoDetails
+                                        .hh_60_over_2010,
+                                      this.state.selectedCountyDemoDetails
+                                        .hh_60_over_2015,
+                                    ],
+                                    backgroundColor: "#EBE9E9",
+                                  },
                                 ],
                               }}
-                            ></StackedBarChart> */}
-                            <Col flex={2} style={{ textAlign: "center" }}>
-                              <h4>2010</h4>
-                            </Col>
-                            <Col flex={2} style={{ textAlign: "center" }}>
-                              <h4>2015</h4>
-                            </Col>
+                            ></StackedBarChart>
                           </Row>
                           <br></br>
-                          <Row gutter="30" align="middle" justify="left">
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Total Number of Households:{" "}
-                              <h5>
-                                {this.state.selectedCountyDemoDetails.Total_Households_2010?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Total Number of Households:{" "}
-                              <h5>
-                                {this.state.selectedCountyDemoDetails.Total_Households_2015?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
-                          </Row>
-                          <br></br>
-                          <Row gutter="30" align="middle" justify="left">
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Households with member 18 & under:{" "}
-                              <h5>
-                                {this.state.selectedCountyDemoDetails.hh_18_under_2010?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Households with member 18 & under:{" "}
-                              <h5>
-                                {this.state.selectedCountyDemoDetails.hh_18_under_2015?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
-                          </Row>
-                          <br></br>
-                          <Row gutter="30" align="middle" justify="left">
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Households with member 60 & over:{" "}
-                              <h5>
-                                {this.state.selectedCountyDemoDetails.hh_60_over_2010?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Households with member 60 & over:{" "}
-                              <h5>
-                                {this.state.selectedCountyDemoDetails.hh_60_over_2015?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
-                          </Row>
                         </CardBody>
                       </Card>
                       <br></br>

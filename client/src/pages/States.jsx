@@ -3,6 +3,7 @@ import desert from "../images/Opacity75Desert.jpeg";
 import DoughnutChart from "../components/DoughnutChart";
 import PolarAreaChart from "../components/PolarAreaChart";
 import CustomButton from "../components/CustomButton";
+import StackedBarChart from "../components/StackedBarChart";
 
 import {
   Form,
@@ -95,9 +96,7 @@ const stateColumns = [
     width: 30,
     align: "left",
     sorter: (a, b) => a.state.localeCompare(b.state),
-    render: (text, row) => (
-      <span>{text}</span>
-    ),
+    render: (text, row) => <span>{text}</span>,
   },
   {
     title: "Population",
@@ -466,7 +465,7 @@ class StatePage extends React.Component {
             onRow={(record, rowIndex) => {
               return {
                 onClick: (event) => {
-                  window.location=`/states?state_name=${record.state}`
+                  window.location = `/states?state_name=${record.state}`;
                 },
               };
             }}
@@ -615,7 +614,7 @@ class StatePage extends React.Component {
 
                 //State Population Data Tab
                 {
-                  label: `Population Data`,
+                  label: `Demographic Data`,
                   key: "2",
                   children: (
                     <Card style={{ width: "80%" }}>
@@ -724,38 +723,54 @@ class StatePage extends React.Component {
                             }}
                           />
                         </Row>
+                        <Divider />
+                        {/* Households within a county */}
+                        <Row align="middle" justify="center">
+                          <h4>Households: </h4>
+                        </Row>
+                        <Row gutter="30" align="left" justify="center">
+                          <StackedBarChart
+                            data={{
+                              labels: ["2010", "2015"],
+                              datasets: [
+                                {
+                                  label: "Total households",
+                                  data: [
+                                    this.state.selectedStateDetails.demoFS
+                                      .Total_HH_2010,
+                                    this.state.selectedStateDetails.demoFS
+                                      .Total_HH_2015,
+                                  ],
+                                  backgroundColor: "#7FB069",
+                                },
+                                {
+                                  label:
+                                    "Total households with members under 18",
+                                  data: [
+                                    this.state.selectedStateDetails.demoFS
+                                      .hh_18_under_2010,
+                                    this.state.selectedStateDetails.demoFS
+                                      .hh_18_under_2015,
+                                  ],
+                                  backgroundColor: "#666A86",
+                                },
+                                {
+                                  label:
+                                    "Total households with members over 60",
+                                  data: [
+                                    this.state.selectedStateDetails.demoFS
+                                      .hh_60_over_2010,
+                                    this.state.selectedStateDetails.demoFS
+                                      .hh_60_over_2015,
+                                  ],
+                                  backgroundColor: "#EBE9E9",
+                                },
+                              ],
+                            }}
+                          ></StackedBarChart>
+                        </Row>
 
                         <br></br>
-                      </CardBody>
-                    </Card>
-                  ),
-                },
-
-                // State Foodstamps Tab
-                {
-                  label: "Foodstamps",
-                  key: "3",
-                  children: (
-                    <Card>
-                      <CardBody>
-                        <Row align="middle" justify="center">
-                          <h3>Foodstamps</h3> <Divider></Divider>
-                        </Row>
-                      </CardBody>
-                    </Card>
-                  ),
-                },
-
-                // State Households Tab
-                {
-                  label: "Households",
-                  key: "4",
-                  children: (
-                    <Card>
-                      <CardBody>
-                        <Row align="middle" justify="center">
-                          <h3>Households</h3> <Divider></Divider>
-                        </Row>
                       </CardBody>
                     </Card>
                   ),
@@ -764,7 +779,7 @@ class StatePage extends React.Component {
                 // State Income Tab
                 {
                   label: "Income",
-                  key: "5",
+                  key: "3",
                   children: (
                     <Card>
                       <CardBody>
@@ -779,7 +794,7 @@ class StatePage extends React.Component {
                 // State Health Surveys Tab
                 {
                   label: `Health Surveys`,
-                  key: "6",
+                  key: "4",
                   children: (
                     <Card>
                       <CardBody>
@@ -995,7 +1010,7 @@ class StatePage extends React.Component {
                 // State Health Insurance Tab
                 {
                   label: "Health Insurance",
-                  key: "7",
+                  key: "5",
                   children: (
                     <Card style={{ width: "80%" }}>
                       <CardBody>
@@ -1154,7 +1169,7 @@ class StatePage extends React.Component {
                 // State Photos Tab
                 {
                   label: "Photos",
-                  key: "8",
+                  key: "6",
                   children: (
                     <Card>
                       <CardBody>
