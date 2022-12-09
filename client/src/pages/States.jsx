@@ -1303,7 +1303,7 @@ class StatePage extends React.Component {
                           <Divider></Divider>
                           <br></br>
                           <Row align="middle" justify="center" gutter={10}>
-                              <h6>This {Math.abs(this.state.selectedStateDetails.healthInsurance.uninsured_rate_change)}% change in the uninsured rate means that: </h6>
+                              <h6>This {Math.abs(this.state.selectedStateDetails.healthInsurance.uninsured_rate_change)}% change in the uninsured rate from 2010 to 2015 means that: </h6>
                           </Row>
                           <Row align="middle" justify="center" gutter={10}>
                             <Statistic                                
