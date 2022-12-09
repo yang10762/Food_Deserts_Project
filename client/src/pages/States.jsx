@@ -14,7 +14,7 @@ import {
   Progress,
 } from "shards-react";
 import stateStyles from "../stateStyles.css";
-import { ArrowDownOutlined, ArrowUpOutlined } from '@ant-design/icons'
+import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
 
 import {
   Badge,
@@ -59,7 +59,6 @@ const wideFormat = format(".3r");
 const carouselRef = React.createRef();
 const { Column, ColumnGroup } = Table;
 const { Option } = Select;
-
 
 var nameSearch = false;
 var popSearch = false;
@@ -108,7 +107,7 @@ const stateColumns = [
     dataIndex: "population_count",
     key: "population_count",
     width: 10,
-    align: "center",
+    align: "right",
     sorter: (a, b) => a.population_count - b.population_count,
     render: (text, row) => (
       <span>{row.population_count?.toLocaleString("en-US")}</span>
@@ -119,7 +118,7 @@ const stateColumns = [
     dataIndex: "total_HH_FD_status",
     key: "total_HH_FD_status",
     width: 10,
-    align: "center",
+    align: "right",
     sorter: (a, b) => a.total_HH_FD_status - b.total_HH_FD_status,
     render: (text, row) => (
       <span>{row.total_HH_FD_status?.toLocaleString("en-US")}</span>
@@ -405,14 +404,7 @@ class StatePage extends React.Component {
 
   render() {
     return (
-      <div
-        style={{
-          backgroundImage: `url(${desert})`,
-          backgroundAttachment: "fixed",
-          backgroundSize: "cover",
-          minHeight: "100vh",
-        }}
-      >
+      <div>
         <Navigation />
         <Form
           style={{ width: "80vw", margin: "0 auto", marginTop: "5vh" }}
@@ -434,7 +426,12 @@ class StatePage extends React.Component {
             <Col flex={2}>
               <FormGroup style={{ width: "10vw" }}>
                 <Button
-                  style={{ marginTop: "4vh" }}
+                  style={{
+                    marginTop: "3vh",
+                    backgroundColor: "#7FB069",
+                    borderRadius: "20px",
+                    border: "none",
+                  }}
                   onClick={this.updateSearchResultsName}
                 >
                   Search Name
@@ -461,7 +458,12 @@ class StatePage extends React.Component {
             <Col flex={2}>
               <FormGroup style={{ width: "10vw" }}>
                 <Button
-                  style={{ marginTop: "4vh" }}
+                  style={{
+                    marginTop: "3vh",
+                    backgroundColor: "#7FB069",
+                    borderRadius: "20px",
+                    border: "none",
+                  }}
                   onClick={this.updateSearchResultsPopulation}
                 >
                   Search Range
@@ -471,7 +473,9 @@ class StatePage extends React.Component {
           </Row>
         </Form>
         <div style={{ width: "70vw", margin: "0 auto", marginTop: "5vh" }}>
-          <h2 style={{ textAlign: "center" }}>States</h2>
+          <h2 style={{ textAlign: "left" }}>States</h2>
+          <h7>Click on a row to see State details.</h7>
+
           {popSearch ? (
             <span style={{ color: "yellow" }}>
               Search results for states with population size of{" "}
@@ -493,7 +497,6 @@ class StatePage extends React.Component {
           <Table
             style={{
               width: "100%",
-              backgroundColor: "rgb(245, 238, 222, 0.8)",
             }}
             dataSource={this.state.usStateResults}
             columns={stateColumns}
@@ -543,7 +546,7 @@ class StatePage extends React.Component {
                             {this.state.selectedStateDetails.detail.abbrev}
                           </h2>
                         </Row>
-                        <Divider></Divider>
+                        <Divider />
                         <Row align="center">
                           <img
                             src={
@@ -554,7 +557,7 @@ class StatePage extends React.Component {
                             style={{ height: "15vw ", objectFit: "cover" }}
                           />
                         </Row>
-                        <Divider></Divider>
+                        <Divider />
                         <Row align="center">
                           <Col
                             flex=".5"
@@ -597,7 +600,7 @@ class StatePage extends React.Component {
                           </Col>
                         </Row>
 
-                        <Divider></Divider>
+                        <Divider />
                         <Row gutter="10" align="middle" justify="center">
                           <Col
                             style={{
@@ -670,7 +673,7 @@ class StatePage extends React.Component {
                             </span>
                           </p>
                         </Row>
-                        <Divider></Divider>
+                        <Divider />
                         <br></br>
                         <Row align="middle" justify="center">
                           <h4>Gender Distribution:</h4>
@@ -702,7 +705,7 @@ class StatePage extends React.Component {
                         <br></br>
 
                         <br></br>
-                        <Divider> </Divider>
+                        <Divider />
                         <br></br>
                         <Row align="middle" justify="center">
                           <h4>Age Distribution: </h4>
@@ -1029,67 +1032,152 @@ class StatePage extends React.Component {
                     <Card className="customCardColor" style={{ width: "80%" }}>
                       <CardBody>
                         <Row align="middle" justify="center">
-                          <h3>Health Insurance Statistics</h3> <Divider></Divider> <br></br>
+                          <h3>Health Insurance Statistics</h3>{" "}
+                          <Divider></Divider> <br></br>
                         </Row>
                         <Row align="middle" justify="center">
-                          <h6>Uninsured Rates in 2010 vs 2015 for {this.state.selectedStateDetails.demoFS.state}:</h6> 
-                        </Row> 
-                          <Row align="middle" justify="center" gutter={10} style={{marginTop: '2%'}}>
-                            <Col span={6}>
-                              <Statistic title="Uninsured rate in 2010" 
-                                value={this.state.selectedStateDetails.healthInsurance.uninsured_rate_2010} 
-                                valueStyle={{ color: this.state.selectedStateDetails.healthInsurance.uninsured_rate_2010 >= this.state.selectedStateDetails.healthInsurance.uninsured_rate_2015 ? '#cf1322' : '#3f8600'}} 
-                                suffix="%" 
-                              />
-                            </Col>
-                            <Col span={6}>
-                              <Statistic title="Uninsured rate in 2015" 
-                                value={this.state.selectedStateDetails.healthInsurance.uninsured_rate_2015}
-                                valueStyle={{ color: this.state.selectedStateDetails.healthInsurance.uninsured_rate_2010 >= this.state.selectedStateDetails.healthInsurance.uninsured_rate_2015 ? '#3f8600' : '#cf1322'}} 
-                                suffix="%" 
-                              />
-                            </Col>
-                            <Col span={6}>
-                              <Statistic
-                                title="% Change from 2010 to 2015"
-                                value={Math.abs(this.state.selectedStateDetails.healthInsurance.uninsured_rate_change)}
-                                precision={1}
-                                valueStyle={{ color: this.state.selectedStateDetails.healthInsurance.uninsured_rate_change < 0 ? '#3f8600': '#cf1322'}}
-                                prefix={this.state.selectedStateDetails.healthInsurance.uninsured_rate_change < 0 ? <ArrowDownOutlined /> : <ArrowUpOutlined />}
-                                suffix="%"
-                              />
-                            </Col>
-                          </Row>
-                          <br></br>
-                          <Divider></Divider>
-                          <br></br>
-                          <Row align="middle" justify="center" gutter={10}>
-                              <h6>This {Math.abs(this.state.selectedStateDetails.healthInsurance.uninsured_rate_change)}% change in the uninsured rate from 2010 to 2015 means that: </h6>
-                          </Row>
-                          <Row align="middle" justify="center" gutter={10}>
-                            <Statistic                                
-                              value={Math.abs(this.state.selectedStateDetails.healthInsurance.health_insurance_coverage_change)}
-                              precision={0}
-                              valueStyle={{color: this.state.selectedStateDetails.healthInsurance.uninsured_rate_change < 0 ? '#3f8600': '#cf1322'}}
-                              prefix={this.state.selectedStateDetails.healthInsurance.uninsured_rate_change < 0 ? <ArrowUpOutlined />: <ArrowDownOutlined />}
-                              suffix= {this.state.selectedStateDetails.healthInsurance.uninsured_rate_change < 0 ? " more people have health insurance": "less people have health insurance"}
+                          <h6>
+                            Uninsured Rates in 2010 vs 2015 for{" "}
+                            {this.state.selectedStateDetails.demoFS.state}:
+                          </h6>
+                        </Row>
+                        <Row
+                          align="middle"
+                          justify="center"
+                          gutter={10}
+                          style={{ marginTop: "2%" }}
+                        >
+                          <Col span={6}>
+                            <Statistic
+                              title="Uninsured rate in 2010"
+                              value={
+                                this.state.selectedStateDetails.healthInsurance
+                                  .uninsured_rate_2010
+                              }
+                              valueStyle={{
+                                color:
+                                  this.state.selectedStateDetails
+                                    .healthInsurance.uninsured_rate_2010 >=
+                                  this.state.selectedStateDetails
+                                    .healthInsurance.uninsured_rate_2015
+                                    ? "#cf1322"
+                                    : "#3f8600",
+                              }}
+                              suffix="%"
                             />
-                          </Row>
-                          <br></br>
-                          <Divider></Divider> 
-                          <br></br>
-                          <Row align="middle" justify="center" gutter={10}>
-                            <h6> In the year 2015, employers in the state of {this.state.selectedStateDetails.demoFS.state} provided health insurance for :</h6>
-                          </Row>
-                          <Row align="middle" justify="center" gutter={10}>
-                            <Statistic                                
-                                value={this.state.selectedStateDetails.healthInsurance.employer_health_insurance_coverage_2015?.toLocaleString("en-US")}
-                                precision={0}
-                                valueStyle={{color:'#3f8600'}}
-                                suffix= "people"
+                          </Col>
+                          <Col span={6}>
+                            <Statistic
+                              title="Uninsured rate in 2015"
+                              value={
+                                this.state.selectedStateDetails.healthInsurance
+                                  .uninsured_rate_2015
+                              }
+                              valueStyle={{
+                                color:
+                                  this.state.selectedStateDetails
+                                    .healthInsurance.uninsured_rate_2010 >=
+                                  this.state.selectedStateDetails
+                                    .healthInsurance.uninsured_rate_2015
+                                    ? "#3f8600"
+                                    : "#cf1322",
+                              }}
+                              suffix="%"
                             />
-                          </Row>
-                          <br></br>
+                          </Col>
+                          <Col span={6}>
+                            <Statistic
+                              title="% Change from 2010 to 2015"
+                              value={Math.abs(
+                                this.state.selectedStateDetails.healthInsurance
+                                  .uninsured_rate_change
+                              )}
+                              precision={1}
+                              valueStyle={{
+                                color:
+                                  this.state.selectedStateDetails
+                                    .healthInsurance.uninsured_rate_change < 0
+                                    ? "#3f8600"
+                                    : "#cf1322",
+                              }}
+                              prefix={
+                                this.state.selectedStateDetails.healthInsurance
+                                  .uninsured_rate_change < 0 ? (
+                                  <ArrowDownOutlined />
+                                ) : (
+                                  <ArrowUpOutlined />
+                                )
+                              }
+                              suffix="%"
+                            />
+                          </Col>
+                        </Row>
+                        <br></br>
+                        <Divider></Divider>
+                        <br></br>
+                        <Row align="middle" justify="center" gutter={10}>
+                          <h6>
+                            This{" "}
+                            {Math.abs(
+                              this.state.selectedStateDetails.healthInsurance
+                                .uninsured_rate_change
+                            )}
+                            % change in the uninsured rate from 2010 to 2015
+                            means that:{" "}
+                          </h6>
+                        </Row>
+                        <Row align="middle" justify="center" gutter={10}>
+                          <Statistic
+                            value={Math.abs(
+                              this.state.selectedStateDetails.healthInsurance
+                                .health_insurance_coverage_change
+                            )}
+                            precision={0}
+                            valueStyle={{
+                              color:
+                                this.state.selectedStateDetails.healthInsurance
+                                  .uninsured_rate_change < 0
+                                  ? "#3f8600"
+                                  : "#cf1322",
+                            }}
+                            prefix={
+                              this.state.selectedStateDetails.healthInsurance
+                                .uninsured_rate_change < 0 ? (
+                                <ArrowUpOutlined />
+                              ) : (
+                                <ArrowDownOutlined />
+                              )
+                            }
+                            suffix={
+                              this.state.selectedStateDetails.healthInsurance
+                                .uninsured_rate_change < 0
+                                ? " more people have health insurance"
+                                : "less people have health insurance"
+                            }
+                          />
+                        </Row>
+                        <br></br>
+                        <Divider></Divider>
+                        <br></br>
+                        <Row align="middle" justify="center" gutter={10}>
+                          <h6>
+                            {" "}
+                            In the year 2015, employers in the state of{" "}
+                            {this.state.selectedStateDetails.demoFS.state}{" "}
+                            provided health insurance for :
+                          </h6>
+                        </Row>
+                        <Row align="middle" justify="center" gutter={10}>
+                          <Statistic
+                            value={this.state.selectedStateDetails.healthInsurance.employer_health_insurance_coverage_2015?.toLocaleString(
+                              "en-US"
+                            )}
+                            precision={0}
+                            valueStyle={{ color: "#3f8600" }}
+                            suffix="people"
+                          />
+                        </Row>
+                        <br></br>
                       </CardBody>
                     </Card>
                   ),

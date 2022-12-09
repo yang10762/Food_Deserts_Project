@@ -71,7 +71,7 @@ export default function Navigation() {
           style={{
             color: "white",
             backgroundColor: "#7FB069",
-            borderRadius: "50",
+            borderRadius: "20px",
             border: "none",
           }}
           onClick={() => {

@@ -1,5 +1,7 @@
 import Navigation from "../components/Navigation.jsx";
 import React from "react";
+import DoughnutChart from "../components/DoughnutChart";
+import PolarAreaChart from "../components/PolarAreaChart";
 import {
   Form,
   FormInput,
@@ -213,7 +215,7 @@ class Counties extends React.Component {
               <FormGroup style={{ width: "10vw" }}>
                 <Button
                   style={{
-                    marginTop: "4vh",
+                    marginTop: "3vh",
                     color: "white",
                     backgroundColor: "#7FB069",
                     borderRadius: "20px",
@@ -499,6 +501,11 @@ class Counties extends React.Component {
                             </Col>
                           </Row>
                           <br></br>
+                          <Divider />
+                          {/* Male and Female population distribution */}
+                          <Row align="middle" justify="center">
+                            <h4>Gender Distribution: </h4>
+                          </Row>
                           <Row gutter="30" align="middle" justify="left">
                             <Col flex={2} style={{ textAlign: "left" }}>
                               Population:{" "}
@@ -509,124 +516,75 @@ class Counties extends React.Component {
                               </h5>
                             </Col>
                             <Col flex={2} style={{ textAlign: "left" }}>
-                              Men:{" "}
-                              <h5>
-                                {this.state.selectedCountyDemoDetails.male?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                              <Progress
-                                percent={(
-                                  (this.state.selectedCountyDemoDetails.male /
-                                    this.state.selectedCountyDemoDetails
-                                      .Population) *
-                                  100
-                                ).toFixed(2)}
-                                strokeColor={"#0000ff"}
-                              />
-                            </Col>
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Women:{" "}
-                              <h5>
-                                {this.state.selectedCountyDemoDetails.female?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                              <Progress
-                                percent={(
-                                  (this.state.selectedCountyDemoDetails.female /
-                                    this.state.selectedCountyDemoDetails
-                                      .Population) *
-                                  100
-                                ).toFixed(2)}
-                                strokeColor={"#FF0000"}
+                              <DoughnutChart
+                                data={{
+                                  labels: ["Male", "Female"],
+                                  datasets: [
+                                    {
+                                      label: "Total",
+                                      data: [
+                                        this.state.selectedCountyDemoDetails
+                                          .male,
+                                        this.state.selectedCountyDemoDetails
+                                          .female,
+                                      ],
+                                    },
+                                  ],
+                                }}
                               />
                             </Col>
                           </Row>
                           <br></br>
                           <br></br>
-                          <Row gutter="30" align="middle" justify="left">
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Age 0-9:{" "}
-                              <h5>
-                                {this.state.selectedCountyDemoDetails.age_0_9?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Age 10-17:{" "}
-                              <h5>
-                                {this.state.selectedCountyDemoDetails.age_10_17?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Age 18-29:{" "}
-                              <h5>
-                                {this.state.selectedCountyDemoDetails.age_18_29?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
+                          <Divider />
+                          {/* Age distribution within a county */}
+                          <Row align="middle" justify="center">
+                            <h4>Age Distribution: </h4>
                           </Row>
-                          <br></br>
                           <Row gutter="30" align="middle" justify="left">
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Age 30-39:{" "}
-                              <h5>
-                                {this.state.selectedCountyDemoDetails.age_30_39?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Age 40-49:{" "}
-                              <h5>
-                                {this.state.selectedCountyDemoDetails.age_40_49?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Age 50-59:{" "}
-                              <h5>
-                                {this.state.selectedCountyDemoDetails.age_50_59?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
-                          </Row>
-                          <br></br>
-                          <Row gutter="30" align="middle" justify="left">
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Age 60-69:{" "}
-                              <h5>
-                                {this.state.selectedCountyDemoDetails.age_60_69?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Age 70-79:{" "}
-                              <h5>
-                                {this.state.selectedCountyDemoDetails.age_70_79?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Age 80 plus:{" "}
-                              <h5>
-                                {this.state.selectedCountyDemoDetails.age_80_plus?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
+                            <PolarAreaChart
+                              data={{
+                                labels: [
+                                  "0-9",
+                                  "10-17",
+                                  "18-29",
+                                  "30-39",
+                                  "40-49",
+                                  "50-59",
+                                  "60-69",
+                                  "70+",
+                                ],
+                                datasets: [
+                                  {
+                                    label: "Total of the population",
+                                    data: [
+                                      this.state.selectedCountyDemoDetails
+                                        .age_0_9,
+                                      this.state.selectedCountyDemoDetails
+                                        .age_10_17,
+                                      this.state.selectedCountyDemoDetails
+                                        .age_18_29,
+                                      this.state.selectedCountyDemoDetails
+                                        .age_30_39,
+                                      this.state.selectedCountyDemoDetails
+                                        .age_40_49,
+                                      this.state.selectedCountyDemoDetails
+                                        .age_50_59,
+                                      this.state.selectedCountyDemoDetails
+                                        .age_60_69,
+                                      this.state.selectedCountyDemoDetails
+                                        .age_70_79 +
+                                        this.state.selectedCountyDemoDetails
+                                          .age_80_plus,
+                                    ],
+                                  },
+                                ],
+                              }}
+                            />
                           </Row>
                           <br></br>
                           <br></br>
+                          <Divider />
                           <Row gutter="30" align="middle" justify="left">
                             <Col flex={2} style={{ textAlign: "center" }}>
                               <h4>2010</h4>
