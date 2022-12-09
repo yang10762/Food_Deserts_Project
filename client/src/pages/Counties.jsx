@@ -3,6 +3,7 @@ import CustomButton from "../components/CustomButton.jsx";
 import React from "react";
 import DoughnutChart from "../components/DoughnutChart";
 import PolarAreaChart from "../components/PolarAreaChart";
+import StackedBarChart from "../components/StackedBarChart.jsx";
 import {
   Form,
   FormInput,
@@ -490,39 +491,37 @@ class Counties extends React.Component {
                               </h3>
                             </Col>
                           </Row>
-                          <br></br>
+                          <Row align="left" justify="right">
+                            <h5>
+                              Total population of{" "}
+                              <span style={{ color: "#7FB069" }}>
+                                {this.state.selectedCountyDemoDetails.Population?.toLocaleString(
+                                  "en-US"
+                                )}{" "}
+                              </span>
+                            </h5>
+                          </Row>
                           <Divider />
                           {/* Male and Female population distribution */}
                           <Row align="middle" justify="center">
                             <h4>Gender Distribution: </h4>
                           </Row>
-                          <Row gutter="30" align="middle" justify="left">
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Population:{" "}
-                              <h5>
-                                {this.state.selectedCountyDemoDetails.Population?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              <DoughnutChart
-                                data={{
-                                  labels: ["Male", "Female"],
-                                  datasets: [
-                                    {
-                                      label: "Total",
-                                      data: [
-                                        this.state.selectedCountyDemoDetails
-                                          .male,
-                                        this.state.selectedCountyDemoDetails
-                                          .female,
-                                      ],
-                                    },
-                                  ],
-                                }}
-                              />
-                            </Col>
+                          <Row gutter="30" align="middle" justify="center">
+                            <DoughnutChart
+                              data={{
+                                labels: ["Male", "Female"],
+                                datasets: [
+                                  {
+                                    label: "Total",
+                                    data: [
+                                      this.state.selectedCountyDemoDetails.male,
+                                      this.state.selectedCountyDemoDetails
+                                        .female,
+                                    ],
+                                  },
+                                ],
+                              }}
+                            />
                           </Row>
                           <br></br>
                           <br></br>
@@ -531,7 +530,7 @@ class Counties extends React.Component {
                           <Row align="middle" justify="center">
                             <h4>Age Distribution: </h4>
                           </Row>
-                          <Row gutter="30" align="middle" justify="left">
+                          <Row gutter="30" align="middle" justify="center">
                             <PolarAreaChart
                               data={{
                                 labels: [
@@ -575,7 +574,43 @@ class Counties extends React.Component {
                           <br></br>
                           <br></br>
                           <Divider />
+
+                          {/* Households within a county */}
                           <Row gutter="30" align="middle" justify="left">
+                            {/* <StackedBarChart
+                              data={{
+                                labels: ["2010", "2015"],
+                                datasets: [
+                                  {
+                                    label: "Total households",
+                                    data: this.state.selectedCountyDemoDetails
+                                      .Total_Households_2010,
+
+                                    backgroundColor: "rgb(255, 99, 132)",
+                                  },
+                                  // {
+                                  //   label: "Households with members 18 & under",
+                                  //   data: labels.map(() =>
+                                  //     faker.datatype.number({
+                                  //       min: -1000,
+                                  //       max: 1000,
+                                  //     })
+                                  //   ),
+                                  //   backgroundColor: "rgb(75, 192, 192)",
+                                  // },
+                                  // {
+                                  //   label: "Households with members 60 & over",
+                                  //   data: labels.map(() =>
+                                  //     faker.datatype.number({
+                                  //       min: -1000,
+                                  //       max: 1000,
+                                  //     })
+                                  //   ),
+                                  //   backgroundColor: "rgb(53, 162, 235)",
+                                  // },
+                                ],
+                              }}
+                            ></StackedBarChart> */}
                             <Col flex={2} style={{ textAlign: "center" }}>
                               <h4>2010</h4>
                             </Col>

@@ -645,11 +645,7 @@ class StatePage extends React.Component {
                           <br></br>
                           <br></br>
                         </Row>
-                        <Row
-                          style={{ minHeight: "75%" }}
-                          align="middle"
-                          justify="center"
-                        >
+                        <Row align="middle" justify="center">
                           {" "}
                           <DoughnutChart
                             data={{
