@@ -263,20 +263,26 @@ export default function Map() {
   const [overlay, setOverlay] = useState("");
 
   return (
-    <div className="Map">
+    <>
       <Navigation />
-      <h1>Food Desert Heatmap</h1>
-      <p>
-        View the heatmap below to see the distribution of food deserts and
-        population across the United States
-      </p>
-      <Wrapper
-        apiKey={`${config.maps_api_key}`}
-        render={render}
-        libraries={["visualization"]}
+      <div
+        className="Map"
+        style={{ width: "80vw", margin: "0 auto", marginTop: "5vh" }}
       >
-        <MyMapComponent center={center} zoom={zoom} styles={mapStyle} />
-      </Wrapper>
-    </div>
+        <h2 style={{ textAlign: "left" }}>Food Desert Map</h2>
+        <h7>
+          View the heatmap below to see the distribution of food deserts and
+          population across the United States
+        </h7>
+
+        <Wrapper
+          apiKey={`${config.maps_api_key}`}
+          render={render}
+          libraries={["visualization"]}
+        >
+          <MyMapComponent center={center} zoom={zoom} styles={mapStyle} />
+        </Wrapper>
+      </div>
+    </>
   );
 }
