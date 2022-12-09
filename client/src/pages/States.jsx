@@ -60,15 +60,15 @@ const { Option } = Select;
 var nameSearch = false;
 var popSearch = false;
 
-var average_half_mile_percent = 4.28;
-var average_1_mile_percent = 1.97;
+var average_half_mile_percent = 4.24;
+var average_1_mile_percent = 1.99;
 var average_10_mile_percent = 0.14;
 var average_20_mile_percent = 0.03;
 
-var std_dev_half_mile_percent = 0.85;
-var std_dev_1_mile_percent = 0.76;
-var std_dev_10_mile_percent = 0.16;
-var std_dev_20_mile_percent = 0.07;
+var std_dev_half_mile_percent = 0.94;
+var std_dev_1_mile_percent = 0.82;
+var std_dev_10_mile_percent = 0.15;
+var std_dev_20_mile_percent = 0.06;
 
 // 'States' table
 const stateColumns = [
@@ -96,7 +96,7 @@ const stateColumns = [
     align: "left",
     sorter: (a, b) => a.state.localeCompare(b.state),
     render: (text, row) => (
-      <a href={`/states?state_name=${row.state}`}>{text}</a>
+      <span>{text}</span>
     ),
   },
   {
@@ -462,6 +462,13 @@ class StatePage extends React.Component {
           <Table
             style={{
               width: "100%",
+            }}
+            onRow={(record, rowIndex) => {
+              return {
+                onClick: (event) => {
+                  window.location=`/states?state_name=${record.state}`
+                },
+              };
             }}
             dataSource={this.state.usStateResults}
             columns={stateColumns}
