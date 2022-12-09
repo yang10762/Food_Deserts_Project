@@ -3,7 +3,7 @@ import CustomButton from "../components/CustomButton.jsx";
 import React from "react";
 import DoughnutChart from "../components/DoughnutChart";
 import PolarAreaChart from "../components/PolarAreaChart";
-import StackedBarChart from "../components/StackedBarChart.jsx";
+import BarChart from "../components/BarChart.jsx";
 import {
   Form,
   FormInput,
@@ -580,7 +580,7 @@ class Counties extends React.Component {
                             <h4>Households: </h4>
                           </Row>
                           <Row gutter="30" align="left" justify="center">
-                            <StackedBarChart
+                            <BarChart
                               data={{
                                 labels: ["2010", "2015"],
                                 datasets: [
@@ -618,7 +618,7 @@ class Counties extends React.Component {
                                   },
                                 ],
                               }}
-                            ></StackedBarChart>
+                            ></BarChart>
                           </Row>
                           <br></br>
                         </CardBody>
@@ -656,70 +656,51 @@ class Counties extends React.Component {
                             </Col>
                           </Row>
                           <br></br>
-                          <Row gutter="30" align="middle" justify="left">
-                            <Col flex={2} style={{ textAlign: "center" }}>
-                              <h4>2010</h4>
-                            </Col>
-                            <Col flex={2} style={{ textAlign: "center" }}>
-                              <h4>2015</h4>
-                            </Col>
-                          </Row>
                           <br></br>
-                          <Row gutter="30" align="middle" justify="left">
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Total Number of Households:{" "}
-                              <h5>
-                                {this.state.selectedCountyIncomeDetails.Total_Households_2010?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Total Number of Households:{" "}
-                              <h5>
-                                {this.state.selectedCountyIncomeDetails.Total_Households_2015?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
+
+                          {/* Foodstamps within a county */}
+                          <Row align="middle" justify="center">
+                            <h4>Households: </h4>
                           </Row>
-                          <br></br>
-                          <Row gutter="30" align="middle" justify="left">
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Number of Households Receiving Food Stamps:{" "}
-                              <h5>
-                                {this.state.selectedCountyIncomeDetails.Households_Receiving_FoodStamps_2010?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Number of Households Receiving Food Stamps:{" "}
-                              <h5>
-                                {this.state.selectedCountyIncomeDetails.Households_Receiving_FoodStamps_2015?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
-                          </Row>
-                          <br></br>
-                          <Row gutter="30" align="middle" justify="left">
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Number Households Below Poverty Level:{" "}
-                              <h5>
-                                {this.state.selectedCountyIncomeDetails.hh_below_pl_2010?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Number Households Below Poverty Level:{" "}
-                              <h5>
-                                {this.state.selectedCountyIncomeDetails.hh_below_pl_2015?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
+                          <Row gutter="30" align="left" justify="center">
+                            <BarChart
+                              data={{
+                                labels: ["2010", "2015"],
+                                datasets: [
+                                  {
+                                    label: "Total households",
+                                    data: [
+                                      this.state.selectedCountyDemoDetails
+                                        .Total_Households_2010,
+                                      this.state.selectedCountyDemoDetails
+                                        .Total_Households_2015,
+                                    ],
+                                    backgroundColor: "#7FB069",
+                                  },
+                                  {
+                                    label:
+                                      "Total households receiving foodstamps",
+                                    data: [
+                                      this.state.selectedCountyIncomeDetails
+                                        .Households_Receiving_FoodStamps_2010,
+                                      this.state.selectedCountyIncomeDetails
+                                        .Households_Receiving_FoodStamps_2015,
+                                    ],
+                                    backgroundColor: "#666A86",
+                                  },
+                                  {
+                                    label: "Total households below poverty",
+                                    data: [
+                                      this.state.selectedCountyIncomeDetails
+                                        .hh_below_pl_2010,
+                                      this.state.selectedCountyIncomeDetails
+                                        .hh_below_pl_2015,
+                                    ],
+                                    backgroundColor: "#EBE9E9",
+                                  },
+                                ],
+                              }}
+                            ></BarChart>
                           </Row>
                           <br></br>
                           <Row gutter="30" align="middle" justify="left">

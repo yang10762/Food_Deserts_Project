@@ -3,7 +3,7 @@ import desert from "../images/Opacity75Desert.jpeg";
 import DoughnutChart from "../components/DoughnutChart";
 import PolarAreaChart from "../components/PolarAreaChart";
 import CustomButton from "../components/CustomButton";
-import StackedBarChart from "../components/StackedBarChart";
+import BarChart from "../components/BarChart";
 
 import {
   Form,
@@ -729,7 +729,7 @@ class StatePage extends React.Component {
                           <h4>Households: </h4>
                         </Row>
                         <Row gutter="30" align="left" justify="center">
-                          <StackedBarChart
+                          <BarChart
                             data={{
                               labels: ["2010", "2015"],
                               datasets: [
@@ -767,7 +767,7 @@ class StatePage extends React.Component {
                                 },
                               ],
                             }}
-                          ></StackedBarChart>
+                          ></BarChart>
                         </Row>
 
                         <br></br>
