@@ -1,5 +1,7 @@
 import React from "react";
-import desert from "../images/Opacity75Desert.jpeg";
+import desert from "../images/Opacity75Desert.png";
+import DoughnutChart from "../components/DoughnutChart";
+import PolarAreaChart from "../components/PolarAreaChart";
 
 import {
   Form,
@@ -72,6 +74,7 @@ var std_dev_1_mile_percent = 0.76;
 var std_dev_10_mile_percent = 0.16;
 var std_dev_20_mile_percent = 0.07;
 
+// 'States' table
 const stateColumns = [
   {
     title: "Flag",
@@ -226,6 +229,7 @@ const stateColumns = [
   },
 ];
 
+// 'Search by state population' bar tickers
 const marks = [
   {
     value: 0,
@@ -288,12 +292,14 @@ class StatePage extends React.Component {
     this.topicOnChange = this.topicOnChange.bind(this);
   }
 
+  // Handling name of state change
   handleUsStateNameChange(event) {
     nameSearch = false;
     popSearch = false;
     this.setState({ usStateQuery: event.target.value });
   }
 
+  // Handling population range change
   handleUsStatePopulationChange(value) {
     nameSearch = false;
     popSearch = false;
@@ -301,6 +307,7 @@ class StatePage extends React.Component {
     this.setState({ populationHighQuery: value[1] });
   }
 
+  // Searching by name of state
   updateSearchResultsName() {
     nameSearch = true;
     popSearch = false;
@@ -309,6 +316,7 @@ class StatePage extends React.Component {
     });
   }
 
+  // Searching by population range
   updateSearchResultsPopulation() {
     nameSearch = false;
     popSearch = true;
@@ -629,6 +637,8 @@ class StatePage extends React.Component {
                     </Card>
                   ),
                 },
+
+                //State Population Data Tab
                 {
                   label: `Population Data`,
                   key: "2",
@@ -660,7 +670,6 @@ class StatePage extends React.Component {
                             </span>
                           </p>
                         </Row>
-
                         <Divider></Divider>
                         <br></br>
                         <Row align="middle" justify="center">
@@ -668,388 +677,138 @@ class StatePage extends React.Component {
                           <br></br>
                           <br></br>
                         </Row>
-                        <Row align="middle" justify="center">
+                        <Row
+                          style={{ minHeight: "75%" }}
+                          align="middle"
+                          justify="center"
+                        >
                           {" "}
-                          <Progress multi style={{ width: "80%" }}>
-                            <Progress
-                              bar
-                              value={
-                                (this.state.selectedStateDetails.demoFS.male /
-                                  this.state.selectedStateDetails.demoFS
-                                    .total) *
-                                100
-                              }
-                            >
-                              {(
-                                (this.state.selectedStateDetails.demoFS.male /
-                                  this.state.selectedStateDetails.demoFS
-                                    .total) *
-                                100
-                              ).toFixed(1)}
-                              %
-                            </Progress>
-                            <Progress
-                              bar
-                              theme={"danger"}
-                              value={
-                                (this.state.selectedStateDetails.demoFS.female /
-                                  this.state.selectedStateDetails.demoFS
-                                    .total) *
-                                100
-                              }
-                            >
-                              {(
-                                (this.state.selectedStateDetails.demoFS.female /
-                                  this.state.selectedStateDetails.demoFS
-                                    .total) *
-                                100
-                              ).toFixed(1)}
-                              %
-                            </Progress>
-                          </Progress>
+                          <DoughnutChart
+                            data={{
+                              labels: ["Male", "Female"],
+                              datasets: [
+                                {
+                                  label: "Total",
+                                  data: [
+                                    this.state.selectedStateDetails.demoFS.male,
+                                    this.state.selectedStateDetails.demoFS
+                                      .female,
+                                  ],
+                                },
+                              ],
+                            }}
+                          />
                         </Row>
                         <br></br>
-                        <Row gutter="10" align="middle" justify="center">
-                          <p align="left">
-                            <Badge className="badge bg-primary">Male</Badge> :{" "}
-                            {""}
-                            {this.state.selectedStateDetails.demoFS.male?.toLocaleString(
-                              "en-US"
-                            )}{" "}
-                            males ~ (
-                            {(
-                              (this.state.selectedStateDetails.demoFS.male /
-                                this.state.selectedStateDetails.demoFS.total) *
-                              100
-                            ).toFixed(1)}
-                            %)
-                            <br></br>
-                            <Badge className="badge bg-danger">
-                              Female
-                            </Badge> :{" "}
-                            {this.state.selectedStateDetails.demoFS.female?.toLocaleString(
-                              "en-US"
-                            )}{" "}
-                            females ~(
-                            {(
-                              (this.state.selectedStateDetails.demoFS.female /
-                                this.state.selectedStateDetails.demoFS.total) *
-                              100
-                            ).toFixed(1)}
-                            %)
-                          </p>
-                        </Row>
+
                         <br></br>
                         <Divider> </Divider>
                         <br></br>
                         <Row align="middle" justify="center">
                           <h4>Age Distribution: </h4>
                         </Row>
-                        <Row align="middle" justify="center">
+                        <Row
+                          style={{ maxHeight: "75%" }}
+                          align="middle"
+                          justify="center"
+                        >
                           {" "}
-                          <Progress multi style={{ width: "80%" }}>
-                            <Progress
-                              bar
-                              theme={"primary"}
-                              value={
-                                (this.state.selectedStateDetails.demoFS
-                                  .age_0_9 /
-                                  this.state.selectedStateDetails.demoFS
-                                    .total) *
-                                100
-                              }
-                            >
-                              {(
-                                (this.state.selectedStateDetails.demoFS
-                                  .age_0_9 /
-                                  this.state.selectedStateDetails.demoFS
-                                    .total) *
-                                100
-                              ).toFixed(1)}
-                              %
-                            </Progress>
-                            <Progress
-                              bar
-                              theme={"secondary"}
-                              value={
-                                (this.state.selectedStateDetails.demoFS
-                                  .age_10_17 /
-                                  this.state.selectedStateDetails.demoFS
-                                    .total) *
-                                100
-                              }
-                            >
-                              {(
-                                (this.state.selectedStateDetails.demoFS
-                                  .age_10_17 /
-                                  this.state.selectedStateDetails.demoFS
-                                    .total) *
-                                100
-                              ).toFixed(1)}
-                              %
-                            </Progress>
-                            <Progress
-                              bar
-                              theme={"success"}
-                              value={
-                                (this.state.selectedStateDetails.demoFS
-                                  .age_18_29 /
-                                  this.state.selectedStateDetails.demoFS
-                                    .total) *
-                                100
-                              }
-                            >
-                              {(
-                                (this.state.selectedStateDetails.demoFS
-                                  .age_18_29 /
-                                  this.state.selectedStateDetails.demoFS
-                                    .total) *
-                                100
-                              ).toFixed(1)}
-                              %
-                            </Progress>
-                            <Progress
-                              bar
-                              theme={"danger"}
-                              value={
-                                (this.state.selectedStateDetails.demoFS
-                                  .age_30_39 /
-                                  this.state.selectedStateDetails.demoFS
-                                    .total) *
-                                100
-                              }
-                            >
-                              {(
-                                (this.state.selectedStateDetails.demoFS
-                                  .age_30_39 /
-                                  this.state.selectedStateDetails.demoFS
-                                    .total) *
-                                100
-                              ).toFixed(1)}
-                              %
-                            </Progress>
-                            <Progress
-                              bar
-                              theme={"warning"}
-                              value={
-                                (this.state.selectedStateDetails.demoFS
-                                  .age_40_49 /
-                                  this.state.selectedStateDetails.demoFS
-                                    .total) *
-                                100
-                              }
-                            >
-                              {(
-                                (this.state.selectedStateDetails.demoFS
-                                  .age_40_49 /
-                                  this.state.selectedStateDetails.demoFS
-                                    .total) *
-                                100
-                              ).toFixed(1)}
-                              %
-                            </Progress>
-                            <Progress
-                              bar
-                              theme={"info"}
-                              value={
-                                (this.state.selectedStateDetails.demoFS
-                                  .age_50_59 /
-                                  this.state.selectedStateDetails.demoFS
-                                    .total) *
-                                100
-                              }
-                            >
-                              {(
-                                (this.state.selectedStateDetails.demoFS
-                                  .age_50_59 /
-                                  this.state.selectedStateDetails.demoFS
-                                    .total) *
-                                100
-                              ).toFixed(1)}
-                              %
-                            </Progress>
-                            <Progress
-                              bar
-                              theme={"light"}
-                              value={
-                                (this.state.selectedStateDetails.demoFS
-                                  .age_60_69 /
-                                  this.state.selectedStateDetails.demoFS
-                                    .total) *
-                                100
-                              }
-                            >
-                              {(
-                                (this.state.selectedStateDetails.demoFS
-                                  .age_60_69 /
-                                  this.state.selectedStateDetails.demoFS
-                                    .total) *
-                                100
-                              ).toFixed(1)}
-                              %
-                            </Progress>
-                            <Progress
-                              bar
-                              theme={"dark"}
-                              value={
-                                ((this.state.selectedStateDetails.demoFS
-                                  .age_70_79 +
-                                  this.state.selectedStateDetails.demoFS
-                                    .age_80_plus) /
-                                  this.state.selectedStateDetails.demoFS
-                                    .total) *
-                                100
-                              }
-                            >
-                              {(
-                                ((this.state.selectedStateDetails.demoFS
-                                  .age_70_79 +
-                                  this.state.selectedStateDetails.demoFS
-                                    .age_80_plus) /
-                                  this.state.selectedStateDetails.demoFS
-                                    .total) *
-                                100
-                              ).toFixed(1)}
-                              %
-                            </Progress>
-                          </Progress>
+                          <PolarAreaChart
+                            data={{
+                              labels: [
+                                "0-9",
+                                "10-17",
+                                "18-29",
+                                "30-39",
+                                "40-49",
+                                "50-59",
+                                "60-69",
+                                "70+",
+                              ],
+                              datasets: [
+                                {
+                                  label: "Total of the population",
+                                  data: [
+                                    this.state.selectedStateDetails.demoFS
+                                      .age_0_9,
+                                    this.state.selectedStateDetails.demoFS
+                                      .age_10_17,
+                                    this.state.selectedStateDetails.demoFS
+                                      .age_18_29,
+                                    this.state.selectedStateDetails.demoFS
+                                      .age_30_39,
+                                    this.state.selectedStateDetails.demoFS
+                                      .age_40_49,
+                                    this.state.selectedStateDetails.demoFS
+                                      .age_50_59,
+                                    this.state.selectedStateDetails.demoFS
+                                      .age_60_69,
+                                    this.state.selectedStateDetails.demoFS
+                                      .age_70_79 +
+                                      this.state.selectedStateDetails.demoFS
+                                        .age_80_plus,
+                                  ],
+                                },
+                              ],
+                            }}
+                          />
                         </Row>
-                        <br></br>
-                        <Row gutter="50" align="middle" justify="center">
-                          <Col>
-                            <Badge className="badge bg-primary">Ages 0-9</Badge>
-                            {" : "}{" "}
-                            {this.state.selectedStateDetails.demoFS.age_0_9?.toLocaleString(
-                              "en-US"
-                            )}{" "}
-                            total ~ (
-                            {(
-                              (this.state.selectedStateDetails.demoFS.age_0_9 /
-                                this.state.selectedStateDetails.demoFS.total) *
-                              100
-                            ).toFixed(1)}
-                            %)
-                            <br></br>
-                            <Badge className="badge bg-secondary">
-                              Ages 10-17
-                            </Badge>
-                            {" : "}{" "}
-                            {this.state.selectedStateDetails.demoFS.age_10_17?.toLocaleString(
-                              "en-US"
-                            )}{" "}
-                            total ~ (
-                            {(
-                              (this.state.selectedStateDetails.demoFS
-                                .age_10_17 /
-                                this.state.selectedStateDetails.demoFS.total) *
-                              100
-                            ).toFixed(1)}
-                            %)
-                            <br></br>
-                            <Badge className="badge bg-success">
-                              Ages 18-29
-                            </Badge>
-                            {" : "}{" "}
-                            {this.state.selectedStateDetails.demoFS.age_18_29?.toLocaleString(
-                              "en-US"
-                            )}{" "}
-                            total ~ (
-                            {(
-                              (this.state.selectedStateDetails.demoFS
-                                .age_18_29 /
-                                this.state.selectedStateDetails.demoFS.total) *
-                              100
-                            ).toFixed(1)}
-                            %)
-                            <br></br>
-                            <Badge className="badge bg-danger">
-                              Ages 30-39
-                            </Badge>
-                            {" : "}{" "}
-                            {this.state.selectedStateDetails.demoFS.age_30_39?.toLocaleString(
-                              "en-US"
-                            )}{" "}
-                            total ~ (
-                            {(
-                              (this.state.selectedStateDetails.demoFS
-                                .age_30_39 /
-                                this.state.selectedStateDetails.demoFS.total) *
-                              100
-                            ).toFixed(1)}
-                            %)
-                            <br></br>
-                          </Col>
-                          <Col>
-                            <Badge className="badge bg-warning">
-                              Ages 40-49
-                            </Badge>
-                            {" : "}{" "}
-                            {this.state.selectedStateDetails.demoFS.age_40_49?.toLocaleString(
-                              "en-US"
-                            )}{" "}
-                            total ~ (
-                            {(
-                              (this.state.selectedStateDetails.demoFS
-                                .age_40_49 /
-                                this.state.selectedStateDetails.demoFS.total) *
-                              100
-                            ).toFixed(1)}
-                            %)
-                            <br></br>
-                            <Badge className="badge bg-info">Ages 50-59</Badge>
-                            {" : "}{" "}
-                            {this.state.selectedStateDetails.demoFS.age_50_59?.toLocaleString(
-                              "en-US"
-                            )}{" "}
-                            total ~ (
-                            {(
-                              (this.state.selectedStateDetails.demoFS
-                                .age_50_59 /
-                                this.state.selectedStateDetails.demoFS.total) *
-                              100
-                            ).toFixed(1)}
-                            %)
-                            <br></br>
-                            <Badge className="badge bg-light">Ages 60-69</Badge>
-                            {" : "}{" "}
-                            {this.state.selectedStateDetails.demoFS.age_60_69?.toLocaleString(
-                              "en-US"
-                            )}{" "}
-                            total ~ (
-                            {(
-                              (this.state.selectedStateDetails.demoFS
-                                .age_60_69 /
-                                this.state.selectedStateDetails.demoFS.total) *
-                              100
-                            ).toFixed(1)}
-                            %)
-                            <br></br>
-                            <Badge className="badge bg-dark">Ages 70+</Badge>
-                            {" : "}{" "}
-                            {(
-                              this.state.selectedStateDetails.demoFS.age_70_79 +
-                              this.state.selectedStateDetails.demoFS.age_80_plus
-                            )?.toLocaleString("en-US")}{" "}
-                            total ~ (
-                            {(
-                              ((this.state.selectedStateDetails.demoFS
-                                .age_70_79 +
-                                this.state.selectedStateDetails.demoFS
-                                  .age_80_plus) /
-                                this.state.selectedStateDetails.demoFS.total) *
-                              100
-                            ).toFixed(1)}
-                            %)<br></br>
-                          </Col>
-                        </Row>
+
                         <br></br>
                       </CardBody>
                     </Card>
                   ),
                 },
+
+                // State Foodstamps Tab
+                {
+                  label: "Foodstamps",
+                  key: "3",
+                  children: (
+                    <Card className="customCardColor">
+                      <CardBody>
+                        <Row align="middle" justify="center">
+                          <h3>Foodstamps</h3> <Divider></Divider>
+                        </Row>
+                      </CardBody>
+                    </Card>
+                  ),
+                },
+
+                // State Households Tab
+                {
+                  label: "Households",
+                  key: "4",
+                  children: (
+                    <Card className="customCardColor">
+                      <CardBody>
+                        <Row align="middle" justify="center">
+                          <h3>Households</h3> <Divider></Divider>
+                        </Row>
+                      </CardBody>
+                    </Card>
+                  ),
+                },
+
+                // State Income Tab
+                {
+                  label: "Income",
+                  key: "5",
+                  children: (
+                    <Card className="customCardColor">
+                      <CardBody>
+                        <Row align="middle" justify="center">
+                          <h3>Income</h3> <Divider></Divider>
+                        </Row>
+                      </CardBody>
+                    </Card>
+                  ),
+                },
+
+                // State Health Surveys Tab
                 {
                   label: `Health Surveys`,
-                  key: "3",
+                  key: "6",
                   children: (
                     <Card className="customCardColor">
                       <CardBody>
@@ -1261,9 +1020,11 @@ class StatePage extends React.Component {
                     </Card>
                   ),
                 },
+
+                // State Health Insurance Tab
                 {
                   label: "Health Insurance",
-                  key: "4",
+                  key: "7",
                   children: (
                     <Card className="customCardColor" style={{ width: "80%" }}>
                       <CardBody>
@@ -1333,9 +1094,11 @@ class StatePage extends React.Component {
                     </Card>
                   ),
                 },
+
+                // State Photos Tab
                 {
                   label: "Photos",
-                  key: "5",
+                  key: "8",
                   children: (
                     <Card className="customCardColor">
                       <CardBody>
