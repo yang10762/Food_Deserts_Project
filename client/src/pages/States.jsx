@@ -4,6 +4,7 @@ import DoughnutChart from "../components/DoughnutChart";
 import PolarAreaChart from "../components/PolarAreaChart";
 import CustomButton from "../components/CustomButton";
 import BarChart from "../components/BarChart";
+import LineChart from "../components/LineChart";
 
 import {
   Form,
@@ -625,7 +626,7 @@ class StatePage extends React.Component {
                         <Row gutter="30" align="middle" justify="center">
                           <h2>
                             {" "}
-                            <span style={{ color: "blue" }}>
+                            <span style={{ color: "#666A86" }}>
                               {
                                 this.state.selectedStateDetails.detail
                                   .population_rank
@@ -637,7 +638,7 @@ class StatePage extends React.Component {
                         <Row align="middle" justify="center">
                           <p>
                             with a total population of{" "}
-                            <span style={{ color: "green" }}>
+                            <span style={{ color: "#7FB069" }}>
                               {this.state.selectedStateDetails.demoFS.total?.toLocaleString(
                                 "en-US"
                               )}{" "}
@@ -737,31 +738,29 @@ class StatePage extends React.Component {
                                   label: "Total households",
                                   data: [
                                     this.state.selectedStateDetails.demoFS
-                                      .Total_HH_2010,
+                                      .total_HH_2010,
                                     this.state.selectedStateDetails.demoFS
-                                      .Total_HH_2015,
+                                      .total_HH_2015,
                                   ],
                                   backgroundColor: "#7FB069",
                                 },
                                 {
-                                  label:
-                                    "Total households with members under 18",
+                                  label: "Households with members under 18",
                                   data: [
                                     this.state.selectedStateDetails.demoFS
-                                      .hh_18_under_2010,
+                                      .total_HH_18_under_2010,
                                     this.state.selectedStateDetails.demoFS
-                                      .hh_18_under_2015,
+                                      .total_HH_18_under_2015,
                                   ],
                                   backgroundColor: "#666A86",
                                 },
                                 {
-                                  label:
-                                    "Total households with members over 60",
+                                  label: "Households with members over 60",
                                   data: [
                                     this.state.selectedStateDetails.demoFS
-                                      .hh_60_over_2010,
+                                      .total_HH_60_over_2010,
                                     this.state.selectedStateDetails.demoFS
-                                      .hh_60_over_2015,
+                                      .total_HH_60_over_2015,
                                   ],
                                   backgroundColor: "#EBE9E9",
                                 },
@@ -785,6 +784,49 @@ class StatePage extends React.Component {
                       <CardBody>
                         <Row align="middle" justify="center">
                           <h3>Income</h3> <Divider></Divider>
+                        </Row>
+                        {/* Foodstamps within a county */}
+                        <Row align="middle" justify="center">
+                          <h4>Foodstamps: </h4>
+                        </Row>
+                        <Row gutter="30" align="left" justify="center">
+                          <BarChart
+                            data={{
+                              labels: ["2010", "2015"],
+                              datasets: [
+                                {
+                                  label: "Total households",
+                                  data: [
+                                    this.state.selectedStateDetails.demoFS
+                                      .total_HH_2010,
+                                    this.state.selectedStateDetails.demoFS
+                                      .total_HH_2015,
+                                  ],
+                                  backgroundColor: "#7FB069",
+                                },
+                                {
+                                  label: "Households receiving foodstamps",
+                                  data: [
+                                    this.state.selectedStateDetails.demoFS
+                                      .total_FS_2010,
+                                    this.state.selectedStateDetails.demoFS
+                                      .total_FS_2015,
+                                  ],
+                                  backgroundColor: "#666A86",
+                                },
+                                // {
+                                //   label: "Households below poverty",
+                                //   data: [
+                                //     this.state.selectedCountyIncomeDetails
+                                //       .hh_below_pl_2010,
+                                //     this.state.selectedCountyIncomeDetails
+                                //       .hh_below_pl_2015,
+                                //   ],
+                                //   backgroundColor: "#EBE9E9",
+                                // },
+                              ],
+                            }}
+                          ></BarChart>
                         </Row>
                       </CardBody>
                     </Card>
@@ -875,6 +917,48 @@ class StatePage extends React.Component {
                           gutter="40"
                           align="center"
                         >
+                          {/* <LineChart
+                            data={{
+                              labels: "Health Survey Results",
+                              datasets: [
+                                {
+                                  label: "2011",
+                                  data: this.state
+                                    .yearlyHSResultsForTopicTotal[0],
+                                  borderColor: "rgb(255, 99, 132)",
+                                  backgroundColor: "rgba(255, 99, 132, 0.5)",
+                                },
+                                {
+                                  label: "2012",
+                                  data: this.state
+                                    .yearlyHSResultsForTopicTotal[1],
+                                  borderColor: "rgb(255, 99, 132)",
+                                  backgroundColor: "rgba(255, 99, 132, 0.5)",
+                                },
+                                {
+                                  label: "2013",
+                                  data: this.state
+                                    .yearlyHSResultsForTopicTotal[2],
+                                  borderColor: "rgb(255, 99, 132)",
+                                  backgroundColor: "rgba(255, 99, 132, 0.5)",
+                                },
+                                {
+                                  label: "2014",
+                                  data: this.state
+                                    .yearlyHSResultsForTopicTotal[3],
+                                  borderColor: "rgb(255, 99, 132)",
+                                  backgroundColor: "rgba(255, 99, 132, 0.5)",
+                                },
+                                {
+                                  label: "2015",
+                                  data: this.state
+                                    .yearlyHSResultsForTopicTotal[4],
+                                  borderColor: "rgb(255, 99, 132)",
+                                  backgroundColor: "rgba(255, 99, 132, 0.5)",
+                                },
+                              ],
+                            }}
+                          ></LineChart> */}
                           <Col>
                             <ProgressAntd
                               type="circle"

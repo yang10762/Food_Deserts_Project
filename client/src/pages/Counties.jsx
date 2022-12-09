@@ -595,8 +595,7 @@ class Counties extends React.Component {
                                     backgroundColor: "#7FB069",
                                   },
                                   {
-                                    label:
-                                      "Total households with members under 18",
+                                    label: "Households with members under 18",
                                     data: [
                                       this.state.selectedCountyDemoDetails
                                         .hh_18_under_2010,
@@ -606,8 +605,7 @@ class Counties extends React.Component {
                                     backgroundColor: "#666A86",
                                   },
                                   {
-                                    label:
-                                      "Total households with members over 60",
+                                    label: "Households with members over 60",
                                     data: [
                                       this.state.selectedCountyDemoDetails
                                         .hh_60_over_2010,
@@ -660,7 +658,7 @@ class Counties extends React.Component {
 
                           {/* Foodstamps within a county */}
                           <Row align="middle" justify="center">
-                            <h4>Households: </h4>
+                            <h4>Foodstamps: </h4>
                           </Row>
                           <Row gutter="30" align="left" justify="center">
                             <BarChart
@@ -678,8 +676,7 @@ class Counties extends React.Component {
                                     backgroundColor: "#7FB069",
                                   },
                                   {
-                                    label:
-                                      "Total households receiving foodstamps",
+                                    label: "Households receiving foodstamps",
                                     data: [
                                       this.state.selectedCountyIncomeDetails
                                         .Households_Receiving_FoodStamps_2010,
@@ -689,7 +686,7 @@ class Counties extends React.Component {
                                     backgroundColor: "#666A86",
                                   },
                                   {
-                                    label: "Total households below poverty",
+                                    label: "Households below poverty",
                                     data: [
                                       this.state.selectedCountyIncomeDetails
                                         .hh_below_pl_2010,
