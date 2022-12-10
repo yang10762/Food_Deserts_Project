@@ -248,29 +248,8 @@ export default function Map() {
   });
 
   return (
-    <>
+    <div className="Map">
       <Navigation />
-<<<<<<< HEAD
-      <div
-        className="Map"
-        style={{ width: "80vw", margin: "0 auto", marginTop: "5vh" }}
-      >
-        <h2 style={{ textAlign: "left" }}>Food Desert Map</h2>
-        <h7>
-          View the heatmap below to see the distribution of food deserts and
-          population across the United States
-        </h7>
-
-        <Wrapper
-          apiKey={`${config.maps_api_key}`}
-          render={render}
-          libraries={["visualization"]}
-        >
-          <MyMapComponent center={center} zoom={zoom} styles={mapStyle} />
-        </Wrapper>
-      </div>
-    </>
-=======
       <div style={{padding:"2em"}}>
 
       <h2>Food Desert Heatmap</h2>
@@ -320,6 +299,5 @@ export default function Map() {
       </Row>
       </div>
     </div>
->>>>>>> Matt
   );
 }
