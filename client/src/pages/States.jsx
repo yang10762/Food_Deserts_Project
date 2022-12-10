@@ -820,16 +820,16 @@ class StatePage extends React.Component {
                                   ],
                                   backgroundColor: "#666A86",
                                 },
-                                // {
-                                //   label: "Households below poverty",
-                                //   data: [
-                                //     this.state.selectedCountyIncomeDetails
-                                //       .hh_below_pl_2010,
-                                //     this.state.selectedCountyIncomeDetails
-                                //       .hh_below_pl_2015,
-                                //   ],
-                                //   backgroundColor: "#EBE9E9",
-                                // },
+                                {
+                                  label: "Households below poverty",
+                                  data: [
+                                    this.state.selectedStateDetails.demoFS
+                                      .total_HH_below_pl_2010,
+                                    this.state.selectedStateDetails.demoFS
+                                      .total_HH_below_pl_2015,
+                                  ],
+                                  backgroundColor: "#EBE9E9",
+                                },
                               ],
                             }}
                           ></BarChart>
