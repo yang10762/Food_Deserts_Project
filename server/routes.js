@@ -15,6 +15,14 @@ const connection = mysql.createConnection({
 });
 connection.connect();
 
+// const connectionPool = mysql.createPool({
+//     host: config.rds_host,
+//     user: config.rds_user,
+//     password: config.rds_password,
+//     port: config.rds_port,
+//     database: config.rds_db
+// });
+
 
 // ********************************************
 //            SIMPLE ROUTE EXAMPLE
@@ -158,15 +166,15 @@ async function getHeatmapOverlay(req, res) {
                      GROUP BY fips
                      HAVING SUM(population) > 5000`;
             break;
-        case 'avg_hh_size':
+        case 'percent_large_hh':
             query = `SELECT fips, lat, lon,
-                            ((SUM(nonfamily_1) / SUM(total_hh)) + ((SUM(family_2) + SUM(nonfamily_2)) / SUM(total_hh) * 2) +
-                            ((SUM(family_3) + SUM(nonfamily_3)) / SUM(total_hh) * 3) + ((SUM(family_4) + SUM(nonfamily_4)) / SUM(total_hh) * 4) +
-                            ((SUM(family_5) + SUM(nonfamily_5)) / SUM(total_hh) * 5) + ((SUM(family_6) + SUM(nonfamily_6)) / SUM(total_hh) * 6) +
-                            ((SUM(family_7_plus) + SUM(nonfamily_7_plus)) / SUM(total_hh) * 7)) AS weight
-                    FROM Household_Size HH
-                    JOIN County_Coordinates ON fips = LEFT(HH.geo_id,5)
-                    GROUP BY fips`;
+                            (
+                            SUM(family_6) + SUM(nonfamily_6) +
+                            SUM(family_7_plus) + SUM(nonfamily_7_plus)
+                            ) / SUM(total_hh) * 100 AS weight
+                        FROM Household_Size HH
+                        JOIN County_Coordinates ON fips = LEFT(HH.geo_id,5)
+                        GROUP BY fips;`;
             break;
         case 'below_poverty_line':
             query = `SELECT fips, lat, lon,

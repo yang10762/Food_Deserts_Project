@@ -3,9 +3,9 @@ import Navigation from "../components/Navigation.jsx";
 import { Wrapper, Status } from "@googlemaps/react-wrapper";
 import config from "../config.json";
 import { getMap } from "../fetcher.js";
-import { Select } from "antd";
+import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
+import { Col, Row, Select, Switch} from "antd";
 
-const { Option } = Select;
 
 let map;
 let foodDesertHeatmap, secondaryHeatmap;
@@ -76,33 +76,32 @@ const foodDesertHeatmapStyle = (heatmapData) => {
   };
 };
 
+const secondaryHeatmapOptions = [
+  { label: "Choose a statistic to visualize...", value: ""},
+  { label: "Population", value: "population", },
+  { label: "% Households With 6 or More People", value: "percent_large_hh", },
+  { label: "% Below Poverty Line", value: "below_poverty_line", },
+  { label: "% Minority", value: "percent_minority", },
+  { label: "% Receiving Food Assistance", value: "percent_food_assistance", },
+];
+
 const secondaryHeatmapStyle = (heatmapData, overlay) => {
-  let radius, opacity, maxIntensity;
+  let radius = 0.35, 
+      opacity = 0.4, 
+      maxIntensity = undefined;
 
   if (overlay === "population") {
     radius = 0.7;
     opacity = 0.45;
-    maxIntensity = 3000;
-  } else if (overlay === "avg_hh_size") {
-    radius  =  0.4;
-    opacity = 0.45;
-    maxIntensity = 5;
+    maxIntensity = 3000; // == 3,000,000
+  } else if (overlay === "percent_large_hh") {
+    maxIntensity = 8;
   } else if (overlay === "below_poverty_line") {
-    radius  =  0.35;
-    opacity = 0.45;
     maxIntensity = 32;
   } else if (overlay === "percent_minority") {
-    radius  =  0.35;
-    opacity = 0.4;
     maxIntensity = 90;
   } else if (overlay === "percent_food_assistance") {
-    radius  =  0.35;
-    opacity = 0.45;
     maxIntensity = 32;
-  } else {
-    radius  =  0.4;
-    opacity = 0.45;
-    maxIntensity = undefined;
   }
   
   return {
@@ -130,11 +129,16 @@ const secondaryHeatmapStyle = (heatmapData, overlay) => {
   };
 };
 
-const getHeatmap = (overlay = "") => {
+const getHeatmap = (overlay = "", showFoodDeserts = true) => {
   
   if (overlay !== "") {
     getMap(overlay).then((res) => {
       const results = res.results;
+
+      if (results.error) {
+        alert("Error getting heatmap data.");
+        return;
+      }
 
       let heatmapData = [];
       for (let i = 0; i < results.length; i++) {
@@ -151,21 +155,28 @@ const getHeatmap = (overlay = "") => {
         secondaryHeatmapStyle(heatmapData, overlay)
       );
       secondaryHeatmap.setMap(map);
-    }).then( getFoodDesertHeatmap );
+    }).then( () => {
+      getFoodDesertHeatmap(showFoodDeserts);
+    });
   } else {
     if (secondaryHeatmap && secondaryHeatmap.getMap()) {
       secondaryHeatmap.setOptions(null);
       secondaryHeatmap.setMap(null);
     }
-    getFoodDesertHeatmap();
+    getFoodDesertHeatmap(showFoodDeserts);
   }
   
 };
 
-const getFoodDesertHeatmap = () => {
-  if (foodDesertHeatmap === undefined || !foodDesertHeatmap.getMap()) {
+const getFoodDesertHeatmap = (showFoodDeserts = true) => {
+  if (showFoodDeserts && (foodDesertHeatmap === undefined || !foodDesertHeatmap.getMap())) {
     getMap("food_desert").then((res) => {
       const results = res.results;
+
+      if (results.error) {
+        alert("Error getting heatmap data.");
+        return;
+      }
 
       let heatmapData = [];
       for (let i = 0; i < results.length; i++) {
@@ -178,20 +189,22 @@ const getFoodDesertHeatmap = () => {
       foodDesertHeatmap.setOptions(
         foodDesertHeatmapStyle(heatmapData)
       );
-      
-      foodDesertHeatmap.setMap(map);
+      foodDesertHeatmap.setMap(null);
+      if (showFoodDeserts) {
+        foodDesertHeatmap.setMap(map);
+      }
     });
 
   } else {
     foodDesertHeatmap.setMap(null);
-    foodDesertHeatmap.setMap(map);
+    if (showFoodDeserts) {
+      foodDesertHeatmap.setMap(map);
+    }
   }
 }
 
 function MyMapComponent({ center, zoom, styles }) {
   const ref = useRef();
-
-  // const [overlay, setOverlay] = useState("food_desert");
 
   useEffect(() => {
     map = new window.google.maps.Map(ref.current, {
@@ -208,12 +221,12 @@ function MyMapComponent({ center, zoom, styles }) {
   return <div ref={ref} 
               id="map" 
               style={{
-                maxWidth: "1200px", 
+                marginLeft: "0",
+                marginRight: "0", 
                 boxShadow:"0 0 1em #888888", 
                 borderRadius:".5em",
                 border: ".25em solid rgb(127, 176, 105)",
-                height: "90vh",
-                transition: "all .5s"
+                height: "90vh"
               }}
           />;
 }
@@ -228,42 +241,62 @@ const center = { lat: 38, lng: -98 };
 const zoom = 5;
 export default function Map() {
   const [overlay, setOverlay] = useState("");
+  const [showFoodDeserts, setShowFoodDeserts] = useState(true);
 
   useEffect(() => {
-    getHeatmap(overlay);
+    getHeatmap(overlay, showFoodDeserts);
   });
-
-  const secondaryHeatmapOptions = [
-    { label: "Choose a statistic to visualize...", value: ""},
-    { label: "Population", value: "population", },
-    { label: "Average Household Size", value: "avg_hh_size", },
-    { label: "% Below Poverty Line", value: "below_poverty_line", },
-    { label: "% Minority", value: "percent_minority", },
-    { label: "% Receiving Food Assistance", value: "percent_food_assistance", },
-  ]
 
   return (
     <div className="Map">
       <Navigation />
+      <div style={{padding:"2em"}}>
+
       <h2>Food Desert Heatmap</h2>
-      <div style={{ display:"flex", flexDirection:"column", justifyContent:"center", alignItems:"center" }}>
-        <p style={{ marginBottom:"1em" }}>
+        <p style={{ textAlign:"center" }}>
           View the heatmap below to see the distribution of food deserts and
           population across the United States
         </p>
-        <Select
-          defaultValue=""
-          onChange={(value)=>{setOverlay(value);}}
-          style={{ minWidth: "300px", width: "25vw", margin: "0", padding:"0" }}
-          options={ secondaryHeatmapOptions }
-        />
-        <Wrapper
-          apiKey={`${config.maps_api_key}`}
-          render={render}
-          libraries={["visualization"]}
-        >
-          <MyMapComponent center={center} zoom={zoom} styles={mapStyle} />
-        </Wrapper>
+      <Row align={"middle"} style={{marginBottom:"1em"}}>
+        <Col xs={0} xl={4}></Col>
+        <Col xs={24} md={8} xl={6}>
+          <label>
+            Show Food Desert Heatmap
+          </label>
+          <Switch
+            defaultChecked
+            onChange={() => { setShowFoodDeserts(!showFoodDeserts); }}
+            style={{marginLeft: "1.5em"}}
+          />
+        </Col>
+        <Col xs={24} md={16} lg={10}>
+          <Row justify={"end"}>
+            <label style={{ margin: "0 1em"}}>
+              Secondary Statistic 
+            </label>
+            <Select
+              defaultValue=""
+              onChange={(value)=>{setOverlay(value);}}
+              style={{ margin: "0 1em", minWidth:"300px"}}
+              options={ secondaryHeatmapOptions }
+            />
+          </Row>
+        </Col>
+        <Col xs={0} xl={4}></Col>
+      </Row>
+      <Row>
+        <Col xs={0} xl={4}></Col>
+        <Col xs={24} xl={16}>
+          <Wrapper
+            apiKey={`${config.maps_api_key}`}
+            render={render}
+            libraries={["visualization"]}
+          >
+            <MyMapComponent center={center} zoom={zoom} styles={mapStyle} />
+          </Wrapper>
+        </Col>
+        <Col xs={0} xl={4}></Col>
+      </Row>
       </div>
     </div>
   );
