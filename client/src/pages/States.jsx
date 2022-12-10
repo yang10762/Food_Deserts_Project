@@ -477,7 +477,7 @@ class StatePage extends React.Component {
           <p style={{ fontSize: 14, color: "black" }}>
             *Food Desert regions are defined for housing units with no vehicle
             access located 1/2 mile and beyond from the nearest supermarket.
-            <br></br>
+            <br />
             **Percentages were calculated based on total housing units without
             car access in both urban and non-urban areas in the year 2010.
             Distance represents the # of miles away from the nearest
@@ -506,6 +506,7 @@ class StatePage extends React.Component {
               type="card"
               tabPosition="top"
               items={[
+                // State Summary Card
                 {
                   label: `State Summary`,
                   key: "1",
@@ -613,7 +614,7 @@ class StatePage extends React.Component {
                   ),
                 },
 
-                //State Demographic Data Tab
+                //State Demographic Card
                 {
                   label: `Demographic Data`,
                   key: "2",
@@ -631,6 +632,8 @@ class StatePage extends React.Component {
                             </h3>
                           </Col>
                         </Row>
+                        <br />
+                        <br />
                         <Row gutter="30" align="middle" justify="center">
                           <h3>Population Rank:</h3>
                         </Row>
@@ -657,6 +660,8 @@ class StatePage extends React.Component {
                           </h6>
                         </Row>
                         <Divider />
+                        <br />
+                        <br />
 
                         {/* Gender distribution within a selected state*/}
                         <Row align="middle" justify="center">
@@ -680,6 +685,8 @@ class StatePage extends React.Component {
                           />
                         </Row>
                         <Divider />
+                        <br />
+                        <br />
 
                         {/* Age distribution within a selected state*/}
                         <Row align="middle" justify="center">
@@ -732,6 +739,8 @@ class StatePage extends React.Component {
                           />
                         </Row>
                         <Divider />
+                        <br />
+                        <br />
 
                         {/* Households within a selected state */}
                         <Row align="middle" justify="center">
@@ -776,24 +785,38 @@ class StatePage extends React.Component {
                             }}
                           ></BarChart>
                         </Row>
+                        <br />
+                        <br />
                       </CardBody>
                     </Card>
                   ),
                 },
 
-                // State Income Tab
+                // State Income Card
                 {
                   label: "Income",
                   key: "3",
                   children: (
                     <Card>
                       <CardBody>
-                        <Row align="middle" justify="center">
-                          <h3>Income</h3> <Divider></Divider>
+                        {/* Card Header */}
+                        <Row gutter="30" align="middle" justify="center">
+                          <Col flex={2} style={{ textAlign: "left" }}>
+                            <h3>Income Data </h3>
+                          </Col>
+                          <Col flex={2} style={{ textAlign: "right" }}>
+                            <h3 style={{ color: "#7FB069" }}>
+                              {this.state.selectedStateName}
+                            </h3>
+                          </Col>
                         </Row>
-                        {/* Foodstamps within a county */}
+                        <Divider />
+                        <br />
+                        <br />
+
+                        {/* Foodstamps within a selected state */}
                         <Row align="middle" justify="center">
-                          <h4>Foodstamps: </h4>
+                          <h4>Households and Food Assistance</h4>
                         </Row>
                         <Row gutter="30" align="left" justify="center">
                           <BarChart
@@ -834,12 +857,63 @@ class StatePage extends React.Component {
                             }}
                           ></BarChart>
                         </Row>
+                        <br />
+                        <br />
+                        <Divider />
+
+                        {/* Income data within a selected state */}
+                        <Row align="middle" justify="center">
+                          <h4>Income</h4>
+                        </Row>
+                        <br />
+                        <br />
+                        <Row gutter="30" align="middle" justify="left">
+                          <Col flex={2} style={{ textAlign: "left" }}>
+                            2010 Avg Median Income:{" "}
+                            <h5>
+                              $
+                              {this.state.selectedStateDetails.demoFS.median_income_2010?.toLocaleString(
+                                "en-US"
+                              )}
+                            </h5>
+                          </Col>
+                          <Col flex={2} style={{ textAlign: "left" }}>
+                            2015 Avg Median Income:{" "}
+                            <h5>
+                              $
+                              {this.state.selectedStateDetails.demoFS.median_income_2015?.toLocaleString(
+                                "en-US"
+                              )}
+                            </h5>
+                          </Col>
+                          <br />
+                        </Row>
+                        <Row gutter="30" align="middle" justify="left">
+                          <Col flex={2} style={{ textAlign: "left" }}>
+                            2010 Avg Median Income Receiving Food Stamps:{" "}
+                            <h5>
+                              $
+                              {this.state.selectedStateDetails.demoFS.avg_med_income_receiving_fs_2010?.toLocaleString(
+                                "en-US"
+                              )}
+                            </h5>
+                          </Col>
+                          <Col flex={2} style={{ textAlign: "left" }}>
+                            2015 Avg Median Income Receiving Food Stamps:{" "}
+                            <h5>
+                              $
+                              {this.state.selectedStateDetails.demoFS.avg_med_income_receiving_fs_2015?.toLocaleString(
+                                "en-US"
+                              )}
+                            </h5>
+                          </Col>
+                        </Row>
                       </CardBody>
                     </Card>
                   ),
                 },
 
-                // State Health Surveys Tab
+                // State Health Surveys Card
                 {
                   label: `Health Surveys`,
                   key: "4",
@@ -903,12 +977,12 @@ class StatePage extends React.Component {
                           </Select>
                         </Row>
                         <Divider></Divider>
-                        <h5 align="center">Topic</h5> <br></br>
+                        <h5 align="center">Topic</h5> <br />
                         <Row align="center">
                           {this.state.selectedTopicTotal}
                         </Row>
                         <Divider></Divider>
-                        <br></br>
+                        <br />
                         <Row style={{ width: "100%" }} align="center">
                           <h5>
                             Survey Results for{" "}
@@ -1086,8 +1160,8 @@ class StatePage extends React.Component {
                             </Row>
                           </Col>
                         </Row>
-                        <br></br>
-                        <br></br>
+                        <br />
+                        <br />
                         <Row>
                           *Note: Results of '-%' indicate no record for that
                           year.
@@ -1097,7 +1171,7 @@ class StatePage extends React.Component {
                   ),
                 },
 
-                // State Health Insurance Tab
+                // State Health Insurance Card
                 {
                   label: "Health Insurance",
                   key: "5",
@@ -1256,7 +1330,7 @@ class StatePage extends React.Component {
                   ),
                 },
 
-                // State Photos Tab
+                // State Photos Card
                 {
                   label: "Photos",
                   key: "6",
@@ -1327,7 +1401,9 @@ class StatePage extends React.Component {
                 },
               ]}
             />
-            <br></br> <br></br> <br></br>
+            <br />
+            <br />
+            <br />
           </div>
         ) : null}
       </div>

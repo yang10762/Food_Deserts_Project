@@ -464,6 +464,7 @@ class Counties extends React.Component {
                     </div>
                   ) : null,
                 },
+                // Demographic Data Card
                 {
                   label: `Demographic Data`,
                   key: "2",
@@ -478,6 +479,7 @@ class Counties extends React.Component {
                       {console.log(this.state.selectedCountyDemoDetails)}
                       <Card title="Demographic Data ">
                         <CardBody>
+                          {/* Card Header */}
                           <Row gutter="30" align="middle" justify="center">
                             <Col flex={2} style={{ textAlign: "left" }}>
                               <h3>Demographic Data </h3>
@@ -491,6 +493,7 @@ class Counties extends React.Component {
                               </h3>
                             </Col>
                           </Row>
+                          <br />
                           <Row align="left" justify="right">
                             <h5>
                               Total population of{" "}
@@ -502,7 +505,9 @@ class Counties extends React.Component {
                             </h5>
                           </Row>
                           <Divider />
-                          {/* Male and Female population distribution */}
+                          <br />
+
+                          {/* Male and Female population distribution within a county */}
                           <Row align="middle" justify="center">
                             <h4>Gender Distribution: </h4>
                           </Row>
@@ -523,9 +528,10 @@ class Counties extends React.Component {
                               }}
                             />
                           </Row>
-                          <br></br>
-                          <br></br>
                           <Divider />
+                          <br />
+                          <br />
+
                           {/* Age distribution within a county */}
                           <Row align="middle" justify="center">
                             <h4>Age Distribution: </h4>
@@ -571,9 +577,9 @@ class Counties extends React.Component {
                               }}
                             />
                           </Row>
-                          <br></br>
-                          <br></br>
                           <Divider />
+                          <br />
+                          <br />
 
                           {/* Households within a county */}
                           <Row align="middle" justify="center">
@@ -618,14 +624,17 @@ class Counties extends React.Component {
                               }}
                             ></BarChart>
                           </Row>
-                          <br></br>
+                          <br />
+                          <br />
                         </CardBody>
                       </Card>
-                      <br></br>
-                      <br></br>
+                      <br />
+                      <br />
                     </div>
                   ) : null,
                 },
+
+                // Income Data Card
                 {
                   label: `Income Data`,
                   key: "3",
@@ -640,6 +649,7 @@ class Counties extends React.Component {
                       {console.log(this.state.selectedCountyIncomeDetails)}
                       <Card title="Income Data ">
                         <CardBody>
+                          {/* Card Header */}
                           <Row gutter="30" align="middle" justify="center">
                             <Col flex={2} style={{ textAlign: "left" }}>
                               <h3>Income Data </h3>
@@ -658,7 +668,7 @@ class Counties extends React.Component {
 
                           {/* Foodstamps within a county */}
                           <Row align="middle" justify="center">
-                            <h4>Foodstamps: </h4>
+                            <h4>Households and Food Assistance </h4>
                           </Row>
                           <Row gutter="30" align="left" justify="center">
                             <BarChart
@@ -700,10 +710,17 @@ class Counties extends React.Component {
                             ></BarChart>
                           </Row>
                           <br></br>
+                          <br></br>
+
+                          {/* Income within a county */}
+                          <Row align="middle" justify="center">
+                            <h4>Income </h4>
+                          </Row>
                           <Row gutter="30" align="middle" justify="left">
                             <Col flex={2} style={{ textAlign: "left" }}>
                               Avg Median Income:{" "}
                               <h5>
+                                $
                                 {this.state.selectedCountyIncomeDetails.avg_est_med_income_2010?.toLocaleString(
                                   "en-US"
                                 )}
@@ -712,6 +729,7 @@ class Counties extends React.Component {
                             <Col flex={2} style={{ textAlign: "left" }}>
                               Avg Median Income:{" "}
                               <h5>
+                                $
                                 {this.state.selectedCountyIncomeDetails.avg_est_med_income_2015?.toLocaleString(
                                   "en-US"
                                 )}
@@ -723,6 +741,7 @@ class Counties extends React.Component {
                             <Col flex={2} style={{ textAlign: "left" }}>
                               Avg Median Income Receiving Food Stamps:{" "}
                               <h5>
+                                $
                                 {this.state.selectedCountyIncomeDetails.avg_med_income_receiving_fs_2010?.toLocaleString(
                                   "en-US"
                                 )}
@@ -731,6 +750,7 @@ class Counties extends React.Component {
                             <Col flex={2} style={{ textAlign: "left" }}>
                               Avg Median Income Receiving Food Stamps:{" "}
                               <h5>
+                                $
                                 {this.state.selectedCountyIncomeDetails.avg_med_income_receiving_fs_2015?.toLocaleString(
                                   "en-US"
                                 )}
@@ -741,7 +761,6 @@ class Counties extends React.Component {
                       </Card>
                       <br></br>
                       <br></br>
-                      {/* <Card><CardBody><Row><Col flex={2} style={{ textAlign: 'left' }}><h5 > See State Details </h5><a href={`/search/states_name?name=${this.state.selectedState}`}>{this.state.selectedState}</a></Col></Row><Row> <Col flex={2} style={{ textAlign: 'left' }}>(Link needs to be fixed once state page is working)</Col></Row></CardBody></Card>*/}
                     </div>
                   ) : null,
                 },
