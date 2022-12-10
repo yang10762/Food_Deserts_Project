@@ -523,6 +523,7 @@ class Counties extends React.Component {
                                       this.state.selectedCountyDemoDetails
                                         .female,
                                     ],
+                                    backgroundColor: ["#666A86", "#d68bb7"],
                                   },
                                 ],
                               }}
@@ -571,6 +572,16 @@ class Counties extends React.Component {
                                         .age_70_79 +
                                         this.state.selectedCountyDemoDetails
                                           .age_80_plus,
+                                    ],
+                                    backgroundColor: [
+                                      "#666A86",
+                                      "#333333",
+                                      "#7FB069",
+                                      "#EBE9E9",
+                                      "#8f96c7",
+                                      "#afb2bd",
+                                      "#d68bb7",
+                                      "#b2e09d",
                                     ],
                                   },
                                 ],
