@@ -1,5 +1,9 @@
 import Navigation from "../components/Navigation.jsx";
+import CustomButton from "../components/CustomButton.jsx";
 import React from "react";
+import DoughnutChart from "../components/DoughnutChart";
+import PolarAreaChart from "../components/PolarAreaChart";
+import BarChart from "../components/BarChart.jsx";
 import {
   Form,
   FormInput,
@@ -24,8 +28,6 @@ const { Column } = Table; //ColumnGroup
 const onChange = (key) => {
   console.log(key);
 };
-
-//This adds customized markings and colour to the label font on the Slider for Population Searches
 const popMarks = {
   // :SliderMarks
   0: "0",
@@ -41,7 +43,6 @@ const popMarks = {
   },
 };
 
-//This adds customized markings and colour to the label font on the Slider for Total Food Desert Searches
 const fdMarks = {
   //: SliderMarks
   0: "0",
@@ -57,7 +58,6 @@ const fdMarks = {
 };
 
 class Counties extends React.Component {
-  //Constructor creating variables
   constructor(props) {
     super(props);
     this.state = {
@@ -83,31 +83,24 @@ class Counties extends React.Component {
     this.goToCounty = this.goToCounty.bind(this);
   }
 
-  //This updates the var countyQuery when user types into the 'county' search box
   handleCountyQueryChange(event) {
     this.setState({ countyQuery: event.target.value });
   }
 
-  //This updates the var stateQuery when user types into the 'state' search box
   handleStateQueryChange(event) {
     this.setState({ stateQuery: event.target.value });
   }
 
-  //This updates the var pop min and max when user types changes the range on the population slider
   handlePopulationChange(value) {
     this.setState({ popMinQuery: value[0] });
     this.setState({ popMaxQuery: value[1] });
   }
 
-  //This updates the var fd min and max when user types changes the range on the Total number of food deserts slider
   handleFDChange(value) {
     this.setState({ fdMinQuery: value[0] });
     this.setState({ fdMaxQuery: value[1] });
   }
 
-  //This update the state and county variable when a row in the table is clicked. 
-  //The new state and county are used to complete the query. 
-  //This func also ensures data from the query is displayed on the cards/tabs
   goToCounty(county, state) {
     this.setState({ selectedCounty: county });
     this.setState({ selectedState: state });
@@ -118,9 +111,6 @@ class Counties extends React.Component {
     });
   }
 
-  //This func updates the 4 seacrh variables when the search button is clicked.
-  //This new info is used for query
-  //This func sets the countiesResult variable the results of the query which is then displayed in the table. 
   updateSearchResults() {
     getCountySearch(
       this.state.countyQuery,
@@ -140,8 +130,6 @@ class Counties extends React.Component {
   //   o.style.backgroundColor = (o.style.backgroundColor == '#7FB069') ? ('transparent') : ('#7FB069');
   // }
 
-  //Ensure the data is displayed. e.g. Initial table when the page first loads. 
-  //Sets instance viables, and then sets the arrays instance variables to the results of the query
   componentDidMount() {
     getAllCounties(null, null).then((res) => {
       this.setState({ countiesResults: res.results });
@@ -169,18 +157,12 @@ class Counties extends React.Component {
     );
   }
 
-  /* The code below is structured just like the web page - the NavBar, then Searched, Then table, then Tab with the Cards */
-
   render() {
     return (
       <div className="County">
         <Navigation />
-        {/* The <Form> 's below are for the searches. Each <FormGroup > is for a searchThe first two are the State and County text searches. */}
         <Form style={{ width: "80vw", margin: "0 auto", marginTop: "5vh" }}>
           <Row>
-          {/* This <Row> has the first two searches which are the State and County text searches. 
-          Both have a handler function which updates the stateQuery and countyQuery instance variable to the string entered in the box*/}
-
             <Col flex={2}>
               <FormGroup style={{ width: "20vw", margin: "0 auto" }}>
                 <label>State</label>
@@ -207,8 +189,6 @@ class Counties extends React.Component {
           </Row>
           <br></br>
           <Row>
-          {/* This <Row> has the next two searches which are the 'population' and 'total num of food deserts' slider searches.
-          Both have the handler function which updates the instance variables once the slider value changes (min and max) */}
             <Col flex={2}>
               <FormGroup style={{ width: "20vw", margin: "0 auto" }}>
                 <label>Population</label>
@@ -235,33 +215,20 @@ class Counties extends React.Component {
             </Col>
             <Col flex={2}>
               <FormGroup style={{ width: "10vw" }}>
-                {/* This search button calls the function that will trigger the query and update the Table with the results*/}
-                <Button
-                  style={{
-                    marginTop: "4vh",
-                    color: "white",
-                    backgroundColor: "#7FB069",
-                    borderRadius: "20px",
-                    border: "none",
-                  }}
-                  onClick={this.updateSearchResults}
-                >
-                  Search
-                </Button>
+                <CustomButton
+                  text="Search"
+                  callback={this.updateSearchResults}
+                />
               </FormGroup>
             </Col>
           </Row>
         </Form>
 
-        <Divider
-          style={{ width: "70vw", margin: "0 auto", marginTop: "2vh" }}
-        />
-        <div style={{ width: "70vw", margin: "0 auto" }}>
-          <h3>Counties</h3>
+        <div style={{ width: "70vw", margin: "0 auto", marginTop: "5vh" }}>
+          <h2>Counties</h2>
           <h7>Click on a row to see County details.</h7>
         </div>
-        {/* This is the <Table>. Data for the table is set to the countiesResult var. Initally this is All counties but will update when search button is hit
-        There is an onClick event for the row which updates the state and county values (see goToCounty func above)*/}
+
         <Table
           style={{ maxWidth: "70vw", margin: "0 auto" }}
           onRow={(record, rowIndex) => {
@@ -278,7 +245,6 @@ class Counties extends React.Component {
             showQuickJumper: true,
           }}
         >
-          {/* Each column has a sorter for string or int. The ?.toLocalString("en-US)  add commas to the large ints */}
           <Column
             title="County"
             dataIndex="County"
@@ -361,10 +327,7 @@ class Counties extends React.Component {
           />
         </Table>
         <Divider />
-        {/* The code below has the Breadcrumb and the 3 Tabs (each with a Card): FD Data, Demo Data and Income Data. 
-        It controlled by a ternary statement - if the values are null (a row in the table has not been clicked) the arrays that hold the results of the 3 queries will be null and none of this will be displayed on the page.
-        If a row is clicked and the onClick event triggers the query and the arrays are populated with the results of the query (they are no longer null), the cards/tabs and breadcrubms will show up */}
-       {/* The Breadcrumb shows 'State/County' and links to the State detail page. It will update when a row is clicked */}
+
         {this.state.selectedCountyFDDetails ? (
           <div style={{ width: "70vw", margin: "0 auto", marginTop: "2vh" }}>
             <Breadcrumb>
@@ -377,6 +340,7 @@ class Counties extends React.Component {
                 {this.state.selectedCounty}
               </BreadcrumbItem>
             </Breadcrumb>
+
             <Tabs
               defaultActiveKey="1"
               centered
@@ -395,8 +359,6 @@ class Counties extends React.Component {
                       }}
                     >
                       {console.log(this.state.selectedCountyFDDetails)}
-                      {/*Below is the Card on the first Tab - FD Data. This card is also controlled by a ternary statement and will not display if the selectedCountyFDDetails array is null
-                      To access the data from the query result just use this.selectedCountyFDDetails.ATRRIBUTE_HERE. */}
                       <Card title="Food Desert Data ">
                         <CardBody>
                           <Row gutter="30" align="middle" justify="center">
@@ -502,6 +464,7 @@ class Counties extends React.Component {
                     </div>
                   ) : null,
                 },
+                // Demographic Data Card
                 {
                   label: `Demographic Data`,
                   key: "2",
@@ -514,10 +477,9 @@ class Counties extends React.Component {
                       }}
                     >
                       {console.log(this.state.selectedCountyDemoDetails)}
-                       {/*Below is the Card on the 2nd Tab - Demo Data. This card is also controlled by a ternary statement and will not display if the selectedCountyDemoDetails array is null*/}
-
                       <Card title="Demographic Data ">
                         <CardBody>
+                          {/* Card Header */}
                           <Row gutter="30" align="middle" justify="center">
                             <Col flex={2} style={{ textAlign: "left" }}>
                               <h3>Demographic Data </h3>
@@ -531,207 +493,159 @@ class Counties extends React.Component {
                               </h3>
                             </Col>
                           </Row>
-                          <br></br>
-                          <Row gutter="30" align="middle" justify="left">
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Population:{" "}
-                              <h5>
+                          <br />
+                          <Row align="left" justify="right">
+                            <h5>
+                              Total population of{" "}
+                              <span style={{ color: "#7FB069" }}>
                                 {this.state.selectedCountyDemoDetails.Population?.toLocaleString(
                                   "en-US"
-                                )}
-                              </h5>
-                            </Col>
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Men:{" "}
-                              <h5>
-                                {this.state.selectedCountyDemoDetails.male?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                              <Progress
-                                percent={(
-                                  (this.state.selectedCountyDemoDetails.male /
-                                    this.state.selectedCountyDemoDetails
-                                      .Population) *
-                                  100
-                                ).toFixed(2)}
-                                strokeColor={"#0000ff"}
-                              />
-                            </Col>
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Women:{" "}
-                              <h5>
-                                {this.state.selectedCountyDemoDetails.female?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                              <Progress
-                                percent={(
-                                  (this.state.selectedCountyDemoDetails.female /
-                                    this.state.selectedCountyDemoDetails
-                                      .Population) *
-                                  100
-                                ).toFixed(2)}
-                                strokeColor={"#FF0000"}
-                              />
-                            </Col>
+                                )}{" "}
+                              </span>
+                            </h5>
                           </Row>
-                          <br></br>
-                          <br></br>
-                          <Row gutter="30" align="middle" justify="left">
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Age 0-9:{" "}
-                              <h5>
-                                {this.state.selectedCountyDemoDetails.age_0_9?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Age 10-17:{" "}
-                              <h5>
-                                {this.state.selectedCountyDemoDetails.age_10_17?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Age 18-29:{" "}
-                              <h5>
-                                {this.state.selectedCountyDemoDetails.age_18_29?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
+                          <Divider />
+                          <br />
+
+                          {/* Male and Female population distribution within a county */}
+                          <Row align="middle" justify="center">
+                            <h4>Gender Distribution: </h4>
                           </Row>
-                          <br></br>
-                          <Row gutter="30" align="middle" justify="left">
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Age 30-39:{" "}
-                              <h5>
-                                {this.state.selectedCountyDemoDetails.age_30_39?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Age 40-49:{" "}
-                              <h5>
-                                {this.state.selectedCountyDemoDetails.age_40_49?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Age 50-59:{" "}
-                              <h5>
-                                {this.state.selectedCountyDemoDetails.age_50_59?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
+                          <Row gutter="30" align="middle" justify="center">
+                            <DoughnutChart
+                              data={{
+                                labels: ["Male", "Female"],
+                                datasets: [
+                                  {
+                                    label: "Total",
+                                    data: [
+                                      this.state.selectedCountyDemoDetails.male,
+                                      this.state.selectedCountyDemoDetails
+                                        .female,
+                                    ],
+                                    backgroundColor: ["#666A86", "#d68bb7"],
+                                  },
+                                ],
+                              }}
+                            />
                           </Row>
-                          <br></br>
-                          <Row gutter="30" align="middle" justify="left">
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Age 60-69:{" "}
-                              <h5>
-                                {this.state.selectedCountyDemoDetails.age_60_69?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Age 70-79:{" "}
-                              <h5>
-                                {this.state.selectedCountyDemoDetails.age_70_79?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Age 80 plus:{" "}
-                              <h5>
-                                {this.state.selectedCountyDemoDetails.age_80_plus?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
+                          <Divider />
+                          <br />
+                          <br />
+
+                          {/* Age distribution within a county */}
+                          <Row align="middle" justify="center">
+                            <h4>Age Distribution: </h4>
                           </Row>
-                          <br></br>
-                          <br></br>
-                          <Row gutter="30" align="middle" justify="left">
-                            <Col flex={2} style={{ textAlign: "center" }}>
-                              <h4>2010</h4>
-                            </Col>
-                            <Col flex={2} style={{ textAlign: "center" }}>
-                              <h4>2015</h4>
-                            </Col>
+                          <Row gutter="30" align="middle" justify="center">
+                            <PolarAreaChart
+                              data={{
+                                labels: [
+                                  "0-9",
+                                  "10-17",
+                                  "18-29",
+                                  "30-39",
+                                  "40-49",
+                                  "50-59",
+                                  "60-69",
+                                  "70+",
+                                ],
+                                datasets: [
+                                  {
+                                    label: "Total of the population",
+                                    data: [
+                                      this.state.selectedCountyDemoDetails
+                                        .age_0_9,
+                                      this.state.selectedCountyDemoDetails
+                                        .age_10_17,
+                                      this.state.selectedCountyDemoDetails
+                                        .age_18_29,
+                                      this.state.selectedCountyDemoDetails
+                                        .age_30_39,
+                                      this.state.selectedCountyDemoDetails
+                                        .age_40_49,
+                                      this.state.selectedCountyDemoDetails
+                                        .age_50_59,
+                                      this.state.selectedCountyDemoDetails
+                                        .age_60_69,
+                                      this.state.selectedCountyDemoDetails
+                                        .age_70_79 +
+                                        this.state.selectedCountyDemoDetails
+                                          .age_80_plus,
+                                    ],
+                                    backgroundColor: [
+                                      "rgba(102, 106, 134, 0.6)",
+                                      "rgba(51, 51, 51, 0.6)",
+                                      "rgba(127, 176, 105, 0.6)",
+                                      "rgba(235, 233, 233, 0.6)",
+                                      "rgba(143, 150, 199, 0.6)",
+                                      "rgba(175, 178, 189, 0.6)",
+                                      "rgba(214, 139, 183, 0.6)",
+                                      "rgba(178, 224, 157, 0.6)",
+                                    ],
+                                  },
+                                ],
+                              }}
+                            />
                           </Row>
-                          <br></br>
-                          <Row gutter="30" align="middle" justify="left">
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Total Number of Households:{" "}
-                              <h5>
-                                {this.state.selectedCountyDemoDetails.Total_Households_2010?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Total Number of Households:{" "}
-                              <h5>
-                                {this.state.selectedCountyDemoDetails.Total_Households_2015?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
+                          <Divider />
+                          <br />
+                          <br />
+
+                          {/* Households within a county */}
+                          <Row align="middle" justify="center">
+                            <h4>Households: </h4>
                           </Row>
-                          <br></br>
-                          <Row gutter="30" align="middle" justify="left">
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Households with member 18 & under:{" "}
-                              <h5>
-                                {this.state.selectedCountyDemoDetails.hh_18_under_2010?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Households with member 18 & under:{" "}
-                              <h5>
-                                {this.state.selectedCountyDemoDetails.hh_18_under_2015?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
+                          <Row gutter="30" align="left" justify="center">
+                            <BarChart
+                              data={{
+                                labels: ["2010", "2015"],
+                                datasets: [
+                                  {
+                                    label: "Total households",
+                                    data: [
+                                      this.state.selectedCountyDemoDetails
+                                        .Total_Households_2010,
+                                      this.state.selectedCountyDemoDetails
+                                        .Total_Households_2015,
+                                    ],
+                                    backgroundColor: "#7FB069",
+                                  },
+                                  {
+                                    label: "Households with members under 18",
+                                    data: [
+                                      this.state.selectedCountyDemoDetails
+                                        .hh_18_under_2010,
+                                      this.state.selectedCountyDemoDetails
+                                        .hh_18_under_2015,
+                                    ],
+                                    backgroundColor: "#666A86",
+                                  },
+                                  {
+                                    label: "Households with members over 60",
+                                    data: [
+                                      this.state.selectedCountyDemoDetails
+                                        .hh_60_over_2010,
+                                      this.state.selectedCountyDemoDetails
+                                        .hh_60_over_2015,
+                                    ],
+                                    backgroundColor: "#EBE9E9",
+                                  },
+                                ],
+                              }}
+                            ></BarChart>
                           </Row>
-                          <br></br>
-                          <Row gutter="30" align="middle" justify="left">
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Households with member 60 & over:{" "}
-                              <h5>
-                                {this.state.selectedCountyDemoDetails.hh_60_over_2010?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Households with member 60 & over:{" "}
-                              <h5>
-                                {this.state.selectedCountyDemoDetails.hh_60_over_2015?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
-                          </Row>
+                          <br />
+                          <br />
                         </CardBody>
                       </Card>
-                      <br></br>
-                      <br></br>
+                      <br />
+                      <br />
                     </div>
                   ) : null,
                 },
+
+                // Income Data Card
                 {
                   label: `Income Data`,
                   key: "3",
@@ -744,10 +658,9 @@ class Counties extends React.Component {
                       }}
                     >
                       {console.log(this.state.selectedCountyIncomeDetails)}
-                     {/*Below is the Card on the 3nd Tab - Income Data. This card is also controlled by a ternary statement and will not display if the selectedCountyIncomeDetails array is null*/}
-
                       <Card title="Income Data ">
                         <CardBody>
+                          {/* Card Header */}
                           <Row gutter="30" align="middle" justify="center">
                             <Col flex={2} style={{ textAlign: "left" }}>
                               <h3>Income Data </h3>
@@ -762,76 +675,63 @@ class Counties extends React.Component {
                             </Col>
                           </Row>
                           <br></br>
-                          <Row gutter="30" align="middle" justify="left">
-                            <Col flex={2} style={{ textAlign: "center" }}>
-                              <h4>2010</h4>
-                            </Col>
-                            <Col flex={2} style={{ textAlign: "center" }}>
-                              <h4>2015</h4>
-                            </Col>
+                          <br></br>
+
+                          {/* Foodstamps within a county */}
+                          <Row align="middle" justify="center">
+                            <h4>Households and Food Assistance </h4>
+                          </Row>
+                          <Row gutter="30" align="left" justify="center">
+                            <BarChart
+                              data={{
+                                labels: ["2010", "2015"],
+                                datasets: [
+                                  {
+                                    label: "Total households",
+                                    data: [
+                                      this.state.selectedCountyDemoDetails
+                                        .Total_Households_2010,
+                                      this.state.selectedCountyDemoDetails
+                                        .Total_Households_2015,
+                                    ],
+                                    backgroundColor: "#7FB069",
+                                  },
+                                  {
+                                    label: "Households receiving foodstamps",
+                                    data: [
+                                      this.state.selectedCountyIncomeDetails
+                                        .Households_Receiving_FoodStamps_2010,
+                                      this.state.selectedCountyIncomeDetails
+                                        .Households_Receiving_FoodStamps_2015,
+                                    ],
+                                    backgroundColor: "#666A86",
+                                  },
+                                  {
+                                    label: "Households below poverty",
+                                    data: [
+                                      this.state.selectedCountyIncomeDetails
+                                        .hh_below_pl_2010,
+                                      this.state.selectedCountyIncomeDetails
+                                        .hh_below_pl_2015,
+                                    ],
+                                    backgroundColor: "#EBE9E9",
+                                  },
+                                ],
+                              }}
+                            ></BarChart>
                           </Row>
                           <br></br>
-                          <Row gutter="30" align="middle" justify="left">
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Total Number of Households:{" "}
-                              <h5>
-                                {this.state.selectedCountyIncomeDetails.Total_Households_2010?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Total Number of Households:{" "}
-                              <h5>
-                                {this.state.selectedCountyIncomeDetails.Total_Households_2015?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
-                          </Row>
                           <br></br>
-                          <Row gutter="30" align="middle" justify="left">
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Number of Households Receiving Food Stamps:{" "}
-                              <h5>
-                                {this.state.selectedCountyIncomeDetails.Households_Receiving_FoodStamps_2010?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Number of Households Receiving Food Stamps:{" "}
-                              <h5>
-                                {this.state.selectedCountyIncomeDetails.Households_Receiving_FoodStamps_2015?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
+
+                          {/* Income within a county */}
+                          <Row align="middle" justify="center">
+                            <h4>Income </h4>
                           </Row>
-                          <br></br>
-                          <Row gutter="30" align="middle" justify="left">
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Number Households Below Poverty Level:{" "}
-                              <h5>
-                                {this.state.selectedCountyIncomeDetails.hh_below_pl_2010?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Number Households Below Poverty Level:{" "}
-                              <h5>
-                                {this.state.selectedCountyIncomeDetails.hh_below_pl_2015?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
-                          </Row>
-                          <br></br>
                           <Row gutter="30" align="middle" justify="left">
                             <Col flex={2} style={{ textAlign: "left" }}>
                               Avg Median Income:{" "}
                               <h5>
+                                $
                                 {this.state.selectedCountyIncomeDetails.avg_est_med_income_2010?.toLocaleString(
                                   "en-US"
                                 )}
@@ -840,6 +740,7 @@ class Counties extends React.Component {
                             <Col flex={2} style={{ textAlign: "left" }}>
                               Avg Median Income:{" "}
                               <h5>
+                                $
                                 {this.state.selectedCountyIncomeDetails.avg_est_med_income_2015?.toLocaleString(
                                   "en-US"
                                 )}
@@ -851,6 +752,7 @@ class Counties extends React.Component {
                             <Col flex={2} style={{ textAlign: "left" }}>
                               Avg Median Income Receiving Food Stamps:{" "}
                               <h5>
+                                $
                                 {this.state.selectedCountyIncomeDetails.avg_med_income_receiving_fs_2010?.toLocaleString(
                                   "en-US"
                                 )}
@@ -859,6 +761,7 @@ class Counties extends React.Component {
                             <Col flex={2} style={{ textAlign: "left" }}>
                               Avg Median Income Receiving Food Stamps:{" "}
                               <h5>
+                                $
                                 {this.state.selectedCountyIncomeDetails.avg_med_income_receiving_fs_2015?.toLocaleString(
                                   "en-US"
                                 )}

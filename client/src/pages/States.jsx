@@ -118,7 +118,7 @@ const stateColumns = [
     width: 10,
     align: "center",
     sorter: (a, b) => a.no_car_half_mile_percent - b.no_car_half_mile_percent,
-    render: (text, row) => <span>{row.no_car_half_mile_percent}%</span>
+    render: (text, row) => <span>{row.no_car_half_mile_percent}%</span>,
   },
   {
     title: "Percentage of Housing Units Beyond 1 Mile From Supermarket**",
@@ -127,7 +127,7 @@ const stateColumns = [
     width: 10,
     align: "center",
     sorter: (a, b) => a.no_car_1_mile_percent - b.no_car_1_mile_percent,
-    render: (text, row) => <span>{row.no_car_1_mile_percent}%</span>
+    render: (text, row) => <span>{row.no_car_1_mile_percent}%</span>,
   },
   {
     title: "Percentage of Housing Units Beyond 10 Miles From Supermarket**",
@@ -136,7 +136,7 @@ const stateColumns = [
     width: 10,
     align: "center",
     sorter: (a, b) => a.no_car_10_mile_percent - b.no_car_10_mile_percent,
-    render: (text, row) => <span>{row.no_car_10_mile_percent}%</span>
+    render: (text, row) => <span>{row.no_car_10_mile_percent}%</span>,
   },
   {
     title: "Percentage of Housing Units Beyond 20 Miles From Supermarket**",
@@ -145,7 +145,7 @@ const stateColumns = [
     width: 10,
     align: "center",
     sorter: (a, b) => a.no_car_20_mile_percent - b.no_car_20_mile_percent,
-    render: (text, row) => <span>{row.no_car_20_mile_percent}%</span>
+    render: (text, row) => <span>{row.no_car_20_mile_percent}%</span>,
   },
 ];
 
@@ -659,14 +659,14 @@ class StatePage extends React.Component {
                                         .age_80_plus,
                                   ],
                                   backgroundColor: [
-                                    "#666A86",
-                                    "#333333",
-                                    "#7FB069",
-                                    "#EBE9E9",
-                                    "#8f96c7",
-                                    "#afb2bd",
-                                    "#d68bb7",
-                                    "#b2e09d",
+                                    "rgba(102, 106, 134, 0.6)",
+                                    "rgba(51, 51, 51, 0.6)",
+                                    "rgba(127, 176, 105, 0.6)",
+                                    "rgba(235, 233, 233, 0.6)",
+                                    "rgba(143, 150, 199, 0.6)",
+                                    "rgba(175, 178, 189, 0.6)",
+                                    "rgba(214, 139, 183, 0.6)",
+                                    "rgba(178, 224, 157, 0.6)",
                                   ],
                                 },
                               ],
