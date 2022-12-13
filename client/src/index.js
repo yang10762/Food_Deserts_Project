@@ -4,7 +4,6 @@ import "./index.css";
 // import App from "./App";
 import Home from "./pages/Home";
 import Map from "./pages/Map";
-import About from "./pages/About";
 import States from "./pages/States";
 import Counties from "./pages/Counties";
 import reportWebVitals from "./reportWebVitals";
@@ -47,10 +46,6 @@ const router = createBrowserRouter([
   {
     path: "/map",
     element: <Map />,
-  },
-  {
-    path: "/about",
-    element: <About />,
   },
   {
     path: "/states",

@@ -38,9 +38,9 @@ export default function Navigation() {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const routes = ["/map", "/about", "/states", "/counties"];
+  const routes = ["/map", "/states", "/counties"];
 
-  const tabs = ["Map", "About", "States", "Counties"];
+  const tabs = ["Map", "States", "Counties"];
 
   return (
     <Wrapper>

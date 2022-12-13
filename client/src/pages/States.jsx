@@ -1,5 +1,4 @@
 import React from "react";
-import desert from "../images/Opacity75Desert.jpeg";
 import DoughnutChart from "../components/DoughnutChart";
 import PolarAreaChart from "../components/PolarAreaChart";
 import CustomButton from "../components/CustomButton";
@@ -850,7 +849,7 @@ class StatePage extends React.Component {
 
                 // State Health Surveys Card
                 {
-                  label: `Health Surveys`,
+                  label: `Health Survey Results`,
                   key: "4",
                   children: (
                     <Card>
@@ -858,7 +857,7 @@ class StatePage extends React.Component {
                         {/* Card Header */}
                         <Row gutter="30" align="middle" justify="center">
                           <Col flex={2} style={{ textAlign: "left" }}>
-                            <h3>Health Surveys </h3>
+                            <h3>Health Survey Results </h3>
                           </Col>
                           <Col flex={2} style={{ textAlign: "right" }}>
                             <h3 style={{ color: "#7FB069" }}>
@@ -957,20 +956,27 @@ class StatePage extends React.Component {
 
                 // State Health Insurance Card
                 {
-                  label: "Health Insurance",
+                  label: "Health Insurance Data",
                   key: "5",
                   children: (
                     <Card style={{ width: "80%" }}>
                       <CardBody>
-                        <Row align="middle" justify="center">
-                          <h3>Health Insurance Statistics</h3>{" "}
-                          <Divider></Divider> <br></br>
+                        {/* Card Header */}
+                        <Row gutter="30" align="middle" justify="center">
+                          <Col flex={2} style={{ textAlign: "left" }}>
+                            <h3>Health Insurance Data</h3>
+                          </Col>
+                          <Col flex={2} style={{ textAlign: "right" }}>
+                            <h3 style={{ color: "#7FB069" }}>
+                              {this.state.selectedStateDetails.demoFS.state}
+                            </h3>
+                          </Col>
                         </Row>
+                        <br />
+                        <br />
+
                         <Row align="middle" justify="center">
-                          <h6>
-                            Uninsured Rates in 2010 vs 2015 for{" "}
-                            {this.state.selectedStateDetails.demoFS.state}:
-                          </h6>
+                          <h4>Uninsured Rates in 2010 vs 2015:</h4>
                         </Row>
                         <Row
                           align="middle"
@@ -992,7 +998,7 @@ class StatePage extends React.Component {
                                   this.state.selectedStateDetails
                                     .healthInsurance.uninsured_rate_2015
                                     ? "#cf1322"
-                                    : "#3f8600",
+                                    : "#7FB069",
                               }}
                               suffix="%"
                             />
@@ -1010,7 +1016,7 @@ class StatePage extends React.Component {
                                     .healthInsurance.uninsured_rate_2010 >=
                                   this.state.selectedStateDetails
                                     .healthInsurance.uninsured_rate_2015
-                                    ? "#3f8600"
+                                    ? "#7FB069"
                                     : "#cf1322",
                               }}
                               suffix="%"
@@ -1028,7 +1034,7 @@ class StatePage extends React.Component {
                                 color:
                                   this.state.selectedStateDetails
                                     .healthInsurance.uninsured_rate_change < 0
-                                    ? "#3f8600"
+                                    ? "#7FB069"
                                     : "#cf1322",
                               }}
                               prefix={
@@ -1068,7 +1074,7 @@ class StatePage extends React.Component {
                               color:
                                 this.state.selectedStateDetails.healthInsurance
                                   .uninsured_rate_change < 0
-                                  ? "#3f8600"
+                                  ? "#7FB069"
                                   : "#cf1322",
                             }}
                             prefix={
@@ -1104,7 +1110,7 @@ class StatePage extends React.Component {
                               "en-US"
                             )}
                             precision={0}
-                            valueStyle={{ color: "#3f8600" }}
+                            valueStyle={{ color: "#7FB069" }}
                             suffix="people"
                           />
                         </Row>
