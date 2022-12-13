@@ -443,7 +443,8 @@ class StatePage extends React.Component {
                             {this.state.selectedStateDetails.detail.abbrev}
                           </h2>
                         </Row>
-                        <Divider />
+                        <br />
+                        <br />
                         <Row align="center">
                           <img
                             src={
@@ -552,7 +553,7 @@ class StatePage extends React.Component {
                           </Col>
                           <Col flex={2} style={{ textAlign: "right" }}>
                             <h3 style={{ color: "#7FB069" }}>
-                              {this.state.selectedStateName}
+                              {this.state.selectedStateDetails.demoFS.state}
                             </h3>
                           </Col>
                         </Row>
@@ -741,11 +742,10 @@ class StatePage extends React.Component {
                           </Col>
                           <Col flex={2} style={{ textAlign: "right" }}>
                             <h3 style={{ color: "#7FB069" }}>
-                              {this.state.selectedStateName}
+                              {this.state.selectedStateDetails.demoFS.state}
                             </h3>
                           </Col>
                         </Row>
-                        <Divider />
                         <br />
                         <br />
 
@@ -855,14 +855,24 @@ class StatePage extends React.Component {
                   children: (
                     <Card>
                       <CardBody>
-                        <Row align="center">
-                          <h3>Health Surveys (2011 - 2016)</h3>{" "}
-                          <Divider></Divider>
+                        {/* Card Header */}
+                        <Row gutter="30" align="middle" justify="center">
+                          <Col flex={2} style={{ textAlign: "left" }}>
+                            <h3>Health Surveys </h3>
+                          </Col>
+                          <Col flex={2} style={{ textAlign: "right" }}>
+                            <h3 style={{ color: "#7FB069" }}>
+                              {this.state.selectedStateDetails.demoFS.state}
+                            </h3>
+                          </Col>
                         </Row>
+                        <br />
+                        <br />
+                        {/* Different Survey Topics */}
                         <Row align="left">
                           <p>Select a topic to see results: </p>
                           <Select
-                            defaultValue="Percent of adults aged 18 years and older who have an overweight classification"
+                            defaultValue="Percentage of adults classified as overweight"
                             style={{ width: "70%", marginLeft: "10px" }}
                             onChange={(value) => {
                               this.topicOnChange(
@@ -871,236 +881,104 @@ class StatePage extends React.Component {
                               );
                             }}
                           >
-                            <Option value="Percent of adults aged 18 years and older who have an overweight classification">
-                              % adults {">="} 18 years overweight
+                            <Option value="Percentage of adults classified as overweight">
+                              Percentage of adults classified as overweight
                             </Option>
-                            <Option value="Percent of adults aged 18 years and older who have obesity">
-                              % adults {">="} 18 years obesity
+                            <Option value="Percentage of adults classified as obese">
+                              Percentage of adults classified as obese
                             </Option>
-                            <Option value="Percent of adults who achieve at least 150 minutes a week of moderate-intensity aerobic physical activity or 75 minutes a week of vigorous-intensity aerobic activity (or an equivalent combination)">
-                              % adults w/ {">="}150 min/wk moderate aerobic
-                              activity or 75 min/wk of vigorous aerobic
-                              activity(or an equivalent combination)
+                            <Option
+                              value="Percentage of adults who perform 2.5 hours or more
+                              a week of moderate aerobic activity or 1.25 hours
+                              a week of vigorous aerobic activity (or an
+                              equivalent combination)"
+                            >
+                              Percentage of adults who perform 2.5 hours or more
+                              a week of moderate aerobic activity or 1.25 hours
+                              a week of vigorous aerobic activity (or an
+                              equivalent combination)
                             </Option>
-                            <Option value="Percent of adults who achieve at least 150 minutes a week of moderate-intensity aerobic physical activity or 75 minutes a week of vigorous-intensity aerobic physical activity and engage in muscle-strengthening activities on 2 or more days a week">
-                              % adults w/ {">="} 150 min/wk of moderate aerobic
-                              physical activity or 75 min/wk of vigorous aerobic
-                              physical activity and engage in
-                              muscle-strengthening activities on 2+ days/wk
+                            <Option
+                              value="Percentage of adults who perform at least 2.5
+                              hours a week of moderate aerobic physical activity
+                              or 1.25 hours a week of vigorous aerobic physical
+                              activity and engage in muscle-strengthening
+                              activities on 2 or more days a week"
+                            >
+                              Percentage of adults who perform at least 2.5
+                              hours a week of moderate aerobic physical activity
+                              or 1.25 hours a week of vigorous aerobic physical
+                              activity and engage in muscle-strengthening
+                              activities on 2 or more days a week
                             </Option>
-                            <Option value="Percent of adults who achieve at least 300 minutes a week of moderate-intensity aerobic physical activity or 150 minutes a week of vigorous-intensity aerobic activity (or an equivalent combination)">
-                              % adults w/ {">="} 300 min/wk of moderate aerobic
-                              physical activity or 150 min/wk of vigorous
-                              aerobic activity (or an equivalent combination)
+                            <Option
+                              value="Percentage of adults who perform 5 hours a week or
+                              more of moderate aerobic physical activity or 2.5
+                              hours a week of vigorous aerobic activity (or an
+                              equivalent combination)"
+                            >
+                              Percentage of adults who perform 5 hours a week or
+                              more of moderate aerobic physical activity or 2.5
+                              hours a week of vigorous aerobic activity (or an
+                              equivalent combination)
                             </Option>
-                            <Option value="Percent of adults who engage in muscle-strengthening activities on 2 or more days a week">
-                              % adults who engage in muscle-strengthening
-                              activities on 2+ days/wk
+                            <Option
+                              value="Percentage of adults who engage in
+                              muscle-strengthening activities on 2 or more days
+                              a week"
+                            >
+                              Percentage of adults who engage in
+                              muscle-strengthening activities on 2 or more days
+                              a week
                             </Option>
-                            <Option value="Percent of adults who engage in no leisure-time physical activity">
-                              % adults who engage in no leisure-time physical
-                              activity
+                            <Option
+                              value="Percentage of adults who engage in no leisure-time
+                              physical activity"
+                            >
+                              Percentage of adults who engage in no leisure-time
+                              physical activity
                             </Option>
-                            <Option value="Percent of adults who report consuming fruit less than one time daily">
-                              % adults who report consuming fruit {"<"}1 time
-                              daily
+                            <Option
+                              value="Percentage of adults who report consuming fruit
+                              less than once daily"
+                            >
+                              Percentage of adults who report consuming fruit
+                              less than once daily
                             </Option>
-                            <Option value="Percent of adults who report consuming vegetables less than one time daily">
-                              % adults who report consuming vegetables {"<"}1
-                              time daily
+                            <Option
+                              value="Percentage of adults who report consuming
+                              vegetables less than once daily"
+                            >
+                              Percentage of adults who report consuming
+                              vegetables less than once daily
                             </Option>
                           </Select>
                         </Row>
-                        <Divider></Divider>
-                        <h5 align="center">Topic</h5> <br />
-                        <Row align="center">
-                          {this.state.selectedTopicTotal}
-                        </Row>
-                        <Divider></Divider>
-                        <br />
-                        <Row style={{ width: "100%" }} align="center">
-                          <h5>
-                            Survey Results for{" "}
-                            {this.state.selectedStateDetails.demoFS.state}*
-                          </h5>{" "}
-                          <br></br>
-                          <br></br>
-                          <br></br>
-                        </Row>
-                        <Row
-                          style={{ width: "100%" }}
-                          gutter="40"
-                          align="center"
-                        >
-                          {/* <LineChart
-                            data={{
-                              labels: "Health Survey Results",
-                              datasets: [
-                                {
-                                  label: "2011",
-                                  data: this.state
-                                    .yearlyHSResultsForTopicTotal[0],
-                                  borderColor: "rgb(255, 99, 132)",
-                                  backgroundColor: "rgba(255, 99, 132, 0.5)",
-                                },
-                                {
-                                  label: "2012",
-                                  data: this.state
-                                    .yearlyHSResultsForTopicTotal[1],
-                                  borderColor: "rgb(255, 99, 132)",
-                                  backgroundColor: "rgba(255, 99, 132, 0.5)",
-                                },
-                                {
-                                  label: "2013",
-                                  data: this.state
-                                    .yearlyHSResultsForTopicTotal[2],
-                                  borderColor: "rgb(255, 99, 132)",
-                                  backgroundColor: "rgba(255, 99, 132, 0.5)",
-                                },
-                                {
-                                  label: "2014",
-                                  data: this.state
-                                    .yearlyHSResultsForTopicTotal[3],
-                                  borderColor: "rgb(255, 99, 132)",
-                                  backgroundColor: "rgba(255, 99, 132, 0.5)",
-                                },
-                                {
-                                  label: "2015",
-                                  data: this.state
-                                    .yearlyHSResultsForTopicTotal[4],
-                                  borderColor: "rgb(255, 99, 132)",
-                                  backgroundColor: "rgba(255, 99, 132, 0.5)",
-                                },
-                              ],
-                            }}
-                          ></LineChart> */}
-                          <Col>
-                            <ProgressAntd
-                              type="circle"
-                              percent={
-                                this.state.yearlyHSResultsForTopicTotal[0]
-                                  .percent
-                              }
-                              width={90}
-                              strokeColor={{
-                                "0%": "#FF0000",
-                                "50%": "#FF7F00",
-                                "100%": "#FFFF00",
-                              }}
-                            />{" "}
-                            <Divider></Divider>
-                            <Row align="center">
-                              {" "}
-                              <h6>2011</h6>
-                            </Row>
-                          </Col>
-                          <Col>
-                            <ProgressAntd
-                              type="circle"
-                              percent={
-                                this.state.yearlyHSResultsForTopicTotal[1]
-                                  .percent
-                              }
-                              width={90}
-                              strokeColor={{
-                                "0%": "#FFFF00",
-                                "50%": "#7FFF00",
-                                "100%": "#00FF00",
-                              }}
-                            />
-                            <Divider></Divider>
-                            <Row align="center">
-                              {" "}
-                              <h6>2012</h6>
-                            </Row>
-                          </Col>
-                          <Col>
-                            <ProgressAntd
-                              type="circle"
-                              percent={
-                                this.state.yearlyHSResultsForTopicTotal[2]
-                                  .percent
-                              }
-                              width={90}
-                              strokeColor={{
-                                "0%": "#00FF00",
-                                "50%": "#00FF7F",
-                                "100%": "#00FFFF",
-                              }}
-                            />{" "}
-                            <Divider></Divider>
-                            <Row align="center">
-                              {" "}
-                              <h6>2013</h6>
-                            </Row>
-                          </Col>
-                          <Col>
-                            <ProgressAntd
-                              type="circle"
-                              percent={
-                                this.state.yearlyHSResultsForTopicTotal[3]
-                                  .percent
-                              }
-                              width={90}
-                              strokeColor={{
-                                "0%": "#00FFFF",
-                                "50%": "#007FFF",
-                                "100%": "#0000FF",
-                              }}
-                            />{" "}
-                            <Divider></Divider>
-                            <Row align="center">
-                              {" "}
-                              <h6>2014</h6>
-                            </Row>
-                          </Col>
-                          <Col>
-                            <ProgressAntd
-                              type="circle"
-                              percent={
-                                this.state.yearlyHSResultsForTopicTotal[4]
-                                  .percent
-                              }
-                              width={90}
-                              strokeColor={{
-                                "0%": "#0000FF",
-                                "50%": "#7F00FF",
-                                "100%": "#FF00FF",
-                              }}
-                            />{" "}
-                            <Divider></Divider>
-                            <Row align="center">
-                              {" "}
-                              <h6>2015</h6>
-                            </Row>
-                          </Col>
-                          <Col>
-                            <ProgressAntd
-                              type="circle"
-                              percent={
-                                this.state.yearlyHSResultsForTopicTotal[5]
-                                  .percent
-                              }
-                              width={90}
-                              strokeColor={{
-                                "0%": "#FF00FF",
-                                "50%": "#FF007F",
-                                "100%": "#FF0000",
-                              }}
-                            />{" "}
-                            <Divider></Divider>
-                            <Row align="center">
-                              {" "}
-                              <h6>2016</h6>
-                            </Row>
-                          </Col>
-                        </Row>
                         <br />
                         <br />
-                        <Row>
-                          *Note: Results of '-%' indicate no record for that
-                          year.
-                        </Row>
+                        <h4 align="left">Survey Results for</h4>{" "}
+                        {this.state.selectedTopicTotal}
+                        <br></br>
+                        <br></br>
+                        <br></br>
+                        {/* Survey Results Line Graph */}
+                        <LineChart
+                          data={{
+                            datasets: [
+                              {
+                                label: "Health Survey Results",
+                                data: this.state.yearlyHSResultsForTopicTotal.map(
+                                  (element) => ({
+                                    percent: element.percent,
+                                    year: element.year,
+                                  })
+                                ),
+                              },
+                            ],
+                          }}
+                        ></LineChart>
+                        <br />
+                        <br />
                       </CardBody>
                     </Card>
                   ),
