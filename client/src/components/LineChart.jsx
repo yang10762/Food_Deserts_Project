@@ -37,12 +37,5 @@ export default function LineChart(props) {
       ],
     };
   };
-  return (
-    <>
-      {/* // <div> */}
-      <Line data={getNonEmptyData(props.data)} />
-      {/* {!(lineData.toString() === {}.toString()) && <Line data={lineData} />} */}
-      {/* </div> */}
-    </>
-  );
+  return <Line data={getNonEmptyData(props.data)} />;
 }

@@ -374,8 +374,18 @@ class Counties extends React.Component {
                               </h3>
                             </Col>
                           </Row>
+                          <Row align="left" justify="right">
+                            <h5>
+                              Total food desserts:{" "}
+                              <span style={{ color: "#7FB069" }}>
+                                {this.state.selectedCountyFDDetails.Total_Food_Deserts?.toLocaleString(
+                                  "en-US"
+                                )}{" "}
+                              </span>
+                            </h5>
+                          </Row>
                           <br></br>
-                          <Row gutter="30" align="middle" justify="left">
+                          {/* <Row gutter="30" align="middle" justify="left">
                             {this.state.selectedCountyFDDetails.FD_County !=
                             null ? (
                               <Col flex={2} style={{ textAlign: "left" }}>
@@ -390,17 +400,10 @@ class Counties extends React.Component {
                                 </h5>
                               </Col>
                             )}
-                          </Row>
+                          </Row> */}
                           <br></br>
+
                           <Row gutter="30" align="middle" justify="left">
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Total Number of Food Deserts:{" "}
-                              <h5>
-                                {this.state.selectedCountyFDDetails.Total_Food_Deserts?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
                             <Col flex={2} style={{ textAlign: "left" }}>
                               Percentage Urban Areas: <nbsp></nbsp>
                               <Progress
@@ -420,43 +423,56 @@ class Counties extends React.Component {
                           </Row>
                           <br></br>
                           <br></br>
-                          <Row gutter="30" align="middle" justify="left">
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              No Car 1/2 Mile from Supermarket:{" "}
-                              <h5>
-                                {this.state.selectedCountyFDDetails.no_car_half_M?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              No Car 1 Mile from Supermarket:{" "}
-                              <h5>
-                                {this.state.selectedCountyFDDetails.no_car_1_M?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
+
+                          {/* Households within a county */}
+                          <Row align="middle" justify="center">
+                            <h4>Food Deserts: </h4>
                           </Row>
-                          <br></br>
-                          <Row gutter="30" align="middle" justify="left">
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              No Car 10 Miles from Supermarket:{" "}
-                              <h5>
-                                {this.state.selectedCountyFDDetails.no_car_10_M?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              No Car 20 Miles from Supermarket:{" "}
-                              <h5>
-                                {this.state.selectedCountyFDDetails.no_car_20_M?.toLocaleString(
-                                  "en-US"
-                                )}
-                              </h5>
-                            </Col>
+                          <Row gutter="30" align="left" justify="center">
+                            <BarChart
+                              data={{
+                                labels: [
+                                  "House Distances from Nearest Supermarket",
+                                ],
+                                datasets: [
+                                  {
+                                    label: "No Car 1/2 Mile from Supermarket",
+                                    data: [
+                                      this.state.selectedCountyFDDetails
+                                        .no_car_half_M,
+                                    ],
+                                    backgroundColor: "#7FB069",
+                                  },
+                                  {
+                                    label: "No Car 1 Miles from Supermarket",
+                                    data: [
+                                      this.state.selectedCountyFDDetails
+                                        .no_car_1_M,
+                                    ],
+                                    backgroundColor: "#666A86",
+                                  },
+                                  {
+                                    label: "No Car 10 Miles from Supermarket",
+                                    data: [
+                                      this.state.selectedCountyFDDetails
+                                        .no_car_10_M,
+                                    ],
+                                    backgroundColor: "#EBE9E9",
+                                  },
+                                  {
+                                    label: "No Car 20 Miles from Supermarket",
+                                    data: [
+                                      this.state.selectedCountyFDDetails
+                                        .no_car_20_M,
+                                    ],
+                                    backgroundColor: "#333333",
+                                  },
+                                ],
+                              }}
+                            ></BarChart>
                           </Row>
+                          <br />
+                          <br />
                         </CardBody>
                       </Card>
                       <br></br>
