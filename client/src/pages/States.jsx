@@ -882,46 +882,46 @@ class StatePage extends React.Component {
                             }}
                           >
                             <Option value="Percent of adults aged 18 years and older who have an overweight classification">
-                              Percentage of adults classified as overweight
+                              Percent of adults classified as overweight
                             </Option>
                             <Option value="Percent of adults aged 18 years and older who have obesity">
-                              Percentage of adults classified as obese
+                              Percent of adults classified as obese
                             </Option>
                             <Option value="Percent of adults who achieve at least 150 minutes a week of moderate-intensity aerobic physical activity or 75 minutes a week of vigorous-intensity aerobic activity (or an equivalent combination)">
-                              Percentage of adults who perform 2.5 hours or more
-                              a week of moderate aerobic activity or 1.25 hours
-                              a week of vigorous aerobic activity (or an
+                              Percent of adults who perform 2.5 hours or more a
+                              week of moderate aerobic activity or 1.25 hours a
+                              week of vigorous aerobic activity (or an
                               equivalent combination)
                             </Option>
                             <Option value="Percent of adults who achieve at least 150 minutes a week of moderate-intensity aerobic physical activity or 75 minutes a week of vigorous-intensity aerobic physical activity and engage in muscle-strengthening activities on 2 or more days a week">
-                              Percentage of adults who perform at least 2.5
-                              hours a week of moderate aerobic physical activity
-                              or 1.25 hours a week of vigorous aerobic physical
-                              activity and engage in muscle-strengthening
-                              activities on 2 or more days a week
+                              Percent of adults who perform at least 2.5 hours a
+                              week of moderate aerobic physical activity or 1.25
+                              hours a week of vigorous aerobic physical activity
+                              and engage in muscle-strengthening activities on 2
+                              or more days a week
                             </Option>
                             <Option value="Percent of adults who achieve at least 300 minutes a week of moderate-intensity aerobic physical activity or 150 minutes a week of vigorous-intensity aerobic activity (or an equivalent combination)">
-                              Percentage of adults who perform 5 hours a week or
+                              Percent of adults who perform 5 hours a week or
                               more of moderate aerobic physical activity or 2.5
                               hours a week of vigorous aerobic activity (or an
                               equivalent combination)
                             </Option>
                             <Option value="Percent of adults who engage in muscle-strengthening activities on 2 or more days a week">
-                              Percentage of adults who engage in
+                              Percent of adults who engage in
                               muscle-strengthening activities on 2 or more days
                               a week
                             </Option>
                             <Option value="Percent of adults who engage in no leisure-time physical activity">
-                              Percentage of adults who engage in no leisure-time
+                              Percent of adults who engage in no leisure-time
                               physical activity
                             </Option>
                             <Option value="Percent of adults who report consuming fruit less than one time daily">
-                              Percentage of adults who report consuming fruit
-                              less than once daily
+                              Percent of adults who report consuming fruit less
+                              than once daily
                             </Option>
                             <Option value="Percent of adults who report consuming vegetables less than one time daily">
-                              Percentage of adults who report consuming
-                              vegetables less than once daily
+                              Percent of adults who report consuming vegetables
+                              less than once daily
                             </Option>
                           </Select>
                         </Row>
