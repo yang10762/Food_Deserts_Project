@@ -62,16 +62,6 @@ const { Option } = Select;
 var nameSearch = false;
 var popSearch = false;
 
-var average_half_mile_percent = 4.24;
-var average_1_mile_percent = 1.99;
-var average_10_mile_percent = 0.14;
-var average_20_mile_percent = 0.03;
-
-var std_dev_half_mile_percent = 0.94;
-var std_dev_1_mile_percent = 0.82;
-var std_dev_10_mile_percent = 0.15;
-var std_dev_20_mile_percent = 0.06;
-
 // 'States' table
 const stateColumns = [
   {
@@ -128,24 +118,7 @@ const stateColumns = [
     width: 10,
     align: "center",
     sorter: (a, b) => a.no_car_half_mile_percent - b.no_car_half_mile_percent,
-    render: (text, row) => (
-      <Badge
-        className={`${
-          row.no_car_half_mile_percent >
-          average_half_mile_percent + 0.5 * std_dev_half_mile_percent
-            ? row.no_car_half_mile_percent >
-              average_half_mile_percent + std_dev_half_mile_percent
-              ? "badge bg-danger"
-              : "badge bg-warning text-dark"
-            : row.no_car_half_mile_percent <
-              average_half_mile_percent - std_dev_half_mile_percent
-            ? "badge bg-success"
-            : "badge bg-warning text-dark"
-        }`}
-      >
-        {row.no_car_half_mile_percent}%
-      </Badge>
-    ),
+    render: (text, row) => <span>{row.no_car_half_mile_percent}%</span>
   },
   {
     title: "Percentage of Housing Units Beyond 1 Mile From Supermarket**",
@@ -154,24 +127,7 @@ const stateColumns = [
     width: 10,
     align: "center",
     sorter: (a, b) => a.no_car_1_mile_percent - b.no_car_1_mile_percent,
-    render: (text, row) => (
-      <Badge
-        className={`${
-          row.no_car_1_mile_percent >
-          average_1_mile_percent + 0.5 * std_dev_1_mile_percent
-            ? row.no_car_1_mile_percent >
-              average_1_mile_percent + std_dev_1_mile_percent
-              ? "badge bg-danger"
-              : "badge bg-warning text-dark"
-            : row.no_car_1_mile_percent <
-              average_1_mile_percent - std_dev_1_mile_percent
-            ? "badge bg-success"
-            : "badge bg-warning text-dark"
-        }`}
-      >
-        {row.no_car_1_mile_percent}%
-      </Badge>
-    ),
+    render: (text, row) => <span>{row.no_car_1_mile_percent}%</span>
   },
   {
     title: "Percentage of Housing Units Beyond 10 Miles From Supermarket**",
@@ -180,23 +136,7 @@ const stateColumns = [
     width: 10,
     align: "center",
     sorter: (a, b) => a.no_car_10_mile_percent - b.no_car_10_mile_percent,
-    render: (text, row) => (
-      <Badge
-        className={`${
-          row.no_car_10_mile_percent >
-          average_10_mile_percent + 0.5 * std_dev_10_mile_percent
-            ? row.no_car_10_mile_percent >
-              average_10_mile_percent + std_dev_10_mile_percent
-              ? "badge bg-danger"
-              : "badge bg-warning text-dark"
-            : row.no_car_10_mile_percent <= 0
-            ? "badge bg-success"
-            : "badge bg-warning text-dark"
-        }`}
-      >
-        {row.no_car_10_mile_percent}%
-      </Badge>
-    ),
+    render: (text, row) => <span>{row.no_car_10_mile_percent}%</span>
   },
   {
     title: "Percentage of Housing Units Beyond 20 Miles From Supermarket**",
@@ -205,23 +145,7 @@ const stateColumns = [
     width: 10,
     align: "center",
     sorter: (a, b) => a.no_car_20_mile_percent - b.no_car_20_mile_percent,
-    render: (text, row) => (
-      <Badge
-        className={`${
-          row.no_car_20_mile_percent >
-          average_20_mile_percent + 0.5 * std_dev_20_mile_percent
-            ? row.no_car_20_mile_percent >
-              average_20_mile_percent + std_dev_20_mile_percent
-              ? "badge bg-danger"
-              : "badge bg-warning text-dark"
-            : row.no_car_20_mile_percent <= 0
-            ? "badge bg-success"
-            : "badge bg-warning text-dark"
-        }`}
-      >
-        {row.no_car_20_mile_percent}%
-      </Badge>
-    ),
+    render: (text, row) => <span>{row.no_car_20_mile_percent}%</span>
   },
 ];
 
