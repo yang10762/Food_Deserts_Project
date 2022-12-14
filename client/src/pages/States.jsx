@@ -60,9 +60,6 @@ const carouselRef = React.createRef();
 const { Column, ColumnGroup } = Table;
 const { Option } = Select;
 
-var nameSearch = false;
-var popSearch = false;
-
 // 'States' table
 const stateColumns = [
   {
@@ -215,23 +212,17 @@ class StatePage extends React.Component {
 
   // Handling name of state change
   handleUsStateNameChange(event) {
-    nameSearch = false;
-    popSearch = false;
     this.setState({ usStateQuery: event.target.value });
   }
 
   // Handling population range change
   handleUsStatePopulationChange(value) {
-    nameSearch = false;
-    popSearch = false;
     this.setState({ populationLowQuery: value[0] });
     this.setState({ populationHighQuery: value[1] });
   }
 
   // Searching by name of state
   updateSearchResultsName() {
-    nameSearch = true;
-    popSearch = false;
     getStateSearchName(this.state.usStateQuery, null, null).then((res) => {
       this.setState({ usStateResults: res.results });
     });
@@ -239,8 +230,6 @@ class StatePage extends React.Component {
 
   // Searching by population range
   updateSearchResultsPopulation() {
-    nameSearch = false;
-    popSearch = true;
     getStateSearchPopulation(
       this.state.populationHighQuery * 2000000,
       this.state.populationLowQuery * 2000000,
@@ -421,10 +410,6 @@ class StatePage extends React.Component {
         this.state.selectedTopicTotal !== null &&
         this.state.selectedTopicTotal !== "undefined" ? (
           <div style={{ width: "70vw", margin: "0 auto", marginTop: "2vh" }}>
-            {console.log(this.state.yearlyHSResultsForTopicTotal)}
-            {console.log(this.state.selectedStateDetails.detail)}
-            {console.log(this.state.selectedStateDetails.demoFS)}
-            {console.log(this.state.selectedStateDetails.healthInsurance)}
             <Tabs
               defaultActiveKey="1"
               centered
