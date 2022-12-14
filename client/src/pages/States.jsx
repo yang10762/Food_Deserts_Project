@@ -4,6 +4,7 @@ import PolarAreaChart from "../components/PolarAreaChart";
 import CustomButton from "../components/CustomButton";
 import BarChart from "../components/BarChart";
 import LineChart from "../components/LineChart";
+import { Line } from "react-chartjs-2";
 
 import {
   Form,
@@ -14,6 +15,7 @@ import {
   CardBody,
   CardTitle,
   Progress,
+  Container,
 } from "shards-react";
 import stateStyles from "../stateStyles.css";
 import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
@@ -586,7 +588,6 @@ class StatePage extends React.Component {
                         <Divider />
                         <br />
                         <br />
-
                         {/* Gender distribution within a selected state*/}
                         <Row align="middle" justify="center">
                           <h4>Gender Distribution:</h4>
@@ -612,71 +613,63 @@ class StatePage extends React.Component {
                         <Divider />
                         <br />
                         <br />
-
                         {/* Age distribution within a selected state*/}
                         <Row align="middle" justify="center">
                           <h4>Age Distribution: </h4>
                         </Row>
-                        <Row
-                          style={{ maxHeight: "75%" }}
-                          align="middle"
-                          justify="center"
-                        >
-                          {" "}
-                          <PolarAreaChart
-                            data={{
-                              labels: [
-                                "0-9",
-                                "10-17",
-                                "18-29",
-                                "30-39",
-                                "40-49",
-                                "50-59",
-                                "60-69",
-                                "70+",
-                              ],
-                              datasets: [
-                                {
-                                  label: "Total of the population",
-                                  data: [
+
+                        <PolarAreaChart
+                          data={{
+                            labels: [
+                              "0-9",
+                              "10-17",
+                              "18-29",
+                              "30-39",
+                              "40-49",
+                              "50-59",
+                              "60-69",
+                              "70+",
+                            ],
+                            datasets: [
+                              {
+                                label: "Total of the population",
+                                data: [
+                                  this.state.selectedStateDetails.demoFS
+                                    .age_0_9,
+                                  this.state.selectedStateDetails.demoFS
+                                    .age_10_17,
+                                  this.state.selectedStateDetails.demoFS
+                                    .age_18_29,
+                                  this.state.selectedStateDetails.demoFS
+                                    .age_30_39,
+                                  this.state.selectedStateDetails.demoFS
+                                    .age_40_49,
+                                  this.state.selectedStateDetails.demoFS
+                                    .age_50_59,
+                                  this.state.selectedStateDetails.demoFS
+                                    .age_60_69,
+                                  this.state.selectedStateDetails.demoFS
+                                    .age_70_79 +
                                     this.state.selectedStateDetails.demoFS
-                                      .age_0_9,
-                                    this.state.selectedStateDetails.demoFS
-                                      .age_10_17,
-                                    this.state.selectedStateDetails.demoFS
-                                      .age_18_29,
-                                    this.state.selectedStateDetails.demoFS
-                                      .age_30_39,
-                                    this.state.selectedStateDetails.demoFS
-                                      .age_40_49,
-                                    this.state.selectedStateDetails.demoFS
-                                      .age_50_59,
-                                    this.state.selectedStateDetails.demoFS
-                                      .age_60_69,
-                                    this.state.selectedStateDetails.demoFS
-                                      .age_70_79 +
-                                      this.state.selectedStateDetails.demoFS
-                                        .age_80_plus,
-                                  ],
-                                  backgroundColor: [
-                                    "rgba(102, 106, 134, 0.6)",
-                                    "rgba(51, 51, 51, 0.6)",
-                                    "rgba(127, 176, 105, 0.6)",
-                                    "rgba(235, 233, 233, 0.6)",
-                                    "rgba(143, 150, 199, 0.6)",
-                                    "rgba(175, 178, 189, 0.6)",
-                                    "rgba(214, 139, 183, 0.6)",
-                                    "rgba(178, 224, 157, 0.6)",
-                                  ],
-                                },
-                              ],
-                            }}
-                          />
-                        </Row>
+                                      .age_80_plus,
+                                ],
+                                backgroundColor: [
+                                  "rgba(102, 106, 134, 0.6)",
+                                  "rgba(51, 51, 51, 0.6)",
+                                  "rgba(127, 176, 105, 0.6)",
+                                  "rgba(235, 233, 233, 0.6)",
+                                  "rgba(143, 150, 199, 0.6)",
+                                  "rgba(175, 178, 189, 0.6)",
+                                  "rgba(214, 139, 183, 0.6)",
+                                  "rgba(178, 224, 157, 0.6)",
+                                ],
+                              },
+                            ],
+                          }}
+                        />
                         <Divider />
                         <br />
                         <br />
-
                         {/* Households within a selected state */}
                         <Row align="middle" justify="center">
                           <h4>Households: </h4>
@@ -729,7 +722,7 @@ class StatePage extends React.Component {
 
                 // State Income Card
                 {
-                  label: "Income",
+                  label: "Income Data",
                   key: "3",
                   children: (
                     <Card>
@@ -797,13 +790,47 @@ class StatePage extends React.Component {
 
                         {/* Income data within a selected state */}
                         <Row align="middle" justify="center">
-                          <h4>Income</h4>
+                          <h4>Average Income</h4>
                         </Row>
                         <br />
+
+                        <Line
+                          data={{
+                            labels: ["2010", "2015"],
+                            datasets: [
+                              {
+                                label: "Avg Median Income",
+                                data: [
+                                  this.state.selectedStateDetails.demoFS
+                                    .median_income_2010,
+                                  this.state.selectedStateDetails.demoFS
+                                    .median_income_2015,
+                                ],
+                                backgroundColor: "rgba(127, 176, 105, 0.6)",
+                                borderColor: "rgba(127, 176, 105, 0.6)",
+                              },
+                              {
+                                label:
+                                  "Avg Median Income Receiving Food Stamps",
+                                data: [
+                                  this.state.selectedStateDetails.demoFS
+                                    .avg_med_income_receiving_fs_2010,
+                                  this.state.selectedStateDetails.demoFS
+                                    .avg_med_income_receiving_fs_2015,
+                                ],
+                                backgroundColor: "rgba(102, 106, 134, 0.6)",
+                                borderColor: "rgba(102, 106, 134, 0.6)",
+                              },
+                            ],
+                          }}
+                        ></Line>
                         <br />
-                        <Row gutter="30" align="middle" justify="left">
+                        <br />
+
+                        <Row align="middle" justify="center">
+                          {/* <Row gutter="30" align="middle" justify="left"> */}
                           <Col flex={2} style={{ textAlign: "left" }}>
-                            2010 Avg Median Income:{" "}
+                            <h7>2010 Avg Median Income:</h7>
                             <h5>
                               $
                               {this.state.selectedStateDetails.demoFS.median_income_2010?.toLocaleString(
@@ -812,7 +839,7 @@ class StatePage extends React.Component {
                             </h5>
                           </Col>
                           <Col flex={2} style={{ textAlign: "left" }}>
-                            2015 Avg Median Income:{" "}
+                            <h7>2015 Avg Median Income:</h7>
                             <h5>
                               $
                               {this.state.selectedStateDetails.demoFS.median_income_2015?.toLocaleString(
@@ -821,10 +848,12 @@ class StatePage extends React.Component {
                             </h5>
                           </Col>
                           <br />
-                        </Row>
-                        <Row gutter="30" align="middle" justify="left">
+                          {/* </Row> */}
+                          {/* <Row gutter="30" align="middle" justify="left"> */}
                           <Col flex={2} style={{ textAlign: "left" }}>
-                            2010 Avg Median Income Receiving Food Stamps:{" "}
+                            <h7>
+                              2010 Avg Median Income Receiving Food Stamps:
+                            </h7>
                             <h5>
                               $
                               {this.state.selectedStateDetails.demoFS.avg_med_income_receiving_fs_2010?.toLocaleString(
@@ -833,7 +862,9 @@ class StatePage extends React.Component {
                             </h5>
                           </Col>
                           <Col flex={2} style={{ textAlign: "left" }}>
-                            2015 Avg Median Income Receiving Food Stamps:{" "}
+                            <h7>
+                              2015 Avg Median Income Receiving Food Stamps:
+                            </h7>
                             <h5>
                               $
                               {this.state.selectedStateDetails.demoFS.avg_med_income_receiving_fs_2015?.toLocaleString(
@@ -841,6 +872,7 @@ class StatePage extends React.Component {
                               )}
                             </h5>
                           </Col>
+                          {/* </Row> */}
                         </Row>
                       </CardBody>
                     </Card>

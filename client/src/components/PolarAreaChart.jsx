@@ -5,8 +5,11 @@ import { Container } from "shards-react";
 
 export default function PolarAreaChart(props) {
   return (
-    <Container maxWidth="sm">
+    <div
+      className="PolarArea"
+      style={{ maxHeight: "50%", display: "flex", justifyContent: "center" }}
+    >
       <PolarArea data={props.data} />
-    </Container>
+    </div>
   );
 }
