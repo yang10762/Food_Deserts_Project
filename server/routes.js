@@ -169,68 +169,15 @@ async function getHeatmapOverlay(req, res) {
     
     let query;
 
-    switch (req.query.overlay) {
-        case 'population':
-            query = `SELECT fips, lat, lon,
-                            SUM(population)/1000 AS weight
-                     FROM Food_Desert
-                     JOIN County_Coordinates ON fips = LEFT(geo_id,5)
-                     GROUP BY fips
-                     HAVING SUM(population) > 5000`;
-            break;
-        case 'percent_large_hh':
-            query = `SELECT fips, lat, lon,
-                            (
-                            SUM(family_6) + SUM(nonfamily_6) +
-                            SUM(family_7_plus) + SUM(nonfamily_7_plus)
-                            ) / SUM(total_hh) * 100 AS weight
-                        FROM Household_Size HH
-                        JOIN County_Coordinates ON fips = LEFT(HH.geo_id,5)
-                        GROUP BY fips;`;
-            break;
-        case 'below_poverty_line':
-            query = `SELECT fips, lat, lon,
-                            (SUM(pct_below_pl_2010 * total_hh_2010) / SUM(total_hh_2010)) AS weight
-                    FROM Food_Assistance
-                    JOIN County_Coordinates ON fips = LEFT(geo_id,5)
-                    GROUP BY fips`;
-            break;
-        case 'percent_minority':
-            query = `SELECT fips, lat, lon,
-                            (SUM(total_black_aa +
-                                total_indigenous +
-                                total_asian +
-                                total_hawaiian_pacific +
-                                total_other +
-                                total_multi) /
-                            SUM(total)) * 100 AS weight
-                    FROM Race_Ethnicity
-                    JOIN County_Coordinates ON fips = LEFT(geo_id,5)
-                    GROUP BY fips`;
-            break;
-        case 'percent_food_assistance':
-            query = `SELECT fips, lat, lon,
-                            (SUM(hh_receiving_fs_2010) / SUM(total_hh_2010)) * 100 AS weight
-                    FROM Food_Assistance
-                    JOIN County_Coordinates ON fips = LEFT(geo_id,5)
-                    GROUP BY fips`;
-            break;
-        case 'food_desert':
-        default:
-            query = `SELECT fips, lat, lon,
-                            (((SUM(no_car_half_mile) / SUM(housing_units)) * 0.2) +
-                            ((SUM(no_car_1_mile) / SUM(housing_units)) * 0.8) +
-                            ((SUM(no_car_10_mile) / SUM(housing_units)) * 1.5) +
-                            ((SUM(no_car_20_mile) / SUM(housing_units)) * 2)) * 100 AS weight
-                    FROM Food_Desert
-                    JOIN County_Coordinates ON fips = LEFT(geo_id,5)
-                    GROUP BY fips
-                    HAVING (SUM(no_car_half_mile) > 0 OR
-                            SUM(no_car_1_mile) > 0 OR
-                            SUM(no_car_10_mile) > 0 OR
-                            SUM(no_car_20_mile) > 0)`
-            break;
-    }
+    if (!(req.query.overlay === 'population' || req.query.overlay === 'percent_large_hh'
+     || req.query.overlay === 'below_poverty_line' || req.query.overlay === 'percent_minority'
+     || req.query.overlay === 'percent_food_assistance' || req.query.overlay === 'food_desert')) {
+      
+      req.query.overlay = 'food_desert';
+     }
+     query = `SELECT fips, lat, lon,
+              weight_${req.query.overlay} AS weight
+              FROM Heatmap_Weight`;
 
     connection.query(query, (error, results, fields) => {
         if (error) {
