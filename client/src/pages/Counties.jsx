@@ -126,9 +126,6 @@ class Counties extends React.Component {
     });
   }
 
-  // changeColor(o) {
-  //   o.style.backgroundColor = (o.style.backgroundColor == '#7FB069') ? ('transparent') : ('#7FB069');
-  // }
 
   componentDidMount() {
     getAllCounties(null, null).then((res) => {
@@ -748,18 +745,18 @@ class Counties extends React.Component {
                               Avg Median Income:{" "}
                               <h5>
                                 $
-                                {this.state.selectedCountyIncomeDetails.avg_est_med_income_2010?.toLocaleString(
-                                  "en-US"
-                                )}
+                                {this.state.selectedCountyIncomeDetails.avg_est_med_income_2010 != null ? (this.state.selectedCountyIncomeDetails.avg_est_med_income_2010?.toLocaleString(
+                                  "en-US")) : (0)
+                                }
                               </h5>
                             </Col>
                             <Col flex={2} style={{ textAlign: "left" }}>
                               Avg Median Income:{" "}
                               <h5>
                                 $
-                                {this.state.selectedCountyIncomeDetails.avg_est_med_income_2015?.toLocaleString(
-                                  "en-US"
-                                )}
+                                {this.state.selectedCountyIncomeDetails.avg_est_med_income_2015 != null ? (this.state.selectedCountyIncomeDetails.avg_est_med_income_2015?.toLocaleString(
+                                  "en-US")) : (0)
+                                }
                               </h5>
                             </Col>
                           </Row>
@@ -769,18 +766,18 @@ class Counties extends React.Component {
                               Avg Median Income Receiving Food Stamps:{" "}
                               <h5>
                                 $
-                                {this.state.selectedCountyIncomeDetails.avg_med_income_receiving_fs_2010?.toLocaleString(
-                                  "en-US"
-                                )}
+                                {this.state.selectedCountyIncomeDetails.avg_med_income_receiving_fs_2010 != null ? (this.state.selectedCountyIncomeDetails.avg_med_income_receiving_fs_2010?.toLocaleString(
+                                  "en-US")) : (0)
+                                }
                               </h5>
                             </Col>
                             <Col flex={2} style={{ textAlign: "left" }}>
                               Avg Median Income Receiving Food Stamps:{" "}
                               <h5>
                                 $
-                                {this.state.selectedCountyIncomeDetails.avg_med_income_receiving_fs_2015?.toLocaleString(
-                                  "en-US"
-                                )}
+                                {this.state.selectedCountyIncomeDetails.avg_med_income_receiving_fs_2015 != null ? (this.state.selectedCountyIncomeDetails.avg_med_income_receiving_fs_2015?.toLocaleString(
+                                  "en-US")) : (0)
+                                }
                               </h5>
                             </Col>
                           </Row>
