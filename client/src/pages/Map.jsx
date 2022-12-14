@@ -219,7 +219,7 @@ function MyMapComponent({ center, zoom, styles }) {
       style={{
         marginLeft: "0",
         marginRight: "0",
-        paddingBottom: "5vh",
+        marginBottom: "5vh",
         boxShadow: "0 0 1em #888888",
         borderRadius: ".5em",
         height: "65vh",
