@@ -761,9 +761,19 @@ class Counties extends React.Component {
                           <br />
                           <br />
 
-                          <Row>
-                            {/* <Row gutter="30" align="middle" justify="left"> */}
-                            <Col flex={2} style={{ textAlign: "left" }}>
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "row",
+                              justifyContent: "space-evenly",
+                            }}
+                          >
+                            <div
+                              style={{
+                                display: "flex",
+                                flexDirection: "column",
+                              }}
+                            >
                               <h7>2010 Avg Median Income:</h7>
                               <h5>
                                 $
@@ -774,9 +784,10 @@ class Counties extends React.Component {
                                     )
                                   : 0}
                               </h5>
-                            </Col>
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              <h7>2015 Avg Median Income:</h7>
+
+                              <h7>
+                                2010 Avg Median Income Receiving Food Stamps:
+                              </h7>
                               <h5>
                                 $
                                 {this.state.selectedCountyIncomeDetails
@@ -786,14 +797,14 @@ class Counties extends React.Component {
                                     )
                                   : 0}
                               </h5>
-                            </Col>
-                            {/* </Row> */}
-                            <br></br>
-                            {/* <Row gutter="30" align="middle" justify="left"> */}
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              <h7>
-                                2010 Avg Median Income Receiving Food Stamps:
-                              </h7>
+                            </div>
+                            <div
+                              style={{
+                                display: "flex",
+                                flexDirection: "column",
+                              }}
+                            >
+                              <h7>2015 Avg Median Income:</h7>
                               <h5>
                                 $
                                 {this.state.selectedCountyIncomeDetails
@@ -803,8 +814,7 @@ class Counties extends React.Component {
                                     )
                                   : 0}
                               </h5>
-                            </Col>
-                            <Col flex={2} style={{ textAlign: "left" }}>
+
                               <h7>
                                 2015 Avg Median Income Receiving Food Stamps:
                               </h7>
@@ -817,9 +827,8 @@ class Counties extends React.Component {
                                     )
                                   : 0}
                               </h5>
-                            </Col>
-                            {/* </Row> */}
-                          </Row>
+                            </div>
+                          </div>
                         </CardBody>
                       </Card>
                       <br></br>

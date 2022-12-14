@@ -827,8 +827,59 @@ class StatePage extends React.Component {
                         <br />
                         <br />
 
-                        <Row align="middle" justify="center">
-                          {/* <Row gutter="30" align="middle" justify="left"> */}
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            justifyContent: "space-evenly",
+                          }}
+                        >
+                          <div
+                            style={{ display: "flex", flexDirection: "column" }}
+                          >
+                            <h7>2010 Avg Median Income:</h7>
+                            <h5>
+                              $
+                              {this.state.selectedStateDetails.demoFS.median_income_2010?.toLocaleString(
+                                "en-US"
+                              )}
+                            </h5>
+
+                            <h7>
+                              2010 Avg Median Income Receiving Food Stamps:
+                            </h7>
+                            <h5>
+                              $
+                              {this.state.selectedStateDetails.demoFS.avg_med_income_receiving_fs_2010?.toLocaleString(
+                                "en-US"
+                              )}
+                            </h5>
+                          </div>
+                          <div
+                            style={{ display: "flex", flexDirection: "column" }}
+                          >
+                            <h7>2015 Avg Median Income:</h7>
+                            <h5>
+                              $
+                              {this.state.selectedStateDetails.demoFS.median_income_2015?.toLocaleString(
+                                "en-US"
+                              )}
+                            </h5>
+
+                            <h7>
+                              2015 Avg Median Income Receiving Food Stamps:
+                            </h7>
+                            <h5>
+                              $
+                              {this.state.selectedStateDetails.demoFS.avg_med_income_receiving_fs_2015?.toLocaleString(
+                                "en-US"
+                              )}
+                            </h5>
+                          </div>
+                        </div>
+
+                        {/* <Row align="middle" justify="center"> */}
+                        {/* <Row gutter="30" align="middle" justify="left">
                           <Col flex={2} style={{ textAlign: "left" }}>
                             <h7>2010 Avg Median Income:</h7>
                             <h5>
@@ -848,8 +899,8 @@ class StatePage extends React.Component {
                             </h5>
                           </Col>
                           <br />
-                          {/* </Row> */}
-                          {/* <Row gutter="30" align="middle" justify="left"> */}
+                        </Row>
+                        <Row gutter="30" align="middle" justify="left">
                           <Col flex={2} style={{ textAlign: "left" }}>
                             <h7>
                               2010 Avg Median Income Receiving Food Stamps:
@@ -872,8 +923,8 @@ class StatePage extends React.Component {
                               )}
                             </h5>
                           </Col>
-                          {/* </Row> */}
-                        </Row>
+                        </Row> */}
+                        {/* </Row> */}
                       </CardBody>
                     </Card>
                   ),
