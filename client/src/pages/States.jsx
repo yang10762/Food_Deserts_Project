@@ -95,7 +95,7 @@ const stateColumns = [
     dataIndex: "population_count",
     key: "population_count",
     width: 10,
-    align: "right",
+    align: "left",
     sorter: (a, b) => a.population_count - b.population_count,
     render: (text, row) => (
       <span>{row.population_count?.toLocaleString("en-US")}</span>
@@ -106,7 +106,7 @@ const stateColumns = [
     dataIndex: "total_HH_FD_status",
     key: "total_HH_FD_status",
     width: 10,
-    align: "right",
+    align: "left",
     sorter: (a, b) => a.total_HH_FD_status - b.total_HH_FD_status,
     render: (text, row) => (
       <span>{row.total_HH_FD_status?.toLocaleString("en-US")}</span>
@@ -117,7 +117,7 @@ const stateColumns = [
     dataIndex: "no_car_half_mile_percent",
     key: "no_car_half_mile_percent",
     width: 10,
-    align: "center",
+    align: "left",
     sorter: (a, b) => a.no_car_half_mile_percent - b.no_car_half_mile_percent,
     render: (text, row) => <span>{row.no_car_half_mile_percent}%</span>,
   },
@@ -126,7 +126,7 @@ const stateColumns = [
     dataIndex: "no_car_1_mile_percent",
     key: "no_car_1_mile_percent",
     width: 10,
-    align: "center",
+    align: "left",
     sorter: (a, b) => a.no_car_1_mile_percent - b.no_car_1_mile_percent,
     render: (text, row) => <span>{row.no_car_1_mile_percent}%</span>,
   },
@@ -135,7 +135,7 @@ const stateColumns = [
     dataIndex: "no_car_10_mile_percent",
     key: "no_car_10_miles_percent",
     width: 10,
-    align: "center",
+    align: "left",
     sorter: (a, b) => a.no_car_10_mile_percent - b.no_car_10_mile_percent,
     render: (text, row) => <span>{row.no_car_10_mile_percent}%</span>,
   },
@@ -144,7 +144,7 @@ const stateColumns = [
     dataIndex: "no_car_20_mile_percent",
     key: "no_car_20_mile_percent",
     width: 10,
-    align: "center",
+    align: "left",
     sorter: (a, b) => a.no_car_20_mile_percent - b.no_car_20_mile_percent,
     render: (text, row) => <span>{row.no_car_20_mile_percent}%</span>,
   },
