@@ -129,23 +129,6 @@ async function retrieveStateDetails(req, res) {
   });
 }
 
-async function retrieveStateHS(req, res) {
-  var usState = req.query.state_name;
-  connection.query(
-    `SELECT question, data_value as percent, stratification1 as population_category
-                      FROM Health_Surveillance
-                      WHERE year = 2011 AND stratification1 = 'total' AND state = '${usState}' ORDER BY question`,
-    function (error, results, fields) {
-      if (error) {
-        console.log(error);
-        res.json({ error: error });
-      } else if (results) {
-        res.json({ results: results });
-      }
-    }
-  );
-}
-
 async function searchStatesHSTopicTotal(req, res) {
   var usState = req.query.name;
   var topic = req.query.topic;
@@ -353,7 +336,6 @@ module.exports = {
   searchStatesName,
   searchStatesPopulation,
   retrieveStateDetails,
-  retrieveStateHS,
   searchStatesHSTopicTotal,
   getHeatmapOverlay,
 };

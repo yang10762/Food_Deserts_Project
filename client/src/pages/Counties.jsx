@@ -18,9 +18,8 @@ import { Table, Row, Col, Divider, Slider, Progress, Tabs } from "antd"; //Pagin
 import "antd/dist/antd.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "shards-ui/dist/css/shards.min.css";
-//import { red, blue } from '@ant-design/colors';
-//import SliderMarks from 'antd/es/slider';
-//import { format } from 'd3-format';
+import { Line } from "react-chartjs-2";
+
 import { getCountySearch, getCountyData, getAllCounties } from "../fetcher";
 
 //const wideFormat = format('.3r');
@@ -125,10 +124,6 @@ class Counties extends React.Component {
       this.setState({ countiesResults: res.results });
     });
   }
-
-  // changeColor(o) {
-  //   o.style.backgroundColor = (o.style.backgroundColor == '#7FB069') ? ('transparent') : ('#7FB069');
-  // }
 
   componentDidMount() {
     getAllCounties(null, null).then((res) => {
@@ -347,6 +342,7 @@ class Counties extends React.Component {
               type="card"
               onChange={onChange}
               items={[
+                // Food desert Card
                 {
                   label: `Food Desert Data`,
                   key: "1",
@@ -384,47 +380,32 @@ class Counties extends React.Component {
                               </span>
                             </h5>
                           </Row>
-                          <br></br>
-                          {/* <Row gutter="30" align="middle" justify="left">
-                            {this.state.selectedCountyFDDetails.FD_County !=
-                            null ? (
-                              <Col flex={2} style={{ textAlign: "left" }}>
-                                <h5 style={{ color: "red" }}>
-                                  This is a Food Desert County.
-                                </h5>
-                              </Col>
-                            ) : (
-                              <Col flex={2} style={{ textAlign: "left" }}>
-                                <h5 style={{ color: "#7FB069" }}>
-                                  This is not a Food Desert County.
-                                </h5>
-                              </Col>
-                            )}
-                          </Row> */}
-                          <br></br>
 
-                          <Row gutter="30" align="middle" justify="left">
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Percentage Urban Areas: <nbsp></nbsp>
-                              <Progress
-                                type="circle"
-                                width={80}
-                                percent={
-                                  this.state.selectedCountyFDDetails
-                                    .percent_urban
-                                }
-                                strokeColor={{
-                                  "0%": "#e3eede",
-                                  "100%": "#7FB069",
-                                }}
-                                style={{ marginRight: 10 }}
-                              />
-                            </Col>
+                          {/* Urban Area Distribution within a county */}
+                          <Row gutter="30" align="middle" justify="center">
+                            <DoughnutChart
+                              data={{
+                                labels: ["Urban", "Non-Urban"],
+                                datasets: [
+                                  {
+                                    label: "Percentage",
+                                    data: [
+                                      this.state.selectedCountyFDDetails
+                                        .percent_urban,
+                                      100 -
+                                        this.state.selectedCountyFDDetails
+                                          .percent_urban,
+                                    ],
+                                    backgroundColor: ["#7FB069", "#666A86"],
+                                    borderColor: ["#7FB069", "#666A86"],
+                                  },
+                                ],
+                              }}
+                            ></DoughnutChart>
                           </Row>
                           <br></br>
-                          <br></br>
 
-                          {/* Households within a county */}
+                          {/* Food Deserts within a county */}
                           <Row align="middle" justify="center">
                             <h4>Food Deserts: </h4>
                           </Row>
@@ -480,6 +461,7 @@ class Counties extends React.Component {
                     </div>
                   ) : null,
                 },
+
                 // Demographic Data Card
                 {
                   label: `Demographic Data`,
@@ -553,57 +535,59 @@ class Counties extends React.Component {
                           <Row align="middle" justify="center">
                             <h4>Age Distribution: </h4>
                           </Row>
-                          <Row gutter="30" align="middle" justify="center">
-                            <PolarAreaChart
-                              data={{
-                                labels: [
-                                  "0-9",
-                                  "10-17",
-                                  "18-29",
-                                  "30-39",
-                                  "40-49",
-                                  "50-59",
-                                  "60-69",
-                                  "70+",
-                                ],
-                                datasets: [
-                                  {
-                                    label: "Total of the population",
-                                    data: [
+                          {/* <Row align="middle" justify="center"> */}
+                          <PolarAreaChart
+                            data={{
+                              labels: [
+                                "0-9",
+                                "10-17",
+                                "18-29",
+                                "30-39",
+                                "40-49",
+                                "50-59",
+                                "60-69",
+                                "70+",
+                              ],
+                              datasets: [
+                                {
+                                  label: "Total of the population",
+                                  data: [
+                                    this.state.selectedCountyDemoDetails
+                                      .age_0_9,
+                                    this.state.selectedCountyDemoDetails
+                                      .age_10_17,
+                                    this.state.selectedCountyDemoDetails
+                                      .age_18_29,
+                                    this.state.selectedCountyDemoDetails
+                                      .age_30_39,
+                                    this.state.selectedCountyDemoDetails
+                                      .age_40_49,
+                                    this.state.selectedCountyDemoDetails
+                                      .age_50_59,
+                                    this.state.selectedCountyDemoDetails
+                                      .age_60_69,
+                                    this.state.selectedCountyDemoDetails
+                                      .age_70_79 +
                                       this.state.selectedCountyDemoDetails
-                                        .age_0_9,
-                                      this.state.selectedCountyDemoDetails
-                                        .age_10_17,
-                                      this.state.selectedCountyDemoDetails
-                                        .age_18_29,
-                                      this.state.selectedCountyDemoDetails
-                                        .age_30_39,
-                                      this.state.selectedCountyDemoDetails
-                                        .age_40_49,
-                                      this.state.selectedCountyDemoDetails
-                                        .age_50_59,
-                                      this.state.selectedCountyDemoDetails
-                                        .age_60_69,
-                                      this.state.selectedCountyDemoDetails
-                                        .age_70_79 +
-                                        this.state.selectedCountyDemoDetails
-                                          .age_80_plus,
-                                    ],
-                                    backgroundColor: [
-                                      "rgba(102, 106, 134, 0.6)",
-                                      "rgba(51, 51, 51, 0.6)",
-                                      "rgba(127, 176, 105, 0.6)",
-                                      "rgba(235, 233, 233, 0.6)",
-                                      "rgba(143, 150, 199, 0.6)",
-                                      "rgba(175, 178, 189, 0.6)",
-                                      "rgba(214, 139, 183, 0.6)",
-                                      "rgba(178, 224, 157, 0.6)",
-                                    ],
-                                  },
-                                ],
-                              }}
-                            />
-                          </Row>
+                                        .age_80_plus,
+                                  ],
+                                  backgroundColor: [
+                                    "rgba(102, 106, 134, 0.6)",
+                                    "rgba(51, 51, 51, 0.6)",
+                                    "rgba(127, 176, 105, 0.6)",
+                                    "rgba(235, 233, 233, 0.6)",
+                                    "rgba(143, 150, 199, 0.6)",
+                                    "rgba(175, 178, 189, 0.6)",
+                                    "rgba(214, 139, 183, 0.6)",
+                                    "rgba(178, 224, 157, 0.6)",
+                                  ],
+                                },
+                              ],
+                            }}
+                            align="middle"
+                            justify="center"
+                          />
+                          {/* </Row> */}
                           <Divider />
                           <br />
                           <br />
@@ -741,49 +725,110 @@ class Counties extends React.Component {
 
                           {/* Income within a county */}
                           <Row align="middle" justify="center">
-                            <h4>Income </h4>
+                            <h4>Average Income </h4>
                           </Row>
-                          <Row gutter="30" align="middle" justify="left">
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Avg Median Income:{" "}
+
+                          <Line
+                            data={{
+                              labels: ["2010", "2015"],
+                              datasets: [
+                                {
+                                  label: "Avg Median Income",
+                                  data: [
+                                    this.state.selectedCountyIncomeDetails
+                                      .avg_est_med_income_2010,
+                                    this.state.selectedCountyIncomeDetails
+                                      .avg_est_med_income_2015,
+                                  ],
+                                  backgroundColor: "rgba(127, 176, 105, 0.6)",
+                                  borderColor: "rgba(127, 176, 105, 0.6)",
+                                },
+                                {
+                                  label:
+                                    "Avg Median Income Receiving Food Stamps",
+                                  data: [
+                                    this.state.selectedCountyIncomeDetails
+                                      .avg_med_income_receiving_fs_2010,
+                                    this.state.selectedCountyIncomeDetails
+                                      .avg_med_income_receiving_fs_2015,
+                                  ],
+                                  backgroundColor: "rgba(102, 106, 134, 0.6)",
+                                  borderColor: "rgba(102, 106, 134, 0.6)",
+                                },
+                              ],
+                            }}
+                          ></Line>
+                          <br />
+                          <br />
+
+                          <div
+                            style={{
+                              display: "flex",
+                              flexDirection: "row",
+                              justifyContent: "space-evenly",
+                            }}
+                          >
+                            <div
+                              style={{
+                                display: "flex",
+                                flexDirection: "column",
+                              }}
+                            >
+                              <h7>2010 Avg Median Income:</h7>
                               <h5>
                                 $
-                                {this.state.selectedCountyIncomeDetails.avg_est_med_income_2010?.toLocaleString(
-                                  "en-US"
-                                )}
+                                {this.state.selectedCountyIncomeDetails
+                                  .avg_est_med_income_2010 != null
+                                  ? this.state.selectedCountyIncomeDetails.avg_est_med_income_2010?.toLocaleString(
+                                      "en-US"
+                                    )
+                                  : 0}
                               </h5>
-                            </Col>
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Avg Median Income:{" "}
+
+                              <h7>
+                                2010 Avg Median Income Receiving Food Stamps:
+                              </h7>
                               <h5>
                                 $
-                                {this.state.selectedCountyIncomeDetails.avg_est_med_income_2015?.toLocaleString(
-                                  "en-US"
-                                )}
+                                {this.state.selectedCountyIncomeDetails
+                                  .avg_est_med_income_2015 != null
+                                  ? this.state.selectedCountyIncomeDetails.avg_est_med_income_2015?.toLocaleString(
+                                      "en-US"
+                                    )
+                                  : 0}
                               </h5>
-                            </Col>
-                          </Row>
-                          <br></br>
-                          <Row gutter="30" align="middle" justify="left">
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Avg Median Income Receiving Food Stamps:{" "}
+                            </div>
+                            <div
+                              style={{
+                                display: "flex",
+                                flexDirection: "column",
+                              }}
+                            >
+                              <h7>2015 Avg Median Income:</h7>
                               <h5>
                                 $
-                                {this.state.selectedCountyIncomeDetails.avg_med_income_receiving_fs_2010?.toLocaleString(
-                                  "en-US"
-                                )}
+                                {this.state.selectedCountyIncomeDetails
+                                  .avg_med_income_receiving_fs_2010 != null
+                                  ? this.state.selectedCountyIncomeDetails.avg_med_income_receiving_fs_2010?.toLocaleString(
+                                      "en-US"
+                                    )
+                                  : 0}
                               </h5>
-                            </Col>
-                            <Col flex={2} style={{ textAlign: "left" }}>
-                              Avg Median Income Receiving Food Stamps:{" "}
+
+                              <h7>
+                                2015 Avg Median Income Receiving Food Stamps:
+                              </h7>
                               <h5>
                                 $
-                                {this.state.selectedCountyIncomeDetails.avg_med_income_receiving_fs_2015?.toLocaleString(
-                                  "en-US"
-                                )}
+                                {this.state.selectedCountyIncomeDetails
+                                  .avg_med_income_receiving_fs_2015 != null
+                                  ? this.state.selectedCountyIncomeDetails.avg_med_income_receiving_fs_2015?.toLocaleString(
+                                      "en-US"
+                                    )
+                                  : 0}
                               </h5>
-                            </Col>
-                          </Row>
+                            </div>
+                          </div>
                         </CardBody>
                       </Card>
                       <br></br>

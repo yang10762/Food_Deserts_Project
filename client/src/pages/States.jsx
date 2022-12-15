@@ -4,6 +4,7 @@ import PolarAreaChart from "../components/PolarAreaChart";
 import CustomButton from "../components/CustomButton";
 import BarChart from "../components/BarChart";
 import LineChart from "../components/LineChart";
+import { Line } from "react-chartjs-2";
 
 import {
   Form,
@@ -14,6 +15,7 @@ import {
   CardBody,
   CardTitle,
   Progress,
+  Container,
 } from "shards-react";
 import stateStyles from "../stateStyles.css";
 import { ArrowDownOutlined, ArrowUpOutlined } from "@ant-design/icons";
@@ -58,9 +60,6 @@ const carouselRef = React.createRef();
 const { Column, ColumnGroup } = Table;
 const { Option } = Select;
 
-var nameSearch = false;
-var popSearch = false;
-
 // 'States' table
 const stateColumns = [
   {
@@ -93,7 +92,7 @@ const stateColumns = [
     dataIndex: "population_count",
     key: "population_count",
     width: 10,
-    align: "right",
+    align: "left",
     sorter: (a, b) => a.population_count - b.population_count,
     render: (text, row) => (
       <span>{row.population_count?.toLocaleString("en-US")}</span>
@@ -104,7 +103,7 @@ const stateColumns = [
     dataIndex: "total_HH_FD_status",
     key: "total_HH_FD_status",
     width: 10,
-    align: "right",
+    align: "left",
     sorter: (a, b) => a.total_HH_FD_status - b.total_HH_FD_status,
     render: (text, row) => (
       <span>{row.total_HH_FD_status?.toLocaleString("en-US")}</span>
@@ -115,7 +114,7 @@ const stateColumns = [
     dataIndex: "no_car_half_mile_percent",
     key: "no_car_half_mile_percent",
     width: 10,
-    align: "center",
+    align: "left",
     sorter: (a, b) => a.no_car_half_mile_percent - b.no_car_half_mile_percent,
     render: (text, row) => <span>{row.no_car_half_mile_percent}%</span>,
   },
@@ -124,7 +123,7 @@ const stateColumns = [
     dataIndex: "no_car_1_mile_percent",
     key: "no_car_1_mile_percent",
     width: 10,
-    align: "center",
+    align: "left",
     sorter: (a, b) => a.no_car_1_mile_percent - b.no_car_1_mile_percent,
     render: (text, row) => <span>{row.no_car_1_mile_percent}%</span>,
   },
@@ -133,7 +132,7 @@ const stateColumns = [
     dataIndex: "no_car_10_mile_percent",
     key: "no_car_10_miles_percent",
     width: 10,
-    align: "center",
+    align: "left",
     sorter: (a, b) => a.no_car_10_mile_percent - b.no_car_10_mile_percent,
     render: (text, row) => <span>{row.no_car_10_mile_percent}%</span>,
   },
@@ -142,7 +141,7 @@ const stateColumns = [
     dataIndex: "no_car_20_mile_percent",
     key: "no_car_20_mile_percent",
     width: 10,
-    align: "center",
+    align: "left",
     sorter: (a, b) => a.no_car_20_mile_percent - b.no_car_20_mile_percent,
     render: (text, row) => <span>{row.no_car_20_mile_percent}%</span>,
   },
@@ -213,23 +212,17 @@ class StatePage extends React.Component {
 
   // Handling name of state change
   handleUsStateNameChange(event) {
-    nameSearch = false;
-    popSearch = false;
     this.setState({ usStateQuery: event.target.value });
   }
 
   // Handling population range change
   handleUsStatePopulationChange(value) {
-    nameSearch = false;
-    popSearch = false;
     this.setState({ populationLowQuery: value[0] });
     this.setState({ populationHighQuery: value[1] });
   }
 
   // Searching by name of state
   updateSearchResultsName() {
-    nameSearch = true;
-    popSearch = false;
     getStateSearchName(this.state.usStateQuery, null, null).then((res) => {
       this.setState({ usStateResults: res.results });
     });
@@ -237,8 +230,6 @@ class StatePage extends React.Component {
 
   // Searching by population range
   updateSearchResultsPopulation() {
-    nameSearch = false;
-    popSearch = true;
     getStateSearchPopulation(
       this.state.populationHighQuery * 2000000,
       this.state.populationLowQuery * 2000000,
@@ -419,10 +410,6 @@ class StatePage extends React.Component {
         this.state.selectedTopicTotal !== null &&
         this.state.selectedTopicTotal !== "undefined" ? (
           <div style={{ width: "70vw", margin: "0 auto", marginTop: "2vh" }}>
-            {console.log(this.state.yearlyHSResultsForTopicTotal)}
-            {console.log(this.state.selectedStateDetails.detail)}
-            {console.log(this.state.selectedStateDetails.demoFS)}
-            {console.log(this.state.selectedStateDetails.healthInsurance)}
             <Tabs
               defaultActiveKey="1"
               centered
@@ -586,7 +573,6 @@ class StatePage extends React.Component {
                         <Divider />
                         <br />
                         <br />
-
                         {/* Gender distribution within a selected state*/}
                         <Row align="middle" justify="center">
                           <h4>Gender Distribution:</h4>
@@ -612,71 +598,63 @@ class StatePage extends React.Component {
                         <Divider />
                         <br />
                         <br />
-
                         {/* Age distribution within a selected state*/}
                         <Row align="middle" justify="center">
                           <h4>Age Distribution: </h4>
                         </Row>
-                        <Row
-                          style={{ maxHeight: "75%" }}
-                          align="middle"
-                          justify="center"
-                        >
-                          {" "}
-                          <PolarAreaChart
-                            data={{
-                              labels: [
-                                "0-9",
-                                "10-17",
-                                "18-29",
-                                "30-39",
-                                "40-49",
-                                "50-59",
-                                "60-69",
-                                "70+",
-                              ],
-                              datasets: [
-                                {
-                                  label: "Total of the population",
-                                  data: [
+
+                        <PolarAreaChart
+                          data={{
+                            labels: [
+                              "0-9",
+                              "10-17",
+                              "18-29",
+                              "30-39",
+                              "40-49",
+                              "50-59",
+                              "60-69",
+                              "70+",
+                            ],
+                            datasets: [
+                              {
+                                label: "Total of the population",
+                                data: [
+                                  this.state.selectedStateDetails.demoFS
+                                    .age_0_9,
+                                  this.state.selectedStateDetails.demoFS
+                                    .age_10_17,
+                                  this.state.selectedStateDetails.demoFS
+                                    .age_18_29,
+                                  this.state.selectedStateDetails.demoFS
+                                    .age_30_39,
+                                  this.state.selectedStateDetails.demoFS
+                                    .age_40_49,
+                                  this.state.selectedStateDetails.demoFS
+                                    .age_50_59,
+                                  this.state.selectedStateDetails.demoFS
+                                    .age_60_69,
+                                  this.state.selectedStateDetails.demoFS
+                                    .age_70_79 +
                                     this.state.selectedStateDetails.demoFS
-                                      .age_0_9,
-                                    this.state.selectedStateDetails.demoFS
-                                      .age_10_17,
-                                    this.state.selectedStateDetails.demoFS
-                                      .age_18_29,
-                                    this.state.selectedStateDetails.demoFS
-                                      .age_30_39,
-                                    this.state.selectedStateDetails.demoFS
-                                      .age_40_49,
-                                    this.state.selectedStateDetails.demoFS
-                                      .age_50_59,
-                                    this.state.selectedStateDetails.demoFS
-                                      .age_60_69,
-                                    this.state.selectedStateDetails.demoFS
-                                      .age_70_79 +
-                                      this.state.selectedStateDetails.demoFS
-                                        .age_80_plus,
-                                  ],
-                                  backgroundColor: [
-                                    "rgba(102, 106, 134, 0.6)",
-                                    "rgba(51, 51, 51, 0.6)",
-                                    "rgba(127, 176, 105, 0.6)",
-                                    "rgba(235, 233, 233, 0.6)",
-                                    "rgba(143, 150, 199, 0.6)",
-                                    "rgba(175, 178, 189, 0.6)",
-                                    "rgba(214, 139, 183, 0.6)",
-                                    "rgba(178, 224, 157, 0.6)",
-                                  ],
-                                },
-                              ],
-                            }}
-                          />
-                        </Row>
+                                      .age_80_plus,
+                                ],
+                                backgroundColor: [
+                                  "rgba(102, 106, 134, 0.6)",
+                                  "rgba(51, 51, 51, 0.6)",
+                                  "rgba(127, 176, 105, 0.6)",
+                                  "rgba(235, 233, 233, 0.6)",
+                                  "rgba(143, 150, 199, 0.6)",
+                                  "rgba(175, 178, 189, 0.6)",
+                                  "rgba(214, 139, 183, 0.6)",
+                                  "rgba(178, 224, 157, 0.6)",
+                                ],
+                              },
+                            ],
+                          }}
+                        />
                         <Divider />
                         <br />
                         <br />
-
                         {/* Households within a selected state */}
                         <Row align="middle" justify="center">
                           <h4>Households: </h4>
@@ -729,7 +707,7 @@ class StatePage extends React.Component {
 
                 // State Income Card
                 {
-                  label: "Income",
+                  label: "Income Data",
                   key: "3",
                   children: (
                     <Card>
@@ -797,13 +775,98 @@ class StatePage extends React.Component {
 
                         {/* Income data within a selected state */}
                         <Row align="middle" justify="center">
-                          <h4>Income</h4>
+                          <h4>Average Income</h4>
                         </Row>
                         <br />
+
+                        <Line
+                          data={{
+                            labels: ["2010", "2015"],
+                            datasets: [
+                              {
+                                label: "Avg Median Income",
+                                data: [
+                                  this.state.selectedStateDetails.demoFS
+                                    .median_income_2010,
+                                  this.state.selectedStateDetails.demoFS
+                                    .median_income_2015,
+                                ],
+                                backgroundColor: "rgba(127, 176, 105, 0.6)",
+                                borderColor: "rgba(127, 176, 105, 0.6)",
+                              },
+                              {
+                                label:
+                                  "Avg Median Income Receiving Food Stamps",
+                                data: [
+                                  this.state.selectedStateDetails.demoFS
+                                    .avg_med_income_receiving_fs_2010,
+                                  this.state.selectedStateDetails.demoFS
+                                    .avg_med_income_receiving_fs_2015,
+                                ],
+                                backgroundColor: "rgba(102, 106, 134, 0.6)",
+                                borderColor: "rgba(102, 106, 134, 0.6)",
+                              },
+                            ],
+                          }}
+                        ></Line>
                         <br />
-                        <Row gutter="30" align="middle" justify="left">
+                        <br />
+
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            justifyContent: "space-evenly",
+                          }}
+                        >
+                          <div
+                            style={{ display: "flex", flexDirection: "column" }}
+                          >
+                            <h7>2010 Avg Median Income:</h7>
+                            <h5>
+                              $
+                              {this.state.selectedStateDetails.demoFS.median_income_2010?.toLocaleString(
+                                "en-US"
+                              )}
+                            </h5>
+
+                            <h7>
+                              2010 Avg Median Income Receiving Food Stamps:
+                            </h7>
+                            <h5>
+                              $
+                              {this.state.selectedStateDetails.demoFS.avg_med_income_receiving_fs_2010?.toLocaleString(
+                                "en-US"
+                              )}
+                            </h5>
+                          </div>
+                          <div
+                            style={{ display: "flex", flexDirection: "column" }}
+                          >
+                            <h7>2015 Avg Median Income:</h7>
+                            <h5>
+                              $
+                              {this.state.selectedStateDetails.demoFS.median_income_2015?.toLocaleString(
+                                "en-US"
+                              )}
+                            </h5>
+
+                            <h7>
+                              2015 Avg Median Income Receiving Food Stamps:
+                            </h7>
+                            <h5>
+                              $
+                              {this.state.selectedStateDetails.demoFS.avg_med_income_receiving_fs_2015?.toLocaleString(
+                                "en-US"
+                              )}
+                            </h5>
+                          </div>
+                        </div>
+
+                        {/* <Row align="middle" justify="center"> */}
+                        {/* <Row gutter="30" align="middle" justify="left">
                           <Col flex={2} style={{ textAlign: "left" }}>
-                            2010 Avg Median Income:{" "}
+                            <h7>2010 Avg Median Income:</h7>
                             <h5>
                               $
                               {this.state.selectedStateDetails.demoFS.median_income_2010?.toLocaleString(
@@ -812,7 +875,7 @@ class StatePage extends React.Component {
                             </h5>
                           </Col>
                           <Col flex={2} style={{ textAlign: "left" }}>
-                            2015 Avg Median Income:{" "}
+                            <h7>2015 Avg Median Income:</h7>
                             <h5>
                               $
                               {this.state.selectedStateDetails.demoFS.median_income_2015?.toLocaleString(
@@ -824,7 +887,9 @@ class StatePage extends React.Component {
                         </Row>
                         <Row gutter="30" align="middle" justify="left">
                           <Col flex={2} style={{ textAlign: "left" }}>
-                            2010 Avg Median Income Receiving Food Stamps:{" "}
+                            <h7>
+                              2010 Avg Median Income Receiving Food Stamps:
+                            </h7>
                             <h5>
                               $
                               {this.state.selectedStateDetails.demoFS.avg_med_income_receiving_fs_2010?.toLocaleString(
@@ -833,7 +898,9 @@ class StatePage extends React.Component {
                             </h5>
                           </Col>
                           <Col flex={2} style={{ textAlign: "left" }}>
-                            2015 Avg Median Income Receiving Food Stamps:{" "}
+                            <h7>
+                              2015 Avg Median Income Receiving Food Stamps:
+                            </h7>
                             <h5>
                               $
                               {this.state.selectedStateDetails.demoFS.avg_med_income_receiving_fs_2015?.toLocaleString(
@@ -841,7 +908,8 @@ class StatePage extends React.Component {
                               )}
                             </h5>
                           </Col>
-                        </Row>
+                        </Row> */}
+                        {/* </Row> */}
                       </CardBody>
                     </Card>
                   ),

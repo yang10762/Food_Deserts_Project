@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { Button } from "shards-react";
 import { useLocation, useNavigate } from "react-router-dom";
+import logo from "../images/logo.svg";
 
 const Bar = styled.div`
   display: flex;
@@ -45,8 +46,22 @@ export default function Navigation() {
   return (
     <Wrapper>
       <Bar>
-        <a className="App-link" href="/" rel="noopener noreferrer">
-          Home
+        <a
+          className="App-link"
+          href="/"
+          rel="noopener noreferrer"
+          style={{ textDecoration: "none" }}
+        >
+          <img src={logo} style={{ height: "50px" }}></img>
+          <span
+            style={{
+              marginLeft: "20px",
+              fontWeight: "bold",
+              color: "#666A86",
+            }}
+          >
+            Food Desert Finder
+          </span>
         </a>
         <Pages>
           {routes.map((route, index) => (
