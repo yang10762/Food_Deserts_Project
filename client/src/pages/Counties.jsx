@@ -791,8 +791,8 @@ class Counties extends React.Component {
                               <h5>
                                 $
                                 {this.state.selectedCountyIncomeDetails
-                                  .avg_est_med_income_2015 != null
-                                  ? this.state.selectedCountyIncomeDetails.avg_est_med_income_2015?.toLocaleString(
+                                  .avg_med_income_receiving_fs_2010 != null
+                                  ? this.state.selectedCountyIncomeDetails.avg_med_income_receiving_fs_2010?.toLocaleString(
                                       "en-US"
                                     )
                                   : 0}
@@ -808,8 +808,8 @@ class Counties extends React.Component {
                               <h5>
                                 $
                                 {this.state.selectedCountyIncomeDetails
-                                  .avg_med_income_receiving_fs_2010 != null
-                                  ? this.state.selectedCountyIncomeDetails.avg_med_income_receiving_fs_2010?.toLocaleString(
+                                  .avg_est_med_income_2015 != null
+                                  ? this.state.selectedCountyIncomeDetails.avg_est_med_income_2015?.toLocaleString(
                                       "en-US"
                                     )
                                   : 0}
